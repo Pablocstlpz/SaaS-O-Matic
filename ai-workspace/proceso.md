@@ -389,3 +389,12 @@
   -> `04-calidad/auditoria.md`
 - Resumí `pendientes.md` con los 10 más importantes arriba, clasificados.
   -> `prompts/22-final-limpieza.md`
+
+## 25/11 · Bloque final (2): README
+
+- Al probar la app escribí `npm install` en la raíz, donde no hay
+  `package.json`. Es lo primero que haría quien lo pruebe, así que pedí que el
+  README lo deje claro arriba del todo: dos carpetas y dos terminales.
+- Capturas hechas con una base de datos recién creada con los datos de
+  ejemplo, no con la mía de pruebas.
+  -> `README.md`, `docs/capturas/`, `prompts/23-final-readme.md`

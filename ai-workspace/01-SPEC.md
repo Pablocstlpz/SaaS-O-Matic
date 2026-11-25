@@ -210,6 +210,9 @@ Tabla (lista cerrada):
 - ¿El formulario valida la letra de control? -> No. Comprueba formato y longitud; la letra de control la valida el servidor
 - ¿Rango del slider? -> De 1 a 200 usuarios, con un campo numérico al lado para cualquier valor de 1 a 100.000
 - ¿Dónde está el simulador? -> Dentro del detalle del cliente: guardar necesita un cliente y el impuesto sale de su país
+- ¿Qué significa "optimizar"? -> Comparar escenarios: mover el slider para
+  ver el precio al momento y guardar varias simulaciones para compararlas en
+  el historial. Los requisitos no piden una recomendación automática del mejor plan
 
 ## 7. Casos de prueba
 

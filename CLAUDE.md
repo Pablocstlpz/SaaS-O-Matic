@@ -30,7 +30,7 @@ Cada decisión nueva que se aparte de la skill se apunta en `docs/decisiones.md`
 
 ## Estilos (frontend)
 
-- Para el aspecto visual, usa la `skill frontend-design`, dentro de lo fijado en Estilos: Material solo para controles y Tailwind para el resto
+- Para el aspecto visual, usa la skill `frontend-design` (en `.claude/skills/frontend-design-1.1.1-v2/`), dentro de lo fijado en Estilos: Material solo para controles y Tailwind para el resto
 - Angular Material solo para controles: slider, select, campos de formulario, snackbar y spinner.
   Su tema (`material-theme.scss`) se ajusta al diseño y es la única fuente de colores.
 - Tarjetas, rejilla, espaciado y tipografía se hacen con Tailwind, usando los colores del tema.

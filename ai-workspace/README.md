@@ -11,3 +11,7 @@ Cómo se construyó SaaS-O-Matic con IA. Para empezar: `proceso.md`, y después 
 - `pendientes.md`: casos vistos que el plan no cubre, anotados sin implementar; arriba, los 10 más importantes.
 - `04-calidad/auditoria.md`: resultado de `npm audit` en backend y frontend.
 - `04-calidad/fallos-detectados.md`: fallos de la IA encontrados al revisar y cómo se corrigieron.
+- `metodologia.md`: por qué trabajé por bloques y no con agentes en paralelo.
+- Directrices para la IA (fuera de esta carpeta): `../CLAUDE.md` (reglas del
+  proyecto), `../.claude/skills/` (mi estándar de arquitectura y la skill de
+  diseño) y `../docs/decisiones.md` (dónde y por qué me aparto del estándar).

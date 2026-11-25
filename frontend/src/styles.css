@@ -1,0 +1,47 @@
+/* Estilos GLOBALES. Reparto:
+   - Angular Material: solo controles (slider, select, campos, snackbar, spinner) y el tema de colores
+   - Tailwind: tarjetas, rejilla, espaciado, tipografia y botones, con clases en el .html
+   - el .css de cada componente: solo lo que no se puede expresar con clases */
+@import 'tailwindcss';
+
+/* Sin la paleta de Tailwind: bg-blue-600 o bg-white no existen y los colores solo salen del tema.
+   Esquinas del diseño: 6 px en tarjetas y 4 px en controles. */
+@theme {
+  --color-*: initial;
+  --radius-tarjeta: 6px;
+  --radius-control: 4px;
+}
+
+/* Colores y letra salen de material-theme.scss. Usa SIEMPRE estos nombres. */
+@theme inline {
+  --color-fondo: var(--mat-sys-surface);
+  --color-superficie: var(--mat-sys-surface-container-low);
+  --color-texto: var(--mat-sys-on-surface);
+  --color-suave: var(--mat-sys-on-surface-variant);
+  --color-borde: var(--mat-sys-outline-variant);
+  --color-primario: var(--mat-sys-primary);
+  --color-sobre-primario: var(--mat-sys-on-primary);
+  --color-peligro: var(--mat-sys-error);
+  --font-sans: var(--mat-sys-body-large-font);
+}
+
+@layer base {
+  body {
+    min-width: 320px;
+  }
+
+  a {
+    color: var(--mat-sys-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* el preflight de Tailwind pone borde a todo y dibuja una raya dentro del hueco
+   de la etiqueta en los mat-form-field con appearance="outline" */
+.mdc-notched-outline__notch {
+  border-right-style: hidden;
+}

@@ -241,3 +241,22 @@
   la primera vez y 0 la segunda.
 - 119 pruebas en verde. Con esto, el backend está terminado: los seis
   endpoints de la spec más `/salud`.
+
+  ## 25/11 · Bloque F1: esqueleto del frontend y aspecto base
+
+- Pedí a la IA que me propusiera la dirección visual antes de programar y
+  esperara mi visto bueno.
+  -> `prompts/13-f1.md`
+- Propuso una "hoja de tarifas": fondo gris verdoso, color principal
+  petróleo, bordes finos sin sombras y la tipografía Atkinson Hyperlegible,
+  que distingue 0/O y 1/I/l (importante en DNI y CIF) y alinea los importes.
+- La aprobé con un cambio: la fuente instalada en el proyecto y no cargada
+  desde Google Fonts, para que la app no dependa de un servicio externo.
+  Solo modo claro, para tener una única paleta que revisar.
+- Resultado: layout responsive, sin errores en consola en móvil y escritorio.
+  La IA quitó la paleta por defecto de Tailwind para que solo existan los
+  colores del tema, y no instaló SweetAlert2: sin editar ni borrar no hay
+  nada que confirmar.
+- Medí el contraste de la paleta: todos los textos cumplen WCAG AA. El color
+  de los bordes no llega a 3:1, así que no sirve para el contorno de los
+  campos de formulario; lo tendré en cuenta en F5.

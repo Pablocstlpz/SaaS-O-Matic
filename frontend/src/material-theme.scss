@@ -1,0 +1,66 @@
+// Tema de Angular Material (Material 3). Es la UNICA fuente de colores y de tipografia de la app:
+// define las variables --mat-sys-* y styles.css se las pasa a Tailwind.
+// Solo modo claro (docs/decisiones.md). https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+$letra: "'Atkinson Hyperlegible Next', system-ui, sans-serif";
+
+html {
+  height: 100%;
+  color-scheme: light;
+
+  // la paleta cian da los tonos que el diseño no usa; los que se ven se fijan debajo
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$cyan-palette,
+      ),
+      typography: (
+        plain-family: $letra,
+        brand-family: $letra,
+      ),
+      density: 0,
+    )
+  );
+
+  @include mat.theme-overrides(
+    (
+      // petroleo: cabecera, botones y foco
+      primary: #0b5d66,
+      on-primary: #ffffff,
+      primary-container: #cbe5e7,
+      on-primary-container: #17262b,
+      secondary-container: #d3e6e8,
+      on-secondary-container: #17262b,
+      // fondo gris verdoso frio; tarjetas y desplegables en blanco
+      surface: #edf1f0,
+      background: #edf1f0,
+      surface-container-lowest: #ffffff,
+      surface-container-low: #ffffff,
+      surface-container: #ffffff,
+      surface-container-high: #ffffff,
+      surface-container-highest: #e3e9e8,
+      on-surface: #17262b,
+      on-background: #17262b,
+      on-surface-variant: #4f6167,
+      // outline-variant separa; outline delimita controles y necesita mas contraste
+      outline: #6b7f83,
+      outline-variant: #c5d1d0,
+      error: #b3261e,
+      on-error: #ffffff,
+      // avisos (snackbar)
+      inverse-surface: #17262b,
+      inverse-on-surface: #ffffff,
+      inverse-primary: #9cc5c7
+    )
+  );
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-large);
+}

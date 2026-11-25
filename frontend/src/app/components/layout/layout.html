@@ -1,0 +1,23 @@
+<header class="bg-primario text-sobre-primario">
+  <div class="mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+    <a
+      routerLink="/"
+      class="flex items-center gap-2.5 py-2 text-xl font-bold text-sobre-primario focus-visible:outline-sobre-primario"
+    >
+      <!-- escalera de tramos: alturas en proporcion 10, 8 y 5, como el precio por usuario -->
+      <span class="flex h-5 items-end gap-0.5" aria-hidden="true">
+        <span class="h-5 w-1.5 bg-sobre-primario"></span>
+        <span class="h-4 w-1.5 bg-sobre-primario"></span>
+        <span class="h-2.5 w-1.5 bg-sobre-primario"></span>
+      </span>
+      SaaS-O-Matic
+    </a>
+
+    <!-- hueco del selector de divisa (F3) -->
+    <div class="flex items-center"></div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+  <router-outlet />
+</main>

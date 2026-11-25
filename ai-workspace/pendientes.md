@@ -193,3 +193,28 @@ temporal vacía.
     email y el nombre queden normalizados (la validación de B2 normaliza antes de mirar) ni que los
     usuarios, el almacenamiento y las llamadas estén dentro de los límites.
 71. **BD con parte de los clientes:** solo se prueba relanzarlo con los cinco ya creados.
+
+## F1 · Esqueleto del frontend y aspecto base
+
+Código: `frontend/`.
+Se han comprobado a mano en Edge sin ventana, con `ng serve`: el 73 (con «Volver al inicio»), el 75 y
+el 76 (a 320, 375 y 1366 px).
+
+### Sin prueba
+
+72. **Formato español:** quitar `LOCALE_ID` o `registerLocaleData` no pone roja ninguna prueba.
+73. **Página no encontrada:** ni la ruta desconocida ni su enlace de vuelta tienen prueba.
+74. **`app-cargando`:** todavía no lo usa ninguna pantalla; ni prueba ni visto en el navegador.
+75. **Aspecto:** los colores del tema, la letra y que no se pida nada fuera de la app.
+76. **Móvil y escritorio:** la cabecera y el contenido sin desplazamiento horizontal.
+
+### Comportamiento por decidir
+
+77. **Título de la pestaña:** es «SaaS-O-Matic» en todas las pantallas.
+78. **Icono de la pestaña:** sigue el `favicon.ico` de la plantilla.
+79. **Otros alfabetos:** la fuente solo trae latín y latín extendido; un nombre en griego o cirílico sale
+    con la letra del sistema.
+
+### Para bloques siguientes
+
+80. **Inicio vacío:** `/` muestra solo la cabecera. F4 tiene que sustituir esa ruta por el buscador.

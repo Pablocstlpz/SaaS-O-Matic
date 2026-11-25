@@ -8,6 +8,30 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · Solo modo claro
+
+**Qué:** `material-theme.scss` fija `color-scheme: light` y `theme-type: light`. La app no sigue el modo del sistema.
+**Por qué:** así hay una sola paleta que ajustar y revisar, y la spec no pide modo oscuro.
+**Descartado:** el `color-scheme: light dark` de la plantilla.
+
+## 2026-11-25 · Fuente instalada con @fontsource, sin Google Fonts
+
+**Qué:** la letra es Atkinson Hyperlegible Next (400, 500 y 700), del paquete `@fontsource/atkinson-hyperlegible-next`, que `angular.json` mete en el build. `index.html` no enlaza nada externo.
+**Por qué:** la app no depende de un servicio de fuera para verse bien. Esta letra distingue `0/O` y `1/I/l` (identificadores fiscales) y tiene cifras tabulares para los importes.
+**Descartado:** la Roboto de la plantilla y los enlaces a Google Fonts.
+
+## 2026-11-25 · Botones con Tailwind y sin fuente de iconos
+
+**Qué:** botones y enlaces se pintan con Tailwind, sin `mat-button`, `mat-icon` ni Material Icons. `styles.css` quita la paleta de Tailwind (`--color-*: initial`): solo quedan los colores del tema.
+**Por qué:** los botones no están entre los controles de Material (ver «Material solo para controles»), y ninguna pantalla de la spec pide iconos.
+**Descartado:** el `mat-button` y la fuente de iconos de la plantilla.
+
+## 2026-11-25 · Sin SweetAlert2
+
+**Qué:** no se instala `sweetalert2`. Los avisos serán solo el snackbar de Material.
+**Por qué:** su uso en la skill es el diálogo de confirmación, y aquí no se edita ni se borra nada.
+**Descartado:** dejar la dependencia instalada sin usarla.
+
 ## 2026-11-25 · Peticiones corruptas: 400, no 500
 
 **Qué:** un cuerpo comprimido y corrupto da 400 `VALIDACION` con «No se puede leer el cuerpo de la petición», y una ruta mal codificada (`/customers/%`), «No se puede leer la dirección de la petición». `app.ts` traduce así cualquier otro error que Express marque con `status` 400.

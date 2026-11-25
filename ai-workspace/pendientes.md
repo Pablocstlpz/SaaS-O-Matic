@@ -27,3 +27,22 @@ Código: `backend/src/utils/identificadorFiscal.ts`.
    que rechazarlo con la lista de países.
 10. **Longitud de la entrada sin normalizar:** una entrada muy larga llena de puntos pasa si lo que
     queda es válido. Solo la frena el límite de 100 KB, salvo que B5 ponga otro.
+
+## B3 · Constantes y servicio de precios
+
+Código: `backend/src/utils/regex.ts` y `backend/src/services/precios.service.ts`.
+
+### Sin prueba
+
+11. **Redondeo al céntimo:** con los tramos y los IVA de hoy el impuesto siempre sale en céntimos
+    enteros, así que quitar el `Math.round` no pone roja ninguna prueba.
+12. **IVA de Italia y Reino Unido:** la tabla de §7 solo prueba ES, DE y FR.
+13. **País sin IVA definido:** el servicio lanza un `Error` (sería un 500). Los validadores tienen
+    que rechazarlo antes.
+
+### Comportamiento por decidir
+
+14. **Usuarios fuera de rango:** el servicio no los valida (con 0 devuelve 0 € y acepta decimales o
+    más de 100.000). B4 los frena en el validador; quien llame al servicio sin validador, no.
+15. **Tramos sin usuarios en el desglose:** ni la spec ni el plan lo dicen. Solo salen los tramos
+    con usuarios (15 usuarios → dos líneas).

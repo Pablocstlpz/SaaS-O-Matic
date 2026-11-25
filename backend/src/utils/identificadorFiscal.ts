@@ -1,5 +1,6 @@
 // Validación del identificador fiscal (spec §3). Funciones puras: ni petición ni base de datos.
 // En España se recalcula el carácter de control; fuera de España solo se mira el formato.
+import { LIMITES } from "./regex.js";
 
 const LETRAS_DNI = "TRWAGMYFPDXBNJZSQVHLCKE";
 // La posición de cada letra es el dígito de control que representa: J = 0, A = 1… I = 9.
@@ -13,7 +14,9 @@ const CIF_CONTROL_CUALQUIERA = "CDFGJUV";
 const FORMATO_DNI = /^\d{8}[A-Z]$/;
 const FORMATO_NIE = /^[XYZ]\d{7}[A-Z]$/;
 const FORMATO_CIF = /^[A-Z]\d{7}[A-Z0-9]$/;
-const FORMATO_EXTRANJERO = /^[A-Z0-9]{4,20}$/;
+const FORMATO_EXTRANJERO = new RegExp(
+  `^[A-Z0-9]{${LIMITES.IDENTIFICADOR_EXTRANJERO_MIN},${LIMITES.IDENTIFICADOR_EXTRANJERO_MAX}}$`,
+);
 
 // Así se valida y así se guarda: mayúsculas, sin espacios, puntos ni guiones.
 export const normalizarIdentificador = (texto: string): string =>

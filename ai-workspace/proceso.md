@@ -122,3 +122,21 @@
 - El resto de casos quedan en `pendientes.md`. Los límites de 4 y 20
   caracteres pasan a B3, para que el formulario use los mismos.
   -> `backend/src/utils/identificadorFiscal.ts`, `ai-workspace/pendientes.md`
+
+## 25/11 · Bloque B3: constantes y servicio de precios
+
+- Pedí el bloque B3 con las mismas normas que B2.
+  -> `prompts/07-b3.md`
+- Resultado: tramos, países con su IVA, planes y límites en una sola
+  constante (`utils/regex.ts`), que tendrá un gemelo en el frontend. El
+  servicio de precios recorre los tramos sin un `if` por tramo y trabaja
+  siempre en céntimos enteros.
+- Los límites del identificador de fuera de España (4 y 20) pasaron a
+  `LIMITES`, como quedó pendiente en B2. Al romperlos, falló su prueba de B2.
+- Acepté que el desglose solo muestre los tramos con usuarios: con 15
+  usuarios no tiene sentido enseñar "0 usuarios a 5 €".
+- Ninguna prueba protege el redondeo del impuesto, y es correcto: con
+  precios en euros enteros y un IVA entero, el impuesto nunca tiene
+  decimales. El redondeo queda para cuando un precio tenga céntimos.
+- 59 pruebas en verde.
+  -> `backend/src/utils/regex.ts`, `backend/src/services/precios.service.ts`

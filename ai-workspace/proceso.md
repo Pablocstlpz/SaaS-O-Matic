@@ -361,3 +361,18 @@
   -> `prompts/20-f8.md`
 - Pedí respetar `prefers-reduced-motion`: si el usuario tiene desactivadas
   las animaciones en su sistema, no hay ninguna.
+
+## 25/11 · Prueba manual en el navegador
+
+- Probé la app con el Claude revisor en mi Chrome: un uso normal y 16
+  intentos de romperla contra la API. Ningún error 500, y un nombre de
+  empresa con código HTML se muestra como texto, sin ejecutarse.
+- Primera prueba con la API de divisas real: funciona, y las cuentas cuadran
+  en dólares.
+- Encontró dos fallos que contradecían decisiones ya tomadas: faltaba la
+  etiqueta "No modifica el precio" (se perdió al reescribir la spec) y el
+  impuesto en otra divisa no decía "calculado en euros" (la corrección no
+  llegó a aplicarse).
+- Revisé el prompt de corrección antes de enviarlo y vi que el revisor había
+  dejado fijo el 21 % de España como ejemplo: cada cliente lleva el de su país.
+  -> `prompts/21-prueba-manual.md`

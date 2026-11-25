@@ -175,4 +175,11 @@ describe('Simulador', () => {
     expect(total()).toBeUndefined();
     expect(pantalla.querySelector('[role="alert"]')?.textContent?.trim()).toBe(message);
   });
+
+  it('almacenamiento y llamadas a la API dicen que no modifican el precio (spec §5)', () => {
+    for (const nombre of ['almacenamiento_gb', 'llamadas_api']) {
+      const campo = entrada(`input[formcontrolname="${nombre}"]`).closest('mat-form-field');
+      expect(campo?.querySelector('mat-hint')?.textContent?.trim()).toBe('No modifica el precio');
+    }
+  });
 });

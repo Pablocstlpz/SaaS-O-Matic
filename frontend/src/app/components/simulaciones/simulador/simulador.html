@@ -48,11 +48,13 @@
     <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
       <mat-label>Almacenamiento (GB)</mat-label>
       <input matInput type="number" inputmode="numeric" formControlName="almacenamiento_gb" />
+      <mat-hint>No modifica el precio</mat-hint>
       <mat-error>{{ formulario.controls.almacenamiento_gb.errors?.['mensaje'] }}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
       <mat-label>Llamadas a la API</mat-label>
       <input matInput type="number" inputmode="numeric" formControlName="llamadas_api" />
+      <mat-hint>No modifica el precio</mat-hint>
       <mat-error>{{ formulario.controls.llamadas_api.errors?.['mensaje'] }}</mat-error>
     </mat-form-field>
 

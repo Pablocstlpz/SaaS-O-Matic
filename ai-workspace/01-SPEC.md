@@ -157,6 +157,7 @@ Tabla (lista cerrada):
   3. Se convierte el impuesto
   4. El total es la base convertida más el impuesto convertido
 - El precio por usuario del desglose se queda en euros, porque es la tarifa. Solo se convierten los importes: «40 usuarios × 8,00 € → 350,70 US$»
+- En otra divisa, el impuesto dice «Impuesto (<porcentaje del país> %, calculado en euros)», por ejemplo «Impuesto (19 %, calculado en euros)» para Alemania, en el simulador y en el historial. En euros se queda «Impuesto (19 %)». El impuesto se convierte desde euros, así que puede no ser el porcentaje exacto de la base convertida
 - En otra divisa, el simulador y el historial pueden diferir en algún céntimo, porque la conversión es informativa. En euros coinciden siempre
 - Si la API falla o tarda: la app sigue en euros y avisa: «No se pueden cargar los tipos de cambio. Los importes se muestran en euros»
 - Mientras se cargan los tipos, el selector dice «Cargando divisas…»
@@ -183,6 +184,7 @@ Tabla (lista cerrada):
 
 - Al mover el slider: espera 250 ms y cancela la petición anterior. Mientras calcula, el precio anterior se ve atenuado con "calculando". Nunca se presenta un precio viejo como si fuera el vigente
 - Se ve: desglose por tramos, coste base, impuesto y total
+- Los campos de almacenamiento y de llamadas a la API llevan la etiqueta «No modifica el precio»
 - Botón guardar: guarda y la simulación aparece en el historial. Está desactivado mientras se calcula y si el cálculo ha fallado
 
 ### Animaciones

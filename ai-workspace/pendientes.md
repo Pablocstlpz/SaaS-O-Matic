@@ -453,7 +453,7 @@ calcular y con el cálculo bloqueado; a 320 y 375 px, que el campo de usuarios c
 152. **Slider en pantalla estrecha:** mide unos 145 px a 375 y 112 a 320 para 200 valores, y el aviso del
      campo de usuarios ocupa cuatro o cinco líneas.
 153. **Resuelto en F7:** la parte sin recorrer del slider se ve (`material-theme.scss`).
-161. **Porcentaje del impuesto en otra divisa:** el impuesto se convierte (spec §5), así que el % de la
+161. **Resuelto:** en otra divisa se lee «Impuesto (19 %, calculado en euros)» (spec §5). **Porcentaje del impuesto en otra divisa:** el impuesto se convierte (spec §5), así que el % de la
      base convertida puede diferir en un céntimo del impuesto que se ve. Con 1 € = 1,096 US$, España y
      17 usuarios: base 170,98, impuesto 35,90, y el 21 % de 170,98 es 35,91. También en el historial.
 

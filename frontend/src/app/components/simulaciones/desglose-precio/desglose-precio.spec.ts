@@ -4,7 +4,7 @@ import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { Calculo } from '../../../interfaces/simulacion';
-import { Divisa } from '../../../shared/divisas';
+import { Divisa, EUR } from '../../../shared/divisas';
 import { DesglosePrecio } from './desglose-precio';
 
 // España y 15 usuarios, como lo devuelve la API
@@ -28,11 +28,11 @@ describe('DesglosePrecio', () => {
   const DOLARES: Divisa = { codigo: 'USD', cambio: 1.10004 };
 
   // devuelve cómo leer la pantalla: el texto de cada elemento, con los espacios reducidos a uno
-  const montar = (calculo: Calculo) => {
+  const montar = (calculo: Calculo, divisa: Divisa = DOLARES) => {
     TestBed.configureTestingModule({ providers: [{ provide: LOCALE_ID, useValue: 'es-ES' }] });
     const desglose = TestBed.createComponent(DesglosePrecio);
     desglose.componentRef.setInput('calculo', calculo);
-    desglose.componentRef.setInput('divisa', DOLARES);
+    desglose.componentRef.setInput('divisa', divisa);
     desglose.componentRef.setInput('calculando', false);
     TestBed.tick();
 
@@ -58,5 +58,13 @@ describe('DesglosePrecio', () => {
     const textos = montar({ ...CALCULO, tramos: [primero, { ...segundo, usuarios: 1, subtotal_centimos: 800 }] });
 
     expect(textos('[data-tarifa]')).toEqual(['10 usuarios × 10,00 €', '1 usuario × 8,00 €']);
+  });
+
+  it('en otra divisa, el impuesto dice que se ha calculado en euros; en euros, no (spec §5)', () => {
+    const ALEMANIA: Calculo = { ...CALCULO, pais: 'DE', porcentaje_impuesto: 19, impuesto_centimos: 2660 };
+
+    expect(montar(ALEMANIA)('dt')).toContain('Impuesto (19 %, calculado en euros)');
+    TestBed.resetTestingModule();
+    expect(montar(ALEMANIA, EUR)('dt')).toContain('Impuesto (19 %)');
   });
 });

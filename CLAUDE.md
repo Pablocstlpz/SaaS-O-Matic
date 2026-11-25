@@ -30,6 +30,7 @@ Cada decisión nueva que se aparte de la skill se apunta en `docs/decisiones.md`
 
 ## Estilos (frontend)
 
+- Para el aspecto visual, usa la `skill frontend-design`, dentro de lo fijado en Estilos: Material solo para controles y Tailwind para el resto
 - Angular Material solo para controles: slider, select, campos de formulario, snackbar y spinner.
   Su tema (`material-theme.scss`) se ajusta al diseño y es la única fuente de colores.
 - Tarjetas, rejilla, espaciado y tipografía se hacen con Tailwind, usando los colores del tema.
@@ -38,21 +39,21 @@ Cada decisión nueva que se aparte de la skill se apunta en `docs/decisiones.md`
 
 ## Dónde va cada regla de la spec
 
-| Regla (spec) | Sitio |
-|---|---|
-| Normalizar nombre, identificador y email (§2, §3) | sanitizers de `validators/clientes.validator.ts`, **antes** de validar |
-| Validación fiscal: DNI, NIE, CIF y fuera de España (§3) | funciones puras en `utils/identificadorFiscal.ts`. El validador las llama con el `pais` del cuerpo. Un identificador falso es 400 `VALIDACION` con `errors` en `identificador_fiscal` |
-| País y plan dentro de la lista (§2, §3) | validador, con `PAISES` y `PLANES` de `utils/regex.ts` |
-| Identificador fiscal único (§4) | el controlador comprueba antes de crear (409 `IDENTIFICADOR_REPETIDO`) **y** hay índice único en el modelo (409 `DUPLICADO`) |
-| Tramos y coste base (§3) | `services/precios.service.ts`, recorriendo `TRAMOS`. Sin un `if` por tramo |
-| Impuesto y total (§3) | el mismo servicio: IVA de `PAISES`, impuesto = `Math.round(base * iva / 100)`, todo en céntimos enteros |
-| País del que sale el impuesto (§3) | `POST /simulations`: el del cliente, leído de la BD. `POST /simulations/calcular`: el `pais` del cuerpo, porque es solo una vista previa |
-| La simulación guarda el % aplicado (§2) | el controlador de simulaciones guarda lo que devuelve el servicio de precios. No hay edición |
-| El cliente de la simulación existe (§4) | controlador de simulaciones: si no existe, 400 `REFERENCIA_INVALIDA` con `errors` en `cliente_id` |
-| Buscador: `q`, como mucho 50, orden por nombre (§4) | controlador de clientes, con `Op.like` del ORM. Nunca SQL montado a mano |
-| Conversión de divisa y redondeo por línea (§5) | `frontend/src/app/services/divisas.service.ts` (tipos de cambio y divisa activa en signals) + una función pura en `shared/`. Solo se convierte al pintar |
-| Buscador mientras se escribe, 300 ms (§5) | componente padre del buscador: `debounceTime` + `switchMap` |
-| Slider: 250 ms, cancelar y «calculando» (§5) | componente padre del simulador: `debounceTime` + `switchMap`. Mientras calcula, el precio anterior se queda atenuado con «calculando»: no se vacía, pero tampoco se presenta como vigente |
+| Regla (spec)                                            | Sitio                                                                                                                                                                                     |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Normalizar nombre, identificador y email (§2, §3)       | sanitizers de `validators/clientes.validator.ts`, **antes** de validar                                                                                                                    |
+| Validación fiscal: DNI, NIE, CIF y fuera de España (§3) | funciones puras en `utils/identificadorFiscal.ts`. El validador las llama con el `pais` del cuerpo. Un identificador falso es 400 `VALIDACION` con `errors` en `identificador_fiscal`     |
+| País y plan dentro de la lista (§2, §3)                 | validador, con `PAISES` y `PLANES` de `utils/regex.ts`                                                                                                                                    |
+| Identificador fiscal único (§4)                         | el controlador comprueba antes de crear (409 `IDENTIFICADOR_REPETIDO`) **y** hay índice único en el modelo (409 `DUPLICADO`)                                                              |
+| Tramos y coste base (§3)                                | `services/precios.service.ts`, recorriendo `TRAMOS`. Sin un `if` por tramo                                                                                                                |
+| Impuesto y total (§3)                                   | el mismo servicio: IVA de `PAISES`, impuesto = `Math.round(base * iva / 100)`, todo en céntimos enteros                                                                                   |
+| País del que sale el impuesto (§3)                      | `POST /simulations`: el del cliente, leído de la BD. `POST /simulations/calcular`: el `pais` del cuerpo, porque es solo una vista previa                                                  |
+| La simulación guarda el % aplicado (§2)                 | el controlador de simulaciones guarda lo que devuelve el servicio de precios. No hay edición                                                                                              |
+| El cliente de la simulación existe (§4)                 | controlador de simulaciones: si no existe, 400 `REFERENCIA_INVALIDA` con `errors` en `cliente_id`                                                                                         |
+| Buscador: `q`, como mucho 50, orden por nombre (§4)     | controlador de clientes, con `Op.like` del ORM. Nunca SQL montado a mano                                                                                                                  |
+| Conversión de divisa y redondeo por línea (§5)          | `frontend/src/app/services/divisas.service.ts` (tipos de cambio y divisa activa en signals) + una función pura en `shared/`. Solo se convierte al pintar                                  |
+| Buscador mientras se escribe, 300 ms (§5)               | componente padre del buscador: `debounceTime` + `switchMap`                                                                                                                               |
+| Slider: 250 ms, cancelar y «calculando» (§5)            | componente padre del simulador: `debounceTime` + `switchMap`. Mientras calcula, el precio anterior se queda atenuado con «calculando»: no se vacía, pero tampoco se presenta como vigente |
 
 Los casos de la spec §7 (tramos, impuesto, identificador fiscal y API) se convierten en pruebas tal cual.
 

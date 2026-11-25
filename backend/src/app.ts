@@ -5,6 +5,7 @@ import express, { type ErrorRequestHandler } from "express";
 import helmet from "helmet";
 
 import { FRONTEND_URL } from "./config.js";
+import { simulacionesRoutes } from "./routes/simulaciones.route.js";
 import { ErrorHttp, noEncontrado } from "./utils/errores.js";
 import { logger } from "./utils/logger.js";
 
@@ -31,6 +32,8 @@ app.use(express.json({ limit: "100kb" }));
 app.get("/salud", (_req, res) => {
   res.status(200).json({ estado: "ok" });
 });
+
+app.use("/simulations", simulacionesRoutes);
 
 app.use(() => {
   throw noEncontrado("Ruta no encontrada");

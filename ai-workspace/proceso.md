@@ -114,10 +114,10 @@
 - Al revisar las pruebas vi que las letras C D F G J U V solo se probaban
   aceptando un control correcto, nunca rechazando uno equivocado: un código que
   aceptara cualquier cosa habría pasado. Pedí tres pruebas más:
-  * `C58818502` inválido (rechaza un control equivocado).
-  * `Y1234567X` válido (con la X, que vale 0, un fallo al sustituir la letra
+  - `C58818502` inválido (rechaza un control equivocado).
+  - `Y1234567X` válido (con la X, que vale 0, un fallo al sustituir la letra
     no se notaría).
-  * `A5881850A` inválido (la A exige número).
+  - `A5881850A` inválido (la A exige número).
 - Cada prueba nueva se rompió a propósito y se puso en rojo. 48 pruebas en verde.
 - El resto de casos quedan en `pendientes.md`. Los límites de 4 y 20
   caracteres pasan a B3, para que el formulario use los mismos.
@@ -140,3 +140,22 @@
   decimales. El redondeo queda para cuando un precio tenga céntimos.
 - 59 pruebas en verde.
   -> `backend/src/utils/regex.ts`, `backend/src/services/precios.service.ts`
+
+  ## 25/11 · Bloque B4: POST /simulations/calcular
+
+- Pedí el bloque B4 con las mismas normas.
+  -> `prompts/08-b4.md`
+- La IA me preguntó qué texto poner en los errores, porque la spec no lo
+  decía. Elegí distinguir "falta el dato" de "el dato está mal", y lo fijé
+  como regla para todos los campos: "<Campo> es obligatorio" y "<Campo> debe
+  ser <regla>". Así no hay que decidirlo campo a campo.
+- La IA encontró un agujero que las pruebas del plan no cubrían: si
+  `usuarios` o `pais` llegaban como lista, se saltaban la validación
+  (`[]` daba un precio de 0 € y `["ES"]` un 500). Aunque el plan no lo
+  incluía, decidí arreglarlo en este bloque: contradecía la spec y los
+  bloques siguientes lo habrían heredado. Lo resolví con una regla común
+  para todos los campos (`campoDelCuerpo`), no con un parche por campo.
+- Para que no se salte en los bloques siguientes, lo añadí a las
+  prohibiciones de `CLAUDE.md`.
+- 67 pruebas en verde.
+  -> `backend/src/validators/`, `docs/decisiones.md`

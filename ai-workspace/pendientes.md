@@ -46,3 +46,26 @@ Código: `backend/src/utils/regex.ts` y `backend/src/services/precios.service.ts
     más de 100.000). B4 los frena en el validador; quien llame al servicio sin validador, no.
 15. **Tramos sin usuarios en el desglose:** ni la spec ni el plan lo dicen. Solo salen los tramos
     con usuarios (15 usuarios → dos líneas).
+
+## B4 · `POST /simulations/calcular`
+
+Código: `backend/src/validators/` y `backend/src/controllers/simulaciones.controller.ts`.
+Los comportamientos 16 y 17 se han comprobado a mano contra la app.
+
+### Comportamiento por decidir
+
+16. **Números como texto:** `"15"`, `"015"` y `"+15"` se aceptan como 15.
+17. **Campos de más** (por ejemplo, `total_centimos`): se ignoran sin avisar.
+
+### Sin prueba
+
+18. **Campo ausente o `null`:** los textos «Los usuarios son obligatorios» y «El país es obligatorio».
+19. **Los dos campos mal a la vez:** `errors` con los dos y `message` con el primero.
+20. **Límites que sí valen:** 1 y 100.000 usuarios por la API.
+21. **Texto de repuesto** de `_handle.ts` para una regla sin mensaje: hoy todas lo tienen.
+22. **Objeto como valor** (`{}`): la regla común lo rechaza, pero las pruebas solo envían listas.
+
+### Para bloques siguientes
+
+23. **Parámetros de la URL como lista** (B7): `?q=a&q=b` llega como lista y `campoDelCuerpo` solo
+    cubre el cuerpo.

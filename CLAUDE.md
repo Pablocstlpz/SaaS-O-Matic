@@ -74,6 +74,8 @@ Los casos de la spec §7 (tramos, impuesto, identificador fiscal y API) se convi
   `matchedData<T>(req)` (solo los campos validados) y la pasan campo a campo.
 - Decimales en el dinero: se trabaja en céntimos enteros. El euro solo aparece al pintar.
 - `innerHTML` con datos del usuario.
+- `body()` directo en los validadores: los campos del cuerpo se declaran con
+  `campoDelCuerpo` de `validators/_campo.ts`.
 
 ## Comandos que tienen que pasar antes de dar una tarea por terminada
 

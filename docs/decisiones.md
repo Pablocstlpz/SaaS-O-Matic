@@ -8,6 +8,18 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · Patrón de los mensajes de cada campo
+
+**Qué:** en todos los campos (cuerpo, ruta y consulta), de este bloque y de los siguientes, el mensaje es «<Campo> es obligatorio» si falta y «<Campo> debe ser <regla>» si está mal, concordando en género y número: «Los usuarios son obligatorios», «El país debe ser uno de: ES, FR, GB, IT, DE».
+**Por qué:** la spec no fija textos. Con un solo patrón, todos los formularios avisan igual y no hay que decidir cada frase.
+**Descartado:** un texto libre para cada campo y regla.
+
+## 2026-11-25 · Campos del cuerpo: regla común
+
+**Qué:** todo campo del cuerpo se declara con `campoDelCuerpo` (`validators/_campo.ts`), no con `body()`: exige que venga y que no sea una lista ni un objeto, antes de cualquier sanitizer. Una lista o un objeto dan el «debe ser» de su campo.
+**Por qué:** express-validator valida las listas elemento a elemento, así que `usuarios: []` daba un precio de 0 € en vez de rechazarse. La regla común evita repetir el fallo en cada recurso.
+**Descartado:** el `body()` directo de la plantilla con la comprobación campo a campo, porque basta olvidarla en uno. También un texto propio para listas y objetos.
+
 ## 2026-11-25 · Pendiente: cuerpo comprimido corrupto
 
 **Qué:** un cuerpo que declara una compresión admitida (por ejemplo, `Content-Encoding: gzip`) pero está corrupto responde hoy 500 `ERROR_INTERNO`. Queda pendiente.

@@ -168,3 +168,28 @@ de una simulación). Del 49, la parte de las mayúsculas tiene prueba.
 57. **Barra invertida:** no hay prueba de buscarla.
 58. **Campos del historial:** la prueba mira cuáles salen y en qué orden, no la forma completa.
 59. **Listas en la consulta:** `campoDeLaConsulta` solo se prueba con `q`.
+
+## B8 · Datos de ejemplo
+
+Código: `backend/scripts/datos-ejemplo.ts`.
+Se han comprobado a mano: el 68 y el 69, lanzando `npm run datos-ejemplo` dos veces contra una BD
+temporal vacía.
+
+### Comportamiento por decidir
+
+65. **Ejecución interrumpida:** si falla entre el cliente y sus simulaciones, queda con menos de las
+    previstas, y al relanzar se salta porque ya existe. No hay transacción.
+66. **Identificador de ejemplo ya usado:** un cliente creado a mano con ese identificador (aunque sea
+    otro nombre u otro país) se salta, y puede no quedar un cliente de ejemplo por país.
+67. **Dos escrituras a la vez:** el script lanzado dos veces a la vez, o con la API guardando datos.
+
+### Sin prueba
+
+68. **El comando:** las pruebas llaman a la función; no cubren la entrada de `package.json`, la
+    condición que la ejecuta desde la consola ni el cierre de la BD.
+69. **Clave ajena:** que el script cree las tablas con la relación depende de que importe
+    `associations.ts`.
+70. **Datos sin validador:** el script escribe con los modelos. No se prueba que el identificador, el
+    email y el nombre queden normalizados (la validación de B2 normaliza antes de mirar) ni que los
+    usuarios, el almacenamiento y las llamadas estén dentro de los límites.
+71. **BD con parte de los clientes:** solo se prueba relanzarlo con los cinco ya creados.

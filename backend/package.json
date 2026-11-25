@@ -12,7 +12,8 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/server.js",
     "tipos": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "datos-ejemplo": "tsx scripts/datos-ejemplo.ts"
   },
   "dependencies": {
     "cors": "^2.8.6",

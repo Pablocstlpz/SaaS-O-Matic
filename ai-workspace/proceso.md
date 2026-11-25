@@ -228,3 +228,16 @@
   texto, apartándose de una regla de `CLAUDE.md`. Lo avisó y lo anotó: el
   texto del usuario entra como parámetro, así que no hay riesgo de inyección.
 - 115 pruebas en verde.
+
+## 25/11 · Bloque B8: datos de ejemplo
+
+- Pedí el bloque B8 para que quien lo pruebe no se encuentre la app vacía.
+  -> `prompts/12-b8.md`
+- Resultado: `npm run datos-ejemplo` crea 5 clientes, uno por país, con 2 o 3
+  simulaciones cada uno. Los importes los calcula el mismo servicio de
+  precios que la API, y los identificadores pasan el algoritmo. Si se lanza
+  dos veces, no duplica nada.
+- Comprobado con el comando real sobre una base de datos vacía: 5 clientes
+  la primera vez y 0 la segunda.
+- 119 pruebas en verde. Con esto, el backend está terminado: los seis
+  endpoints de la spec más `/salud`.

@@ -172,16 +172,35 @@
 - La IA sacó la regla del país a un fichero común para no repetirla entre
   clientes y simulaciones.
 - Corregí tres cosas al revisar:
-  * La IA quitaba los espacios de dentro del email. Eso podía guardar otra
+  - La IA quitaba los espacios de dentro del email. Eso podía guardar otra
     dirección sin avisar; ahora se rechaza. Al cambiarlo, la IA vio que el
     validador aceptaba espacios entre comillas (`"com pras"@acme.example`)
     y añadió una regla que los rechaza también.
-  * El 409 decía "debe ser único", el patrón de los errores de formato. Lo
+  - El 409 decía "debe ser único", el patrón de los errores de formato. Lo
     cambié por "Ya existe un cliente con ese identificador fiscal", porque el
     dato está bien escrito: lo que pasa es que ya existe.
-  * Pedí comprobar qué pasaba con un país incorrecto, y **fallaba**: el error
+  - Pedí comprobar qué pasaba con un país incorrecto, y **fallaba**: el error
     salía también en el identificador, que no se puede validar sin saber el
     país. Ahora sale solo en `pais`. Ninguna prueba del plan lo cubría.
 - Actualicé la spec para el email: la spec tiene que decir lo que hace el
   código.
   -> `backend/src/models/`, `validators/`, `controllers/clientes.controller.ts`
+
+  ## 25/11 · Bloque B6: simulaciones y POST /simulations
+
+- Pedí el bloque B6 con esfuerzo medio: lo delicado (validación común,
+  país y precios) ya estaba resuelto en bloques anteriores.
+  -> `prompts/10-b6.md`
+- Resultado: la simulación se guarda con el resultado del servicio de precios
+  y el % de impuesto aplicado, para que el historial no cambie si cambia el
+  IVA. 88 pruebas en verde, cada prueba nueva rota a propósito.
+- Lo más importante: el IVA sale del país del cliente guardado en la base de
+  datos, no del que llegue en la petición. Una prueba manda otro país en el
+  cuerpo y comprueba que se ignora: nadie puede presupuestar con el IVA de
+  otro país.
+- Un cliente que no existe da 400 `REFERENCIA_INVALIDA` en `cliente_id`, no
+  404: lo que está mal es un dato del cuerpo, no la URL.
+- La relación cliente–simulaciones impide borrar un cliente con simulaciones.
+- La IA añadió una regla que nadie había pedido (`cliente_id` mayor que 0) y
+  la quitó ella misma: no inventar requisitos funciona.
+  -> `backend/src/models/simulacion.model.ts`, `controllers/simulaciones.controller.ts`

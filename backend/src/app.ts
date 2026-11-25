@@ -5,6 +5,7 @@ import express, { type ErrorRequestHandler } from "express";
 import helmet from "helmet";
 
 import { FRONTEND_URL } from "./config.js";
+import "./models/associations.js";
 import { clientesRoutes } from "./routes/clientes.route.js";
 import { simulacionesRoutes } from "./routes/simulaciones.route.js";
 import { ErrorHttp, noEncontrado } from "./utils/errores.js";

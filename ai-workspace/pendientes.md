@@ -102,3 +102,29 @@ nombre y con el cuerpo `{}`) y el 37 (sin identificador).
 35. **Identificador fiscal por la API:** no se prueba un cliente de fuera de España ni un duplicado
     escrito de otra forma (`a-58.818.501` frente a `A58818501`).
 36. **Listas y objetos** en los campos de cliente: los frena `campoDelCuerpo`, probado solo en B4.
+
+## B6 · Simulaciones: modelo y `POST /simulations`
+
+Código: `backend/src/models/`, `backend/src/validators/simulaciones.validator.ts` y
+`backend/src/controllers/simulaciones.controller.ts`.
+Se han comprobado a mano contra la app: del 38 al 40, el 41 (con el cuerpo `{}`, con todo a `null` y,
+en `cliente_id`, con lista y objeto), el 42 (con 0), el 43, el 44 (sin `llamadas_api`) y del 45 al 47.
+
+### Comportamiento por decidir
+
+38. **`cliente_id` 0 o negativo:** pasa el validador, que solo pide un entero, y sale
+    `REFERENCIA_INVALIDA` («El cliente no existe»).
+39. **`cliente_id` enorme:** `1e20` da «El cliente no existe» y `1e30`, «debe ser un número entero».
+40. **Números como texto y campos de más (ver 16 y 17):** igual al guardar. Los importes, el %, el
+    `id` y la `fecha_creacion` que lleguen en el cuerpo se ignoran.
+
+### Sin prueba
+
+41. **Campo ausente, `null`, lista u objeto:** los textos «es obligatorio» de `cliente_id`,
+    `almacenamiento_gb` y `llamadas_api`, y el «debe ser» de `cliente_id`.
+42. **Usuarios al guardar:** el rango solo se prueba en `/simulations/calcular` (comparten regla).
+43. **Límites que sí valen:** 0 y 1.000.000 GB, y 0 y 1.000.000.000 llamadas.
+44. **Decimales:** no se prueban en `cliente_id`, `almacenamiento_gb` ni `llamadas_api`.
+45. **Sin edición:** ninguna prueba comprueba que `PUT`, `PATCH` o `DELETE /simulations/:id` dan 404.
+46. **Campos de más:** de lo que se ignora en el cuerpo, solo se prueba `pais`.
+47. **Clave ajena:** la BD impide borrar un cliente con simulaciones (`RESTRICT`); sin prueba.

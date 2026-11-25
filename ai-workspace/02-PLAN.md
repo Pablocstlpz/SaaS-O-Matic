@@ -20,9 +20,9 @@ La spec da los campos de entrada, pero no los nombres de todos los de salida. To
 sufijo `_centimos` y es un entero.
 
 - **Cliente:** `id`, `nombre_empresa`, `identificador_fiscal`, `email_contacto`, `pais`, `plan`, `fecha_creacion`.
-- **Cálculo** (`POST /simulations/calcular`): `usuarios`, `pais`, `tramos: [{ desde, hasta, usuarios,
-  precio_unitario_centimos, subtotal_centimos }]`, `coste_base_centimos`, `porcentaje_impuesto`,
-  `impuesto_centimos`, `total_centimos`. `hasta` es `null` en el último tramo.
+- **Cálculo** (`POST /simulations/calcular`): `usuarios`, `pais`,
+  `tramos: [{ desde, hasta, usuarios, precio_unitario_centimos, subtotal_centimos }]`, `coste_base_centimos`,
+  `porcentaje_impuesto`, `impuesto_centimos`, `total_centimos`. `hasta` es `null` en el último tramo.
 - **Simulación:** `id`, `cliente_id`, `usuarios`, `almacenamiento_gb`, `llamadas_api`, `coste_base_centimos`,
   `porcentaje_impuesto`, `impuesto_centimos`, `total_centimos`, `fecha_creacion`. El desglose por tramos
   no se guarda: sale de `usuarios` y de los tramos de hoy, y podría no cuadrar con un presupuesto antiguo.
@@ -129,7 +129,7 @@ sufijo `_centimos` y es un entero.
 ### B7 · Lecturas: buscador, detalle e historial
 
 - **Spec:** §4 «GET /customers?q=texto», «GET /customers/:id» y «GET /customers/:id/simulations»;
-  §6 «¿Buscador sin texto?» y «¿% y _ en la búsqueda?».
+  §6 «¿Buscador sin texto?» y «¿% y \_ en la búsqueda?».
 - **Ficheros:** `src/validators/clientes.validator.ts` (`q`, `id`), `src/controllers/clientes.controller.ts`
   (listar, obtener, historial), `src/routes/clientes.route.ts`, `tests/clientes-leer.test.ts`.
 - **Pruebas:**

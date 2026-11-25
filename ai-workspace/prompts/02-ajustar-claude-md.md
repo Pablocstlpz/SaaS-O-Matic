@@ -1,3 +1,6 @@
+## Encargo
+
+```text
 Ajusta CLAUDE.md:
 
 1. Añade en "Lo que se mantiene de la skill": maquetación con Tailwind,
@@ -10,3 +13,4 @@ Ajusta CLAUDE.md:
 5. .gitignore: excluye solo .claude/settings.local.json, no .claude entero.
 
 Enséñame el diff. Sin commit.
+```

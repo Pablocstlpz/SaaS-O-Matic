@@ -67,8 +67,8 @@ Los comportamientos 16 y 17 se han comprobado a mano contra la app.
 
 ### Para bloques siguientes
 
-23. **Parámetros de la URL como lista** (B7): `?q=a&q=b` llega como lista y `campoDelCuerpo` solo
-    cubre el cuerpo.
+23. **Resuelto en B7.** Parámetros de la URL como lista: `?q=a&q=b` es 400 en `q`
+    (`campoDeLaConsulta`).
 
 ## B5 · Clientes: modelo y `POST /customers`
 
@@ -114,7 +114,8 @@ en `cliente_id`, con lista y objeto), el 42 (con 0), el 43, el 44 (sin `llamadas
 
 38. **`cliente_id` 0 o negativo:** pasa el validador, que solo pide un entero, y sale
     `REFERENCIA_INVALIDA` («El cliente no existe»).
-39. **`cliente_id` enorme:** `1e20` da «El cliente no existe» y `1e30`, «debe ser un número entero».
+39. **`cliente_id` enorme:** desde B7, lo que pasa de `Number.MAX_SAFE_INTEGER` (`1e20`, `1e30`) da
+    «debe ser un número entero»; por debajo, «El cliente no existe».
 40. **Números como texto y campos de más (ver 16 y 17):** igual al guardar. Los importes, el %, el
     `id` y la `fecha_creacion` que lleguen en el cuerpo se ignoran.
 
@@ -128,3 +129,42 @@ en `cliente_id`, con lista y objeto), el 42 (con 0), el 43, el 44 (sin `llamadas
 45. **Sin edición:** ninguna prueba comprueba que `PUT`, `PATCH` o `DELETE /simulations/:id` dan 404.
 46. **Campos de más:** de lo que se ignora en el cuerpo, solo se prueba `pais`.
 47. **Clave ajena:** la BD impide borrar un cliente con simulaciones (`RESTRICT`); sin prueba.
+
+## B7 · Lecturas: buscador, detalle e historial
+
+Código: `backend/src/controllers/clientes.controller.ts`,
+`backend/src/validators/clientes.validator.ts`, `backend/src/models/cliente.model.ts` y
+`backend/src/app.ts`.
+Se han comprobado a mano contra la app: del 49 al 55, el 57 (una barra invertida) y el 58 (la forma
+de una simulación). Del 49, la parte de las mayúsculas tiene prueba.
+
+### Resueltos en B7, con prueba
+
+48. **Mayúsculas con tilde o eñe:** `q=érica` encuentra «IBÉRICA SUR» (columna `nombre_busqueda`).
+50. **Carácter nulo en `q`:** daba 500; es 400.
+51. **Longitud de `q`:** como mucho 120 caracteres.
+60. **Id de cientos de cifras:** `id` y `cliente_id` daban 500; son 400.
+61. **Ruta mal codificada** (`/customers/%`): daba 500; es 400.
+62. **Cuerpo comprimido y corrupto** (pendiente desde B1): daba 500; es 400.
+63. **Carácter nulo en el nombre:** se guardaba y el buscador no veía lo de detrás; es 400.
+
+### Comportamiento por decidir
+
+49. **Orden de tildes y eñe:** la lista ya no distingue mayúsculas (resuelto en B7), pero el orden
+    sigue siendo el binario: las letras con tilde y la eñe van detrás de la z («Ábaco» detrás de
+    «Zeta»).
+52. **Identificador escrito con signos:** `q` no se normaliza, así que `a-588` no encuentra `A588185`.
+53. **Espacios en `q`:** no se quitan los de los extremos; `q= zeta ` no encuentra «zeta».
+54. **Otros parámetros:** se ignoran, también `q[]=zeta`, que devuelve la lista sin filtrar.
+55. **`id` raro:** 0, negativo o mayor que el último dan 404; `01` vale como 1; `1.5`, `1e30` y los que
+    pasan de `Number.MAX_SAFE_INTEGER` dan 400.
+56. **Empates:** dos clientes con el mismo nombre (aunque cambien las mayúsculas), o dos simulaciones
+    con la misma fecha, no tienen un orden fijado.
+64. **Equivalencias de letras:** `ss` no encuentra `ß`, y una tilde escrita como carácter aparte
+    (texto sin normalizar) no coincide con la letra acentuada.
+
+### Sin prueba
+
+57. **Barra invertida:** no hay prueba de buscarla.
+58. **Campos del historial:** la prueba mira cuáles salen y en qué orden, no la forma completa.
+59. **Listas en la consulta:** `campoDeLaConsulta` solo se prueba con `q`.

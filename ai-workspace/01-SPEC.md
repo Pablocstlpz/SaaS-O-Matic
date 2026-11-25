@@ -105,6 +105,8 @@ Tabla (lista cerrada):
 ### GET /customers?q=texto: buscador
 
 - Busca dentro del nombre o del identificador, sin distinguir mayúsculas
+  (también en letras con tilde y en la ñ). Las tildes sí cuentan: "erica"
+  no encuentra "Ibérica". Máximo 120 caracteres
 - Sale: 200 con la lista (máximo 50, ordenada por nombre). Sin resultados = lista vacía, no error
 
 ### GET /customers/:id: datos de un cliente

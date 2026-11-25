@@ -1,3 +1,6 @@
+## Encargo
+
+```text
 Respuestas a tus dudas:
 
 1. Sin q: los 50 primeros por nombre.
@@ -21,3 +24,4 @@ Cambios:
   probado desde un clon limpio.
 
 Enséñame el diff. Sin commit.
+```

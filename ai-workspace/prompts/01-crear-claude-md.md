@@ -1,3 +1,6 @@
+## Encargo
+
+```text
 Lee ai-workspace/01-SPEC.md y mi skill /arquitectura-angular (SKILL.md y
 references/backend-node.md y frontend.md; ignora .NET y Python).
 
@@ -36,3 +39,4 @@ CLAUDE.md:
 
 Si encuentras otro choque entre la skill y la spec, pregúntame antes de
 escribir. Al terminar, enséñame el diff. Sin commit.
+```

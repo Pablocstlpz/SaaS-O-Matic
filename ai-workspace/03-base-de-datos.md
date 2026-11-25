@@ -116,3 +116,34 @@ CREATE TABLE `simulaciones` (
 - **Cambios de modelo sin migraciones.** `sync()` crea las tablas que faltan
   pero no modifica las existentes. Válido para una prueba en local; con datos
   reales que conservar, harían falta migraciones.
+
+## Organización de carpetas
+
+El backend se organiza por capas: cada petición baja de la ruta al modelo. El frontend, por
+componentes, agrupados por pantalla.
+
+```text
+backend/
+├── src/
+│   ├── routes/        URL → validador → controlador
+│   ├── validators/    limpian y validan la entrada; 400 si algo falla
+│   ├── controllers/   leen lo validado, llaman al servicio y al modelo, y responden
+│   ├── services/      reglas de negocio: tramos, impuesto y total (precios.service.ts)
+│   ├── models/        tablas de Sequelize y sus relaciones
+│   ├── data/          la conexión a SQLite (db.ts)
+│   └── utils/         errores, logger, constantes (regex.ts) e identificador fiscal
+├── scripts/           datos de ejemplo (npm run datos-ejemplo)
+└── tests/             pruebas de Vitest, por endpoint y por utilidad
+
+frontend/src/app/
+├── components/
+│   ├── clientes/      buscador, tarjeta, detalle, datos, alta y formulario
+│   ├── simulaciones/  simulador, desglose del precio e historial
+│   ├── compartidos/   piezas comunes: cargando y selector de divisa
+│   ├── layout/        cabecera, pie y hueco para la página
+│   └── no-encontrado/ página 404
+├── services/          llamadas a la API (BaseHttpService), divisas y avisos
+├── interfaces/        forma del JSON, campo a campo igual que la API
+├── shared/            funciones puras (conversión de divisa) y constantes gemelas (regex.ts)
+└── pipes/             formato de importes
+```

@@ -351,7 +351,10 @@
   valida el servidor, para no duplicar el algoritmo. Si es falso, el error
   sale junto al campo, igual que el de cliente repetido.
 - Al crear, avisa y lleva al detalle del cliente nuevo.
-- Probé yo mismo la app completa en el navegador: <lo que encontraste>.
+- Probé yo mismo la app completa en el navegador. Funcionaba, y vi que el
+  formulario acepta un DNI con la letra mal hasta que se envía: es lo que
+  decidí (la letra la valida el servidor), pero a un usuario le parece un
+  fallo. Lo dejé anotado en pendientes.
 
 ## 25/11 · Bloque F8: animaciones y repaso visual
 
@@ -398,3 +401,14 @@
 - Capturas hechas con una base de datos recién creada con los datos de
   ejemplo, no con la mía de pruebas.
   -> `README.md`, `docs/capturas/`, `prompts/23-final-readme.md`
+
+## 25/11 · Bloque final (3): documentación
+
+- Índice de `ai-workspace/`, tabla de fallos detectados, organización de
+  carpetas y `metodologia.md`.
+  -> `prompts/24-final-documentacion.md`
+- Al compilar los fallos, la IA encontró dos errores míos: un texto de
+  plantilla sin rellenar en `proceso.md` y el fichero de prompts de B7
+  mezclado con el de B5. Los corregí.
+- El Claude revisor clonó el repositorio de cero en Linux con Node 22 y
+  siguió el README: instala, compila y pasan todas las pruebas a la primera.

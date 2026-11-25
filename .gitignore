@@ -1,0 +1,30 @@
+# Dependencias
+node_modules/
+
+# Compilados y cachés
+dist/
+.angular/
+coverage/
+*.tsbuildinfo
+
+# Configuración local (el .env.example sí se sube)
+.env
+.env.local
+
+# Base de datos local
+*.sqlite
+*.sqlite-journal
+*.db
+
+# Registros
+*.log
+npm-debug.log*
+
+# Sistema y editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Ajustes personales de Claude Code
+.claude/settings.local.json

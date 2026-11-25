@@ -2,7 +2,7 @@
 
 ## Encargo
 
-```
+```text
 Responde en castellano.
 
 Segunda parte del bloque final: escribe README.md en la raíz. Lo leerá

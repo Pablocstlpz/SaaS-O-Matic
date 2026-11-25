@@ -2,7 +2,7 @@
 
 ## Encargo
 
-```
+```text
 Responde en castellano.
 
 Primera parte del bloque final de ai-workspace/02-PLAN.md:

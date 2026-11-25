@@ -7,6 +7,7 @@ detalle, cambio de divisa, simulador y alta) y 16 intentos de romperla
 contra la API. Era la primera prueba con la API de divisas real.
 
 Salieron dos fallos que contradecían decisiones ya tomadas:
+
 - Faltaba la etiqueta "No modifica el precio": se perdió al reescribir la spec.
 - El impuesto en otra divisa no decía "calculado en euros": la corrección
   del pendiente 161 no llegó a aplicarse.
@@ -17,7 +18,7 @@ porcentaje de su país.
 
 ## Encargo
 
-```
+```text
 Al probar la app en el navegador han salido dos fallos:
 
 1. Falta la etiqueta "No modifica el precio" en los campos de almacenamiento

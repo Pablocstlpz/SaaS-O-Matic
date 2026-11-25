@@ -304,3 +304,8 @@ sufijo `_centimos` y es un entero.
 - **Terminado:** ningún punto de la spec sin prueba o sin motivo; ningún hallazgo abierto sin anotar; el
   README funciona en el clon sin pasos que no estén escritos. Necesita que el trabajo esté en commits,
   porque el clon solo ve lo que hay en git.
+  > Nota: `cobertura-spec.md` no se hizo. La auditoría independiente
+  > (`04-calidad/auditoria-codigo.md`) cubre lo mismo con más rigor: comparó
+  > las reglas de la spec con una implementación propia en 500 000 combinaciones
+  > de tramos e IVA y 1,19 millones de identificadores fiscales, y rompió pruebas
+  > a propósito para comprobar que detectan fallos.

@@ -4,18 +4,18 @@ Casos vistos que el plan no cubre. Están anotados, no implementados.
 
 ## Resumen: los 10 más importantes
 
-| Nº              | Pendiente                                                                                   | Clasificación       | Motivo                                                                                          |
-| --------------- | ------------------------------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------- |
-| 139, 89, 161    | En otra divisa, el simulador y el historial (y el % del impuesto) pueden diferir un céntimo | limitación aceptada | La spec (§5) dice que la conversión es informativa. En euros coinciden siempre                  |
-| 91              | Al convertir, un medio céntimo exacto puede redondear hacia abajo (coma flotante)          | limitación aceptada | Solo toca la conversión al pintar. Lo que se guarda y se calcula va en céntimos enteros de euro |
-| 26              | El mismo identificador en dos países da 409                                                 | limitación aceptada | La spec (§2) pide identificador único, sin mencionar el país                                    |
-| 86              | Ninguna prueba compara las constantes gemelas del backend y del frontend                    | mejora              | Si una cambia sin la otra, el formulario y la API dejan de coincidir sin aviso                  |
-| 49              | Orden del buscador: «Ábaco» sale detrás de «Zeta»                                           | mejora              | El orden es binario; la spec solo dice «ordenada por nombre»                                    |
-| 52, 53          | `q` no quita espacios de los extremos ni signos: `a-588` no encuentra `A588185`             | mejora              | El identificador se guarda normalizado, pero lo buscado no se normaliza                         |
-| 114             | El buscador no avisa de que puede haber más de 50 clientes                                  | mejora              | El tope de 50 es de la spec (§4); lo que falta es decirlo en pantalla                           |
-| 103, 109, 122, 148 | Sin botón de reintentar tras un error: hay que recargar o volver a escribir              | limitación aceptada | Decidido en `docs/decisiones.md` (buscador y detalle)                                           |
-| 65, 67          | Datos de ejemplo sin transacción ni control de dos ejecuciones a la vez                     | limitación aceptada | El script se lanza a mano sobre una BD vacía; relanzarlo se salta lo que ya existe              |
-| 129             | El historial sale entero, sin paginar                                                       | fuera de alcance    | La spec no pide paginar el historial                                                            |
+| Nº                 | Pendiente                                                                                   | Clasificación       | Motivo                                                                                          |
+| ------------------ | ------------------------------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------- |
+| 139, 89, 161       | En otra divisa, el simulador y el historial (y el % del impuesto) pueden diferir un céntimo | limitación aceptada | La spec (§5) dice que la conversión es informativa. En euros coinciden siempre                  |
+| 91                 | Al convertir, un medio céntimo exacto puede redondear hacia abajo (coma flotante)           | limitación aceptada | Solo toca la conversión al pintar. Lo que se guarda y se calcula va en céntimos enteros de euro |
+| 26                 | El mismo identificador en dos países da 409                                                 | limitación aceptada | La spec (§2) pide identificador único, sin mencionar el país                                    |
+| 86                 | Ninguna prueba compara las constantes gemelas del backend y del frontend                    | mejora              | Si una cambia sin la otra, el formulario y la API dejan de coincidir sin aviso                  |
+| 49                 | Orden del buscador: «Ábaco» sale detrás de «Zeta»                                           | mejora              | El orden es binario; la spec solo dice «ordenada por nombre»                                    |
+| 52, 53             | `q` no quita espacios de los extremos ni signos: `a-588` no encuentra `A588185`             | mejora              | El identificador se guarda normalizado, pero lo buscado no se normaliza                         |
+| 114                | El buscador no avisa de que puede haber más de 50 clientes                                  | mejora              | El tope de 50 es de la spec (§4); lo que falta es decirlo en pantalla                           |
+| 103, 109, 122, 148 | Sin botón de reintentar tras un error: hay que recargar o volver a escribir                 | limitación aceptada | Decidido en `docs/decisiones.md` (buscador y detalle)                                           |
+| 65, 67             | Datos de ejemplo sin transacción ni control de dos ejecuciones a la vez                     | limitación aceptada | El script se lanza a mano sobre una BD vacía; relanzarlo se salta lo que ya existe              |
+| 129                | El historial sale entero, sin paginar                                                       | fuera de alcance    | La spec no pide paginar el historial                                                            |
 
 El resto, tal cual (los diez de la tabla siguen abajo, en su bloque, con el detalle):
 
@@ -104,7 +104,7 @@ nombre y con el cuerpo `{}`) y el 37 (sin identificador).
 28. **Plan en mayúsculas** (`PRO`): se rechaza.
 29. **Longitud sin normalizar (ver 10):** B5 no pone otro límite en nombre, identificador ni email;
     solo se mide lo que queda tras limpiar.
-37. **País fuera de la lista sin identificador** (o que no es texto): salen los dos errores, porque
+30. **País fuera de la lista sin identificador** (o que no es texto): salen los dos errores, porque
     que falte no depende del país.
 
 ### Sin prueba
@@ -158,26 +158,26 @@ de una simulación). Del 49, la parte de las mayúsculas tiene prueba.
 ### Resueltos en B7, con prueba
 
 48. **Mayúsculas con tilde o eñe:** `q=érica` encuentra «IBÉRICA SUR» (columna `nombre_busqueda`).
-50. **Carácter nulo en `q`:** daba 500; es 400.
-51. **Longitud de `q`:** como mucho 120 caracteres.
-60. **Id de cientos de cifras:** `id` y `cliente_id` daban 500; son 400.
-61. **Ruta mal codificada** (`/customers/%`): daba 500; es 400.
-62. **Cuerpo comprimido y corrupto** (pendiente desde B1): daba 500; es 400.
-63. **Carácter nulo en el nombre:** se guardaba y el buscador no veía lo de detrás; es 400.
+49. **Carácter nulo en `q`:** daba 500; es 400.
+50. **Longitud de `q`:** como mucho 120 caracteres.
+51. **Id de cientos de cifras:** `id` y `cliente_id` daban 500; son 400.
+52. **Ruta mal codificada** (`/customers/%`): daba 500; es 400.
+53. **Cuerpo comprimido y corrupto** (pendiente desde B1): daba 500; es 400.
+54. **Carácter nulo en el nombre:** se guardaba y el buscador no veía lo de detrás; es 400.
 
 ### Comportamiento por decidir
 
 49. **Orden de tildes y eñe:** la lista ya no distingue mayúsculas (resuelto en B7), pero el orden
     sigue siendo el binario: las letras con tilde y la eñe van detrás de la z («Ábaco» detrás de
     «Zeta»).
-52. **Identificador escrito con signos:** `q` no se normaliza, así que `a-588` no encuentra `A588185`.
-53. **Espacios en `q`:** no se quitan los de los extremos; `q= zeta ` no encuentra «zeta».
-54. **Otros parámetros:** se ignoran, también `q[]=zeta`, que devuelve la lista sin filtrar.
-55. **`id` raro:** 0, negativo o mayor que el último dan 404; `01` vale como 1; `1.5`, `1e30` y los que
+50. **Identificador escrito con signos:** `q` no se normaliza, así que `a-588` no encuentra `A588185`.
+51. **Espacios en `q`:** no se quitan los de los extremos; `q= zeta ` no encuentra «zeta».
+52. **Otros parámetros:** se ignoran, también `q[]=zeta`, que devuelve la lista sin filtrar.
+53. **`id` raro:** 0, negativo o mayor que el último dan 404; `01` vale como 1; `1.5`, `1e30` y los que
     pasan de `Number.MAX_SAFE_INTEGER` dan 400.
-56. **Empates:** dos clientes con el mismo nombre (aunque cambien las mayúsculas), o dos simulaciones
+54. **Empates:** dos clientes con el mismo nombre (aunque cambien las mayúsculas), o dos simulaciones
     con la misma fecha, no tienen un orden fijado.
-64. **Equivalencias de letras:** `ss` no encuentra `ß`, y una tilde escrita como carácter aparte
+55. **Equivalencias de letras:** `ss` no encuentra `ß`, y una tilde escrita como carácter aparte
     (texto sin normalizar) no coincide con la letra acentuada.
 
 ### Sin prueba
@@ -285,8 +285,8 @@ antes de los cambios de la revisión.
 ### Resueltos en la revisión de F3, con prueba
 
 101. **Mientras carga:** el selector dice «Cargando divisas…» en lugar del desplegable.
-106. **Atribución:** la API sin clave la exige. El pie cita a ExchangeRate-API con su enlace.
-107. **Enlace del pie:** se abre en una pestaña nueva, así la app no se recarga.
+102. **Atribución:** la API sin clave la exige. El pie cita a ExchangeRate-API con su enlace.
+103. **Enlace del pie:** se abre en una pestaña nueva, así la app no se recarga.
 
 ### Sin prueba
 
@@ -297,7 +297,7 @@ antes de los cambios de la revisión.
 97. **Teclado:** foco visible en el selector y cambio de divisa con las flechas.
 98. **Resuelto con el 101:** durante la espera ya no hay desplegable, solo el texto.
 99. **Sin guardar:** ninguna prueba impide usar `localStorage` o `sessionStorage`.
-100. **Visible en todas las pantallas:** las pruebas montan el layout, no recorren las rutas.
+100.  **Visible en todas las pantallas:** las pruebas montan el layout, no recorren las rutas.
 
 ### Comportamiento por decidir
 
@@ -306,7 +306,7 @@ antes de los cambios de la revisión.
 103. **Sin reintento:** si fallan los tipos, solo recargar la página los vuelve a pedir.
 104. **Otros avisos:** solo hay un snackbar; un aviso posterior sustituye al de los tipos.
 105. **Divisa elegida:** al recargar se vuelve a EUR.
-108. **Aviso sobre el pie:** el snackbar sale abajo y, en pantallas cortas o estrechas, puede tapar la
+106. **Aviso sobre el pie:** el snackbar sale abajo y, en pantallas cortas o estrechas, puede tapar la
      atribución mientras se ve.
 
 ## F4 · Buscador y dashboard
@@ -470,7 +470,7 @@ calcular y con el cálculo bloqueado; a 320 y 375 px, que el campo de usuarios c
 152. **Slider en pantalla estrecha:** mide unos 145 px a 375 y 112 a 320 para 200 valores, y el aviso del
      campo de usuarios ocupa cuatro o cinco líneas.
 153. **Resuelto en F7:** la parte sin recorrer del slider se ve (`material-theme.scss`).
-161. **Resuelto:** en otra divisa se lee «Impuesto (19 %, calculado en euros)» (spec §5). **Porcentaje del impuesto en otra divisa:** el impuesto se convierte (spec §5), así que el % de la
+154. **Resuelto:** en otra divisa se lee «Impuesto (19 %, calculado en euros)» (spec §5). **Porcentaje del impuesto en otra divisa:** el impuesto se convierte (spec §5), así que el % de la
      base convertida puede diferir en un céntimo del impuesto que se ve. Con 1 € = 1,096 US$, España y
      17 usuarios: base 170,98, impuesto 35,90, y el 21 % de 170,98 es 35,91. También en el historial.
 
@@ -484,13 +484,23 @@ calcular y con el cálculo bloqueado; a 320 y 375 px, que el campo de usuarios c
 158. **Slider:** que al soltar no repite la petición, y el clic sobre la pista (`valueChange`).
 159. **Spinners** «Calculando…» y «Guardando…».
 160. **Divisa en el simulador:** que cambiarla vuelve a pintar el desglose sin pedir nada.
-162. **Aspecto:** ni el color de la pista del slider ni que el campo de usuarios quepa a 320 px.
+161. **Aspecto:** ni el color de la pista del slider ni que el campo de usuarios quepa a 320 px.
 
-## Auditoría de código (`04-calidad/auditoria-codigo.md`)
+## Auditoría de código
 
-Hallazgos que se dejan sin arreglar. Siguen sin implementar.
+Hallazgos de `04-calidad/auditoria-codigo.md` que no se arreglaron antes de entregar.
 
-- **Hallazgo 4:** los NIF K, L y M (personas físicas sin DNI ni NIE) se rechazan siempre. Hueco de la spec: hay que preguntar a negocio si se admiten y con qué algoritmo.
-- **Hallazgo 7:** `q` no se normaliza como el identificador guardado: `A-58818` no encuentra `A58818501`. Hay que decidir si se normaliza (relacionado con 52 y 53).
-- **Hallazgo 8:** lógica y textos copiados entre backend y frontend fuera de las constantes gemelas (`limpiarNombre`, `normalizarIdentificador`, formatos, mensajes), y copias dentro de cada lado (`SIN_CLIENTE`, `PAISES.find(...)`, `errorDeCampo` en las pruebas).
-- **Hallazgo 10:** tras un envío fallido, el foco no va al primer campo con error. Sin comprobar con lector de pantalla.
+### Comportamiento por decidir
+
+162. **NIF K, L y M** (hallazgo 4): personas físicas sin DNI ni NIE. Se rechazan siempre, porque la spec
+     solo nombra DNI, NIE y CIF. Hay que preguntar a negocio si se admiten y con qué algoritmo.
+163. **`q` sin normalizar** (hallazgo 7): `A-58818` no encuentra `A58818501`. Es el mismo caso que 52 y 53.
+
+### Mejoras
+
+164. **Lógica copiada entre backend y frontend** (hallazgo 8): `limpiarNombre`, `normalizarIdentificador`,
+     los formatos del identificador y los mensajes de error están fuera de las constantes gemelas y sin el
+     comentario de gemelo. Dentro de cada lado se repiten `SIN_CLIENTE`, `PAISES.find(...)?.nombre` y
+     `errorDeCampo` en las pruebas.
+165. **Foco tras un envío fallido** (hallazgo 10): no va al primer campo con error. Sin comprobar con lector
+     de pantalla.

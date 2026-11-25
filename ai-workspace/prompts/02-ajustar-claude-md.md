@@ -1,3 +1,5 @@
+# Ajustar CLAUDE.md
+
 ## Encargo
 
 ```text

@@ -48,8 +48,8 @@ cd frontend && npx ng test --watch=false
 - Guarda las simulaciones y muestra el historial de cada cliente.
 - Muestra los importes en otra divisa. Los tipos de cambio vienen de ExchangeRate-API, así que hace falta internet.
 
-| Buscador                                    | Detalle y simulador                                     | Alta                                   |
-| ------------------------------------------- | ------------------------------------------------------- | -------------------------------------- |
+| Buscador                                  | Detalle y simulador                                 | Alta                              |
+| ----------------------------------------- | --------------------------------------------------- | --------------------------------- |
 | ![Buscador](docs/capturas/1-buscador.png) | ![Detalle y simulador](docs/capturas/2-detalle.png) | ![Alta](docs/capturas/3-alta.png) |
 
 ## Estructura

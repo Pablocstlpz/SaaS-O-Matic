@@ -2,7 +2,7 @@
 
 ## Encargo
 
-```
+```text
 Responde en castellano.
 
 Tercera parte del bloque final. Solo documentación, sin tocar código:

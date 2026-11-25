@@ -186,6 +186,13 @@ Fuera de alcance (no está en los requisitos):
 - ¿Máximo de clientes? -> Sin límite. El buscador devuelve 50 como mucho
 - ¿Quién calcula el slider? -> El backend, para tener una sola fórmula
 - ¿Login? -> No. Es interna y no se pide
+- ¿Buscador sin texto (sin q o vacío)? -> Devuelve los 50 primeros por nombre
+- ¿% y \_ en la búsqueda? -> Se buscan como texto literal, no como comodines
+- ¿Cuánto se espera a la API de divisas? -> 5 s. Después, sigue en euros y avisa
+- ¿Los tipos de cambio se guardan entre recargas? -> No. Solo en memoria mientras la app está abierta
+- ¿El formulario valida la letra de control? -> No. Comprueba formato y longitud; la letra de control la valida el servidor
+- ¿Rango del slider? -> De 1 a 200 usuarios, con un campo numérico al lado para cualquier valor de 1 a 100.000
+- ¿Dónde está el simulador? -> Dentro del detalle del cliente: guardar necesita un cliente y el impuesto sale de su país
 
 ## 7. Casos de prueba
 
@@ -231,3 +238,9 @@ Fuera de alcance (no está en los requisitos):
 Backend: Node + Express (TypeScript)
 Frontend: Angular (TypeScript)
 BD: SQLite
+
+## 9. Datos de ejemplo
+
+- Un script del backend (`npm run datos-ejemplo`) crea 5 clientes, uno por país de la tabla, con 2 o 3 simulaciones cada uno
+- Los identificadores fiscales son válidos y los importes los calcula el mismo servicio de precios que la API
+- Si se lanza dos veces no duplica nada: un cliente con un identificador que ya existe se salta

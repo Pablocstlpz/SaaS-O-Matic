@@ -5,8 +5,13 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/f
 import { CodigoPais, Plan } from '../../../interfaces/cliente';
 import { LIMITES } from '../../../shared/regex';
 
-const { NOMBRE_EMPRESA_MIN, NOMBRE_EMPRESA_MAX, EMAIL_MAX, IDENTIFICADOR_EXTRANJERO_MIN, IDENTIFICADOR_EXTRANJERO_MAX } =
-  LIMITES;
+const {
+  NOMBRE_EMPRESA_MIN,
+  NOMBRE_EMPRESA_MAX,
+  EMAIL_MAX,
+  IDENTIFICADOR_EXTRANJERO_MIN,
+  IDENTIFICADOR_EXTRANJERO_MAX,
+} = LIMITES;
 
 // Solo formato y longitud (spec §6): la letra de control la comprueba el servidor.
 // En España, 8 números y una letra (DNI), o una letra, 7 números y el control (NIE y CIF).

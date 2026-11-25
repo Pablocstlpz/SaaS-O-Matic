@@ -2,6 +2,23 @@
 
 Casos vistos que el plan no cubre. Están anotados, no implementados.
 
+## Resumen: los 10 más importantes
+
+| Nº              | Pendiente                                                                                   | Clasificación       | Motivo                                                                                          |
+| --------------- | ------------------------------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------- |
+| 139, 89, 161    | En otra divisa, el simulador y el historial (y el % del impuesto) pueden diferir un céntimo | limitación aceptada | La spec (§5) dice que la conversión es informativa. En euros coinciden siempre                  |
+| 91              | Al convertir, un medio céntimo exacto puede redondear hacia abajo (coma flotante)          | limitación aceptada | Solo toca la conversión al pintar. Lo que se guarda y se calcula va en céntimos enteros de euro |
+| 26              | El mismo identificador en dos países da 409                                                 | limitación aceptada | La spec (§2) pide identificador único, sin mencionar el país                                    |
+| 86              | Ninguna prueba compara las constantes gemelas del backend y del frontend                    | mejora              | Si una cambia sin la otra, el formulario y la API dejan de coincidir sin aviso                  |
+| 49              | Orden del buscador: «Ábaco» sale detrás de «Zeta»                                           | mejora              | El orden es binario; la spec solo dice «ordenada por nombre»                                    |
+| 52, 53          | `q` no quita espacios de los extremos ni signos: `a-588` no encuentra `A588185`             | mejora              | El identificador se guarda normalizado, pero lo buscado no se normaliza                         |
+| 114             | El buscador no avisa de que puede haber más de 50 clientes                                  | mejora              | El tope de 50 es de la spec (§4); lo que falta es decirlo en pantalla                           |
+| 103, 109, 122, 148 | Sin botón de reintentar tras un error: hay que recargar o volver a escribir              | limitación aceptada | Decidido en `docs/decisiones.md` (buscador y detalle)                                           |
+| 65, 67          | Datos de ejemplo sin transacción ni control de dos ejecuciones a la vez                     | limitación aceptada | El script se lanza a mano sobre una BD vacía; relanzarlo se salta lo que ya existe              |
+| 129             | El historial sale entero, sin paginar                                                       | fuera de alcance    | La spec no pide paginar el historial                                                            |
+
+El resto, tal cual (los diez de la tabla siguen abajo, en su bloque, con el detalle):
+
 ## B2 · Identificador fiscal
 
 Código: `backend/src/utils/identificadorFiscal.ts`.

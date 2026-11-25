@@ -35,7 +35,11 @@
             <dd>{{ simulacion.coste_base_centimos | importe: divisa() }}</dd>
           </div>
           <div class="flex justify-between gap-3">
-            <dt>Impuesto ({{ simulacion.porcentaje_impuesto }}&nbsp;%{{ divisa().codigo === 'EUR' ? '' : ', calculado en euros' }})</dt>
+            <dt>
+              Impuesto ({{ simulacion.porcentaje_impuesto }}&nbsp;%{{
+                divisa().codigo === 'EUR' ? '' : ', calculado en euros'
+              }})
+            </dt>
             <dd>{{ simulacion.impuesto_centimos | importe: divisa() }}</dd>
           </div>
           <div class="mt-2 flex justify-between gap-3 text-lg font-bold">

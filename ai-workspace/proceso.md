@@ -376,3 +376,16 @@
 - Revisé el prompt de corrección antes de enviarlo y vi que el revisor había
   dejado fijo el 21 % de España como ejemplo: cada cliente lleva el de su país.
   -> `prompts/21-prueba-manual.md`
+
+  ## 25/11 · Bloque final (1): limpieza
+
+- Pedí revisar las dependencias distinguiendo lo que afecta a la app en uso
+  de lo que solo afecta a desarrollo. Los 5 avisos altos del frontend eran
+  de herramientas de desarrollo y se arreglaron con versiones menores; la app
+  en uso no tiene ninguno.
+- En el backend quedan 2 avisos moderados de una dependencia de Sequelize.
+  El único arreglo era bajar a una versión muy antigua que rompe la app, así
+  que lo documenté y no lo apliqué.
+  -> `04-calidad/auditoria.md`
+- Resumí `pendientes.md` con los 10 más importantes arriba, clasificados.
+  -> `prompts/22-final-limpieza.md`

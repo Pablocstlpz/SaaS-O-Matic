@@ -273,3 +273,18 @@
 - Ningún servicio del frontend calcula precios: piden el cálculo a la API.
 - 10 pruebas en verde, cada una rota a propósito.
   -> `prompts/14-f2.md`
+
+## 25/11 · Bloque F3: servicio y selector de divisa
+
+- Al probar en móvil, la IA vio que su primera versión partía el logo y
+  agrandaba la cabecera a 320 px, y lo corrigió antes de entregar.
+- El enlace de la atribución se abre en una pestaña nueva, para no sacar al
+  usuario de la app.
+- Los tipos de cambio se piden una sola vez y se esperan como mucho 5 s. Si
+  la API falla o tarda, la app sigue en euros y avisa.
+  -> `prompts/15-f3.md`
+- La IA señaló que no había leído las condiciones de la API de divisas. Las
+  revisé: el servicio sin clave exige citarla. Añadí la atribución en el pie
+  de la página: sin ella, la app incumplía las condiciones de uso.
+- Añadí un estado "Cargando divisas…" al selector, que la spec pide en todas
+  las pantallas.

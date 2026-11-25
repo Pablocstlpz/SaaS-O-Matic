@@ -255,3 +255,39 @@ los dos textos salen; no las duraciones). El 86, comparando los dos ficheros con
 
 93. **`Id` es un número:** el `:id` de la ruta llega como texto. F6 tiene que convertirlo y decidir qué se
     ve con `/customers/abc`.
+
+## F3 · Servicio y selector de divisa
+
+Código: `frontend/src/app/services/divisas.service.ts`,
+`frontend/src/app/components/compartidos/selector-divisa/` y `frontend/src/app/components/layout/`.
+Se han comprobado a mano en Edge sin ventana, con `ng serve`: el 97, el 99 (ni `localStorage` ni
+`sessionStorage`), el 100 (el selector y el pie, en el inicio y en la página no encontrada, a 320, 375
+y 1366 px), del 102 solo que el selector no se abre y el 105 (la divisa vuelve a EUR). El 97 se probó
+antes de los cambios de la revisión.
+
+### Resueltos en la revisión de F3, con prueba
+
+101. **Mientras carga:** el selector dice «Cargando divisas…» en lugar del desplegable.
+106. **Atribución:** la API sin clave la exige. El pie cita a ExchangeRate-API con su enlace.
+107. **Enlace del pie:** se abre en una pestaña nueva, así la app no se recarga.
+
+### Sin prueba
+
+94. **Respuesta sin tipos válidos** (`result: "error"`, sin `rates`, sin USD o GBP, o con un cambio
+    que no es un número positivo): cuenta como API caída.
+95. **GBP y vuelta a EUR:** la prueba solo elige USD.
+96. **Sin conexión** (`status` 0): la prueba de API caída usa un 500.
+97. **Teclado:** foco visible en el selector y cambio de divisa con las flechas.
+98. **Resuelto con el 101:** durante la espera ya no hay desplegable, solo el texto.
+99. **Sin guardar:** ninguna prueba impide usar `localStorage` o `sessionStorage`.
+100. **Visible en todas las pantallas:** las pruebas montan el layout, no recorren las rutas.
+
+### Comportamiento por decidir
+
+102. **Después del aviso:** desaparece a los 8 s (o con «Cerrar») y el selector queda deshabilitado sin
+     explicar por qué.
+103. **Sin reintento:** si fallan los tipos, solo recargar la página los vuelve a pedir.
+104. **Otros avisos:** solo hay un snackbar; un aviso posterior sustituye al de los tipos.
+105. **Divisa elegida:** al recargar se vuelve a EUR.
+108. **Aviso sobre el pie:** el snackbar sale abajo y, en pantallas cortas o estrechas, puede tapar la
+     atribución mientras se ve.

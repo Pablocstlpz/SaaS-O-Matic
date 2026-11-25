@@ -13,11 +13,23 @@
       SaaS-O-Matic
     </a>
 
-    <!-- hueco del selector de divisa (F3) -->
-    <div class="flex items-center"></div>
+    <app-selector-divisa
+      [divisa]="divisas.activa().codigo"
+      [disponible]="divisas.disponible()"
+      [cargando]="divisas.cargando()"
+      (elegir)="divisas.elegir($event)"
+    />
   </div>
 </header>
 
-<main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+<main class="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-8">
   <router-outlet />
 </main>
+
+<!-- atribucion que exige la API de tipos de cambio sin clave -->
+<footer class="mx-auto w-full max-w-6xl px-4 py-4 text-sm text-suave sm:px-6">
+  Tipos de cambio por
+  <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener noreferrer" class="text-suave underline"
+    >ExchangeRate-API</a
+  >
+</footer>

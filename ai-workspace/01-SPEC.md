@@ -151,7 +151,9 @@ Tabla (lista cerrada):
 - Los tipos se piden a https://open.er-api.com/v6/latest/EUR una vez y se guardan
 - Se convierte solo al pintar. La base de datos siempre está en euros
 - Redondeo: se convierte cada línea por separado a 2 decimales y el total es la suma de las líneas ya convertidas, para que cuadre
-- Si la API falla o tarda: la app sigue en euros y avisa
+- Si la API falla o tarda: la app sigue en euros y avisa: «No se pueden cargar los tipos de cambio. Los importes se muestran en euros»
+- Mientras se cargan los tipos, el selector dice «Cargando divisas…»
+- La API sin clave exige atribución: en el pie de la página, «Tipos de cambio por ExchangeRate-API», con enlace a https://www.exchangerate-api.com que se abre en una pestaña nueva
 
 ### Buscador y Dashboard
 

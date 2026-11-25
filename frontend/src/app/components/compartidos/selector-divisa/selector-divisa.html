@@ -1,0 +1,24 @@
+<!-- caja clara sobre la cabecera: el select usa los colores del tema tal cual -->
+<div
+  class="rounded-control bg-superficie has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-sobre-primario"
+  [class.w-24]="!cargando()"
+>
+  @if (cargando()) {
+    <!-- fuera del select para que en movil parta en dos lineas y no estreche el logo -->
+    <p class="w-24 px-3 py-1 text-sm leading-tight text-suave sm:w-auto sm:py-2.5" role="status">Cargando divisas…</p>
+  } @else {
+    <!-- el relleno va en el disparador, que es lo que atiende al clic: asi abre toda la caja -->
+    <mat-select
+      class="**:[.mat-mdc-select-trigger]:py-1.5 **:[.mat-mdc-select-trigger]:pr-2 **:[.mat-mdc-select-trigger]:pl-3"
+      aria-label="Divisa"
+      [value]="divisa()"
+      [disabled]="!disponible()"
+      [panelWidth]="null"
+      (selectionChange)="elegir.emit($event.value)"
+    >
+      @for (codigo of codigos; track codigo) {
+        <mat-option [value]="codigo">{{ codigo }}</mat-option>
+      }
+    </mat-select>
+  }
+</div>

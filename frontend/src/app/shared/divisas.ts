@@ -1,7 +1,9 @@
 // Conversión de divisa (spec §5). Es el ÚNICO sitio que convierte, y solo para pintar: la API,
 // los servicios y las interfaces siguen en céntimos de euro.
 
-export type CodigoDivisa = 'EUR' | 'USD' | 'GBP';
+export const CODIGOS_DIVISA = ['EUR', 'USD', 'GBP'] as const;
+
+export type CodigoDivisa = (typeof CODIGOS_DIVISA)[number];
 
 export interface Divisa {
   codigo: CodigoDivisa;

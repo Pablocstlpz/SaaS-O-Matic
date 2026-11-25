@@ -8,6 +8,12 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · `DivisasService` usa `shared/divisas.ts`
+
+**Qué:** el servicio toma de `shared/divisas.ts` el tipo `Divisa`, los códigos y `EUR`. La skill solo deja a un servicio usar `BaseHttpService`, `interfaces` y `environments`.
+**Por qué:** el servicio y la función que convierte tienen que hablar de la misma divisa, y `shared/` no depende de nada, así que no hay ciclo.
+**Descartado:** repetir los tipos en el servicio, o llevarlos a `interfaces/`, que describe lo que devuelve nuestra API.
+
 ## 2026-11-25 · `BaseHttpService`: solo GET y POST, y errores sin la forma de la API
 
 **Qué:** no hay `put`, `patch` ni `delete`. Si no llega un error con la forma de nuestra API (sin respuesta, o un cuerpo que no es suyo), `ErrorApi` lleva `tipo: ''` y `errors: []`.

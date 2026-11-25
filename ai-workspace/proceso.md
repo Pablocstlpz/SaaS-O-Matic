@@ -27,6 +27,10 @@
   - Quitar un comando que no existía (`formato:comprobar`).
   - Material solo para controles; tarjetas y maquetación con Tailwind, para
     que no parezca una app genérica.
+  - Además de Claude Code, que programa, usé un segundo Claude en otra
+    conversación como revisor: le pasaba cada informe de bloque y me ayudaba
+    a detectar huecos y decidir qué corregir. Las decisiones finales las
+    tomaba yo.
 
 * Slider: dejar el precio anterior atenuado con "calculando" en vez de
   vaciarlo, para que no parpadee.

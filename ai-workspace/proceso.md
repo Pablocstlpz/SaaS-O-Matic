@@ -100,3 +100,25 @@
   dependencia de Sequelize. El arreglo que propone npm baja a una versión muy
   antigua, así que no lo apliqué. Solo se ha probado con Node 24.
   -> `backend/`, `docs/decisiones.md`
+
+## 25/11 · Bloque B2: validación del identificador fiscal
+
+- Pedí el bloque B2 con tres normas nuevas: solo las pruebas del plan, una
+  rotura por prueba y los casos extra apuntados al final, sin implementarlos.
+  Así corté la tendencia a ampliar el alcance que vi en B1.
+  -> `prompts/06-b2.md`
+- Resultado: DNI, NIE y CIF se validan recalculando el carácter de control.
+  Fuera de España, solo formato. Función pura, sin base de datos ni HTTP.
+- La IA añadió un NIE falso (`X1234567A`) que faltaba en la tabla de la spec
+  y planteó 11 casos que el plan no cubría.
+- Al revisar las pruebas vi que las letras C D F G J U V solo se probaban
+  aceptando un control correcto, nunca rechazando uno equivocado: un código que
+  aceptara cualquier cosa habría pasado. Pedí tres pruebas más:
+  * `C58818502` inválido (rechaza un control equivocado).
+  * `Y1234567X` válido (con la X, que vale 0, un fallo al sustituir la letra
+    no se notaría).
+  * `A5881850A` inválido (la A exige número).
+- Cada prueba nueva se rompió a propósito y se puso en rojo. 48 pruebas en verde.
+- El resto de casos quedan en `pendientes.md`. Los límites de 4 y 20
+  caracteres pasan a B3, para que el formulario use los mismos.
+  -> `backend/src/utils/identificadorFiscal.ts`, `ai-workspace/pendientes.md`

@@ -69,7 +69,8 @@ sufijo `_centimos` y es un entero.
 
 - **Spec:** §3 «Coste mensual base» e «Impuesto».
 - **Ficheros:** `src/utils/regex.ts` (`LIMITES`, `PLANES`, `PAISES` con IVA, `TRAMOS` en céntimos),
-  `src/services/precios.service.ts`, `tests/precios.test.ts`.
+  `src/services/precios.service.ts`, `tests/precios.test.ts`, `src/utils/identificadorFiscal.ts`
+  (los límites 4 y 20 del identificador fiscal de fuera de España pasan a `LIMITES` de `utils/regex.ts`).
 - **Pruebas:**
   - Tabla de §7 «Tramos», filas de 1 a 100.
   - Tabla de §7 «Impuesto» (ES 15, DE 51, FR 10).

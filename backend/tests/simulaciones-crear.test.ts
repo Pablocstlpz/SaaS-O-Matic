@@ -85,6 +85,28 @@ describe("POST /simulations", () => {
     expect(await filas()).toMatchObject([IMPORTES_DE]);
   });
 
+  it("ignora id, fecha_creacion, porcentaje_impuesto e importes del cuerpo", async () => {
+    const ajena = "2000-01-01T00:00:00.000Z";
+
+    const { status, cuerpo } = await crear({
+      id: 999,
+      fecha_creacion: ajena,
+      porcentaje_impuesto: 0,
+      coste_base_centimos: 1,
+      impuesto_centimos: 1,
+      total_centimos: 1,
+    });
+
+    expect(status).toBe(201);
+    expect(cuerpo).toMatchObject(IMPORTES_DE);
+    expect(cuerpo).not.toMatchObject({ id: 999 });
+    expect(cuerpo).not.toMatchObject({ fecha_creacion: ajena });
+    const [fila] = await filas();
+    expect(fila).toMatchObject(IMPORTES_DE);
+    expect(fila.id).not.toBe(999);
+    expect(new Date(fila.fecha_creacion).toISOString()).not.toBe(ajena);
+  });
+
   it.each([
     ["almacenamiento_gb", -1, ALMACENAMIENTO_MAL],
     ["almacenamiento_gb", 1_000_001, ALMACENAMIENTO_MAL],

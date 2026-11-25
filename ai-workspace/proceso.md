@@ -412,3 +412,19 @@
   mezclado con el de B5. Los corregí.
 - El Claude revisor clonó el repositorio de cero en Linux con Node 22 y
   siguió el README: instala, compila y pasan todas las pruebas a la primera.
+
+## 25/11 · Auditoría técnica independiente
+
+- Pedí a Claude Opus, en una conversación nueva sin el contexto de cómo se
+  construyó, una auditoría del código contra la spec y CLAUDE.md.
+  -> `04-calidad/auditoria-codigo.md`, `prompts/25-auditoria.md`
+- Resultado: ningún fallo crítico ni alto. Comparó las reglas de negocio con
+  una implementación propia en 500 000 combinaciones de tramos e IVA y en 1,19
+  millones de identificadores fiscales: ninguna diferencia.
+- Encontró un fallo real que nadie había visto: con dos simulaciones de la
+  misma fecha, el historial ponía primero la más antigua. Pasaba casi siempre
+  con los datos de ejemplo.
+- Decidí qué arreglar antes de entregar: el fallo, los huecos de pruebas y
+  dos validaciones de una línea. Lo que era una duda de negocio, una
+  refactorización o una mejora queda en pendientes, con su referencia.
+  -> `prompts/26-arreglos-auditoria.md`

@@ -8,6 +8,12 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · Las 40 líneas por función no cuentan los `describe` de las pruebas
+
+**Qué:** el máximo de 40 líneas por función se mide en el código y en los `it` y funciones auxiliares de las pruebas, pero no en el callback de un `describe`, que agrupa casos y no tiene lógica propia. El máximo de 200 por fichero sigue contando todo.
+**Por qué:** la auditoría (hallazgo 9) vio que solo los `describe` pasan de 40; partirlos obliga a repartir el montaje común entre ficheros sin que nada mejore.
+**Descartado:** partir los `describe` en bloques de 40 líneas.
+
 ## 2026-11-25 · Alta de cliente: errores repartidos por `errors` y avisos al escribir
 
 **Qué:** `cliente-alta` (padre) envía y, si el error trae `errors`, se los pasa a `cliente-formulario` (hijo), que los pone junto a su campo; si no trae ninguno, pinta `message` bajo el formulario. El hijo usa `FormControl` con país y plan anulables y validadores que dan `{ mensaje }` con los textos de la API, como el simulador. Los avisos salen al escribir (`ShowOnDirtyErrorStateMatcher`).

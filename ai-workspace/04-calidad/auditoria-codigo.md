@@ -144,3 +144,22 @@ Usé scripts de un solo uso, sin guardarlos en el repositorio. Se ejecutan con `
 (3) `crearDatosEjemplo()` 20 veces, comparando el orden del historial con el de los `id`;
 (4) medición de líneas con el AST de `typescript`;
 (5) cada mutación: copia del fichero, cambio, `npm test` o `ng test`, y restaurar la copia.
+
+## Estado
+
+Revisado tras los arreglos (`npm run tipos`, 127 pruebas del backend, `ng build` sin avisos, 46 del frontend y el `grep` sin resultados). Cada prueba nueva se rompió una vez a propósito y falló.
+
+**Arreglado**
+
+| Hallazgo | Qué se hizo | Prueba nueva (y qué la hace fallar) |
+| -------- | ----------- | ----------------------------------- |
+| 1 | El historial ordena por `fecha_creacion DESC` y después por `id DESC` | `clientes-leer.test.ts`: tres simulaciones con la misma fecha. Falla sin el `id` |
+| 2 | Solo la prueba, el código ya era correcto | `simulaciones-crear.test.ts`: `id`, `fecha_creacion`, `porcentaje_impuesto` e importes del cuerpo se ignoran. Falla con `...req.body` |
+| 3 | Solo pruebas | `Z1234567R` válido, `K58818501` y `T5881850A` inválidos. Fallan con `XYW` y sin la lista de iniciales |
+| 5 | El formulario cuenta el nombre por caracteres (`[...nombre]`) | `cliente-alta.spec.ts`: 1 emoji falla y 120 valen, 121 fallan. Falla contando unidades |
+| 6 | El nombre rechaza `\p{Cc}` y U+202A–202E / U+2066–2069, con la misma regla del carácter nulo | `clientes-crear.test.ts`: carácter de control, cambio de dirección y 121 emojis. Fallan con solo el nulo |
+| 9 | Anotado en `docs/decisiones.md`: las 40 líneas no cuentan los `describe` de las pruebas | — |
+
+Nota del hallazgo 6: el formulario del frontend no repite esta regla; un nombre con un carácter de control pasa el formulario y vuelve como 400 junto al campo.
+
+**Pendiente** (en `ai-workspace/pendientes.md`, apartado «Auditoría de código»): hallazgos 4 (NIF K/L/M), 7 (`q` sin normalizar), 8 (lógica copiada entre backend y frontend) y 10 (foco tras un envío fallido).

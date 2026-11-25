@@ -12,6 +12,7 @@ import { campoPais, esPaisDeLaLista } from "./_pais.js";
 const { NOMBRE_EMPRESA_MIN, NOMBRE_EMPRESA_MAX, EMAIL_MAX } = LIMITES;
 
 // Los sanitizers van detrás de isString().bail(): solo reciben textos.
+const CONTROL_O_DIRECCION = /[\p{Cc}\u202A-\u202E\u2066-\u2069]/u;
 const limpiarNombre = (texto: string) => texto.trim().replace(/\s+/g, " ");
 const limpiarEmail = (texto: string) => texto.trim().toLowerCase();
 
@@ -23,9 +24,10 @@ const nombreEmpresa = campoDelCuerpo("nombre_empresa", {
   .bail()
   .customSanitizer(limpiarNombre)
   .isLength({ min: NOMBRE_EMPRESA_MIN, max: NOMBRE_EMPRESA_MAX })
-  // El buscador de SQLite no ve lo que va detrás de un carácter nulo.
+  // Sin caracteres de control (el nulo corta el buscador de SQLite) ni los que cambian la dirección
+  // del texto (U+202A–202E y U+2066–2069), que dan la vuelta a lo que se ve.
   .not()
-  .contains("\0");
+  .matches(CONTROL_O_DIRECCION);
 
 // La regla depende del país que llega en el mismo cuerpo. Sin un país de la lista no hay regla
 // que aplicar, y el error sale solo en `pais`.

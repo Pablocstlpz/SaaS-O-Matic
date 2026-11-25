@@ -53,7 +53,11 @@ export const crearFormulario = () => {
       obligatorio: 'El nombre de empresa es obligatorio',
       debeSer: `El nombre de empresa debe ser un texto de ${NOMBRE_EMPRESA_MIN} a ${NOMBRE_EMPRESA_MAX} caracteres`,
       limpiar: limpiarNombre,
-      vale: ({ length }) => length >= NOMBRE_EMPRESA_MIN && length <= NOMBRE_EMPRESA_MAX,
+      // por caracteres, como la API: un emoji cuenta uno, no dos
+      vale: (nombre) => {
+        const { length } = [...nombre];
+        return length >= NOMBRE_EMPRESA_MIN && length <= NOMBRE_EMPRESA_MAX;
+      },
     }),
     email_contacto: campoTexto({
       obligatorio: 'El email de contacto es obligatorio',

@@ -485,3 +485,12 @@ calcular y con el cálculo bloqueado; a 320 y 375 px, que el campo de usuarios c
 159. **Spinners** «Calculando…» y «Guardando…».
 160. **Divisa en el simulador:** que cambiarla vuelve a pintar el desglose sin pedir nada.
 162. **Aspecto:** ni el color de la pista del slider ni que el campo de usuarios quepa a 320 px.
+
+## Auditoría de código (`04-calidad/auditoria-codigo.md`)
+
+Hallazgos que se dejan sin arreglar. Siguen sin implementar.
+
+- **Hallazgo 4:** los NIF K, L y M (personas físicas sin DNI ni NIE) se rechazan siempre. Hueco de la spec: hay que preguntar a negocio si se admiten y con qué algoritmo.
+- **Hallazgo 7:** `q` no se normaliza como el identificador guardado: `A-58818` no encuentra `A58818501`. Hay que decidir si se normaliza (relacionado con 52 y 53).
+- **Hallazgo 8:** lógica y textos copiados entre backend y frontend fuera de las constantes gemelas (`limpiarNombre`, `normalizarIdentificador`, formatos, mensajes), y copias dentro de cada lado (`SIN_CLIENTE`, `PAISES.find(...)`, `errorDeCampo` en las pruebas).
+- **Hallazgo 10:** tras un envío fallido, el foco no va al primer campo con error. Sin comprobar con lector de pantalla.

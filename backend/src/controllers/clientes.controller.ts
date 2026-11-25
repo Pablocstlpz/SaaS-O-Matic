@@ -54,7 +54,11 @@ export const listarSimulacionesCliente: RequestHandler = async (req, res) => {
   await buscarCliente(id);
   const simulaciones = await Simulacion.findAll({
     where: { cliente_id: id },
-    order: [["fecha_creacion", "DESC"]],
+    // El id desempata las altas del mismo milisegundo: la más nueva tiene el id mayor.
+    order: [
+      ["fecha_creacion", "DESC"],
+      ["id", "DESC"],
+    ],
   });
   res.status(200).json(simulaciones);
 };

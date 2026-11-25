@@ -83,6 +83,19 @@ describe("GET /customers/:id/simulations", () => {
     expect(cuerpo).toMatchObject([{ usuarios: 3 }, { usuarios: 2 }, { usuarios: 1 }]);
   });
 
+  it("con la misma fecha, la de id mayor va primero", async () => {
+    const igual = "2026-04-01";
+    await Simulacion.bulkCreate([
+      simulacion(sinHistorial, 1, igual),
+      simulacion(sinHistorial, 2, igual),
+      simulacion(sinHistorial, 3, igual),
+    ]);
+
+    const { cuerpo } = await peticion("GET", `/customers/${sinHistorial}/simulations`);
+
+    expect(cuerpo).toMatchObject([{ usuarios: 3 }, { usuarios: 2 }, { usuarios: 1 }]);
+  });
+
   it("un cliente sin simulaciones → 200 con la lista vacía", async () => {
     const { status, cuerpo } = await peticion("GET", `/customers/${sinHistorial}/simulations`);
 

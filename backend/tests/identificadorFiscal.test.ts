@@ -15,6 +15,9 @@ describe("identificador fiscal de España", () => {
     { entrada: "Q2826000H", valido: true, caso: "CIF, control letra" },
     { entrada: "Q28260008", valido: false, caso: "Q exige letra" },
     { entrada: "a-58.818.501", valido: true, caso: "se normaliza antes" },
+    { entrada: "Z1234567R", valido: true, caso: "NIE con Z" },
+    { entrada: "K58818501", valido: false, caso: "inicial de CIF sin regla" },
+    { entrada: "T5881850A", valido: false, caso: "inicial de CIF sin regla" },
   ])("$entrada ($caso) → válido: $valido", ({ entrada, valido }) => {
     expect(esIdentificadorValido(entrada, "ES")).toBe(valido);
   });

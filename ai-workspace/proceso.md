@@ -33,4 +33,7 @@
   y después el código: la spec siempre manda.
 - La IA corrigió por su cuenta una entrada de `decisiones.md` que seguía
   hablando de `mat-card`.
+  - Añadí la skill `frontend-design` para el aspecto visual, dentro de lo ya
+  decidido (Material para controles, Tailwind para el resto). Descarté Stitch
+  para no mezclar dos fuentes de diseño.
   -> `CLAUDE.md`, `docs/decisiones.md`

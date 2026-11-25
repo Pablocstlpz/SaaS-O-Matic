@@ -8,6 +8,12 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · Docker: nginx sirve la app y pasa la API desde el mismo origen
+
+**Qué:** `docker compose up --build` levanta `backend` (Node 22, sin dependencias de desarrollo, SQLite en el volumen `datos`) y `frontend` (Angular compilado, servido por nginx). nginx pasa `/customers`, `/simulations` y `/salud` al backend y el resto a `index.html`; solo se publica el puerto del frontend (`PUERTO`, 8080 por defecto) y solo en `127.0.0.1`: desde fuera se entra por un proxy o túnel (Cloudflare en el servidor). El proyecto se llama `saas-o-matic` en el compose, así que el volumen es `saas-o-matic_datos` en cualquier equipo, se clone en la carpeta que se clone. La `apiUrl` de producción (`environment.ts`) queda vacía; `ng serve` sigue usando `environment.development.ts`. Los datos de ejemplo se cargan si el fichero de la base no existe (volumen nuevo).
+**Por qué:** con un solo origen no hay que configurar `FRONTEND_URL` en cada máquina. Pero el navegador manda `Origin` también en los POST al mismo origen, y el backend lo rechazaría: nginx quita `Origin` solo si su host es el de la petición; uno ajeno pasa y el backend da 403. La imagen es Debian 13 (`trixie`) porque el binario de `sqlite3` pide glibc 2.38 y la 12 trae la 2.36.
+**Descartado:** fijar `FRONTEND_URL` por máquina, quitar `Origin` siempre (se perdería el 403 a otros orígenes) y contar clientes para decidir si sembrar.
+
 ## 2026-11-25 · Las 40 líneas por función no cuentan los `describe` de las pruebas
 
 **Qué:** el máximo de 40 líneas por función se mide en el código y en los `it` y funciones auxiliares de las pruebas, pero no en el callback de un `describe`, que agrupa casos y no tiene lógica propia. El máximo de 200 por fichero sigue contando todo.
@@ -207,9 +213,9 @@ Las más recientes arriba.
 **Por qué:** la spec pide tarjetas. El buscador devuelve como mucho 50 resultados, ya ordenados por nombre en el servidor, así que no hacen falta orden ni paginación en el navegador.
 **Descartado:** la tabla de Material del procedimiento de la skill (§6.12 y el checklist).
 
-## 2026-11-25 · SQLite sin Docker ni migraciones .sql
+## 2026-11-25 · SQLite sin servidor de base de datos ni migraciones .sql
 
-**Qué:** la base de datos es un fichero SQLite (ruta en `config.ts`, ignorado por git). Al arrancar, `server.ts` llama a `sequelize.sync()`, sin `alter` ni `force`, y se crean las tablas que falten. Las pruebas usan SQLite en memoria. No hay `migraciones/`, `migraciones.js`, `Dockerfile` ni `docker-compose.yml`.
+**Qué:** la base de datos es un fichero SQLite (ruta en `config.ts`, ignorado por git). Al arrancar, `server.ts` llama a `sequelize.sync()`, sin `alter` ni `force`, y se crean las tablas que falten. Las pruebas usan SQLite en memoria. No hay `migraciones/` ni `migraciones.js`. (Docker llegó después, solo para empaquetar la app: ver la entrada de Docker.)
 **Por qué:** la spec fija SQLite, la app se ejecuta en local y no hay datos de producción que conservar.
 **Descartado:** MySQL con Docker y el mecanismo `migrar()` con ficheros `NNN-*.sql` de la plantilla. Si algún día hay datos que conservar, se recupera `migrar()` de la skill (backend-node.md §7).
 

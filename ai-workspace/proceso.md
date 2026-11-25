@@ -427,3 +427,16 @@
   dos validaciones de una línea. Lo que era una duda de negocio, una
   refactorización o una mejora queda en pendientes, con su referencia.
   -> `prompts/26-arreglos-auditoria.md`
+
+## 25/11 · Extra: Docker y despliegue
+
+- Como extra, pedí poder arrancar todo con `docker compose up` y desplegarlo
+  en mi servidor (ARM64) con Portainer, igual que mis otros proyectos.
+  -> `prompts/27-docker.md`
+- La IA encontró dos problemas que no estaban previstos: el navegador manda
+  la cabecera Origin también en los POST al mismo dominio y el backend los
+  rechazaba con 403 (lo resolvió en nginx), y sqlite3 no funciona en Debian
+  12 (pasó a Debian 13).
+- Lo adapté a mi servidor: el puerto solo se abre en local, porque el acceso
+  público va por un túnel de Cloudflare, y en otro puerto, porque el 3000 y el
+  8080 ya los usan otras apps.

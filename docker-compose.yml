@@ -1,0 +1,22 @@
+# Uso: docker compose up --build  →  http://localhost:8080 (otro puerto: PUERTO=9000 docker compose up)
+# Nombre fijo: el volumen se llama saas-o-matic_datos en cualquier equipo.
+name: saas-o-matic
+
+services:
+  backend:
+    build: ./backend
+    volumes:
+      - datos:/datos
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      # Solo en local: desde fuera se entra por un proxy o túnel (Cloudflare en el servidor).
+      - "127.0.0.1:${PUERTO:-8080}:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  datos:

@@ -70,3 +70,33 @@
   acepté: un cliente de ejemplo por país, el script no duplica si se lanza
   dos veces, y con más de 200 usuarios el slider se queda al máximo.
   -> `01-SPEC.md` §6 y §9, `02-PLAN.md`
+
+## 25/11 · Bloque B1: esqueleto del backend, errores y seguridad común
+
+- Desde este bloque, las tareas de programación las hace Sonnet 5.5. Hasta
+  ahora usaba Opus 5.5, porque sentar las bases (spec, reglas y plan) pedía
+  más razonamiento. Con el plan cerrado, el trabajo es ejecutarlo.
+- Pedí el bloque B1, y solo ese, partiendo de la plantilla Node de mi skill.
+  -> `prompts/05-b1.md`
+- Resultado: el backend arranca, responde a `/salud`, y los errores salen
+  siempre con `message`, `tipo` y `errors`. Pruebas en verde y tipos sin
+  errores.
+- La IA rompió el código a propósito 16 veces, una cada vez, para comprobar
+  que las pruebas detectan los fallos: 404, JSON mal formado, cuerpo de más
+  de 100 KB, 409, 500 sin detalles internos, CORS y configuración. Todas las
+  roturas pusieron alguna prueba en rojo.
+- Acepté sus decisiones nuevas: configuración con valores por defecto y sin
+  `.env` (quien lo pruebe arranca sin crear ficheros) y logger sin redacción de
+  campos (no hay contraseñas ni tokens).
+- Me planteó dos casos que la spec no cubría:
+  - Juego de caracteres o compresión no admitidos: daban 500 y son un fallo
+    del cliente -> 400 con "No se puede leer el cuerpo de la petición".
+  - Cuerpo que no es JSON: se queda como está; los validadores darán 400 por
+    los campos que falten.
+- Después propuso un tercero (gzip corrupto). Lo dejé como pendiente: nadie
+  lo va a enviar y cada caso extra cuesta tiempo. Desde B2, le pido que
+  apunte esos casos al final de su respuesta en vez de implementarlos.
+- Pendiente para la auditoría final: 2 avisos moderados de `npm audit` en una
+  dependencia de Sequelize. El arreglo que propone npm baja a una versión muy
+  antigua, así que no lo apliqué. Solo se ha probado con Node 24.
+  -> `backend/`, `docs/decisiones.md`

@@ -8,6 +8,30 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · Pendiente: cuerpo comprimido corrupto
+
+**Qué:** un cuerpo que declara una compresión admitida (por ejemplo, `Content-Encoding: gzip`) pero está corrupto responde hoy 500 `ERROR_INTERNO`. Queda pendiente.
+**Por qué:** es un caso distinto del de la compresión no admitida y se ha dejado fuera de B1 a propósito.
+**Descartado:** por ahora, darle el 400 `VALIDACION` de los cuerpos que no se pueden leer.
+
+## 2026-11-25 · Cuerpos que la API no puede leer
+
+**Qué:** un juego de caracteres o una compresión no admitidos dan 400 `VALIDACION` con «No se puede leer el cuerpo de la petición». Un cuerpo que no es JSON (otro `Content-Type`) no se lee: la petición sigue como si no trajera cuerpo, aunque pase de 100 KB, y no hay 413.
+**Por qué:** lo primero es un fallo del cliente y no un 500. Lo segundo no llega a cargarse en memoria, que es lo que protege el límite, y el frontend solo envía JSON.
+**Descartado:** el 500 de la plantilla para lo primero. Para lo segundo, rechazar otros `Content-Type` o contar sus bytes.
+
+## 2026-11-25 · Configuración con valores por defecto, sin `.env`
+
+**Qué:** `config.ts` lee `PORT` (3000), `FRONTEND_URL` (`http://localhost:4200`) y `DB_ALMACEN` (`backend/datos.sqlite`) de las variables de entorno, todas con valor por defecto. No hay `dotenv`, `.env.example` ni variables obligatorias. `validarConfig()` devuelve la lista de fallos y es `server.ts` quien la escribe y sale con 1. CORS admite solo `FRONTEND_URL`.
+**Por qué:** sin autenticación ni servidor de base de datos no hay secretos, y la app arranca en local sin pasos previos. Así `config.ts` no depende de nada.
+**Descartado:** el `.env` obligatorio de la plantilla. También su `localhost:4200` fijo en la lista de CORS además del configurado, porque la spec admite un solo origen.
+
+## 2026-11-25 · Logger sin redacción de campos
+
+**Qué:** `utils/logger.ts` escribe con `console.info`, `console.warn` y `console.error`, sin filtrar campos.
+**Por qué:** los campos que redacta la plantilla (contraseñas y tokens) no existen aquí. `console.log` está prohibido en el proyecto.
+**Descartado:** conservar la lista de campos sensibles, que no tendría nada que ocultar. Si entra algún secreto, se recupera de la plantilla.
+
 ## 2026-11-25 · Material solo para controles; el resto, con Tailwind
 
 **Qué:** Angular Material se usa solo para controles: slider, select, campos de formulario, snackbar y spinner. Su tema se ajusta al diseño. Tarjetas, rejilla y tipografía se hacen con Tailwind, sin `mat-card`, y no hay CSS a mano para lo que Tailwind ya resuelve.

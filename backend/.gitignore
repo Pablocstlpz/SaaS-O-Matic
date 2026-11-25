@@ -1,0 +1,6 @@
+node_modules/
+dist/
+
+# Base de datos local
+*.sqlite
+*.sqlite-journal

@@ -10,6 +10,17 @@
   --color-*: initial;
   --radius-tarjeta: 6px;
   --radius-control: 4px;
+
+  /* Aparecer y desaparecer: solo opacidad y cortas, para no retrasar ningun clic.
+     Se usan siempre con motion-safe: (con animate.enter y animate.leave de Angular), asi que
+     con prefers-reduced-motion no hay animacion. Material respeta esa preferencia por su cuenta. */
+  --animate-aparecer: aparecer 150ms ease-out;
+  --animate-desaparecer: aparecer 100ms ease-in reverse forwards;
+  @keyframes aparecer {
+    from {
+      opacity: 0;
+    }
+  }
 }
 
 /* Colores y letra salen de material-theme.scss. Usa SIEMPRE estos nombres. */

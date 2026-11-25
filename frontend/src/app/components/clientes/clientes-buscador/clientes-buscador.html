@@ -1,6 +1,9 @@
 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
   <h1 class="text-2xl font-bold">Clientes</h1>
-  <a routerLink="/clientes/nuevo" class="rounded-control bg-primario px-4 py-2 font-medium text-sobre-primario">
+  <a
+    routerLink="/clientes/nuevo"
+    class="rounded-control bg-primario px-4 py-2 font-medium text-sobre-primario hover:bg-primario/90 motion-safe:transition-colors"
+  >
     Dar de alta un cliente
   </a>
 </div>
@@ -13,16 +16,22 @@
 @if (cargando()) {
   <app-cargando />
 } @else if (error(); as mensaje) {
-  <p class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro" role="alert">{{ mensaje }}</p>
+  <p
+    animate.enter="motion-safe:animate-aparecer"
+    class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro"
+    role="alert"
+  >
+    {{ mensaje }}
+  </p>
 } @else if (clientes().length === 0) {
-  <p class="py-8 text-suave" role="status">No hay resultados</p>
+  <p animate.enter="motion-safe:animate-aparecer" class="py-8 text-suave" role="status">No hay resultados</p>
 } @else {
-  <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+  <ul animate.enter="motion-safe:animate-aparecer" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
     @for (cliente of clientes(); track cliente.id) {
       <li class="min-w-0">
         <a
           [routerLink]="['/clientes', cliente.id]"
-          class="block h-full rounded-tarjeta border border-borde bg-superficie p-4 text-texto hover:border-primario"
+          class="block h-full rounded-tarjeta border border-borde bg-superficie p-4 text-texto hover:border-primario motion-safe:transition-colors"
         >
           <app-cliente-tarjeta [cliente]="cliente" />
         </a>

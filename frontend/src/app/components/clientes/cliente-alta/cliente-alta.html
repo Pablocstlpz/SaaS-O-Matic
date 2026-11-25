@@ -2,6 +2,13 @@
   <h1 class="mb-4 text-2xl font-bold">Dar de alta un cliente</h1>
   <app-cliente-formulario [guardando]="guardando()" [errores]="erroresCampo()" (enviar)="crear($event)" />
   @if (error(); as mensaje) {
-    <p class="mt-4 rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro" role="alert">{{ mensaje }}</p>
+    <p
+      animate.enter="motion-safe:animate-aparecer"
+      animate.leave="pointer-events-none motion-safe:animate-desaparecer"
+      class="mt-4 rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro"
+      role="alert"
+    >
+      {{ mensaje }}
+    </p>
   }
 </section>

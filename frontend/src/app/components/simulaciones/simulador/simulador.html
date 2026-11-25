@@ -25,11 +25,22 @@
 
   <div class="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
     @if (calculo(); as precio) {
-      <app-desglose-precio [calculo]="precio" [divisa]="divisa()" [calculando]="calculando()" />
+      <app-desglose-precio
+        animate.enter="motion-safe:animate-aparecer"
+        [calculo]="precio"
+        [divisa]="divisa()"
+        [calculando]="calculando()"
+      />
     } @else if (calculando()) {
       <app-cargando texto="Calculando…" />
     } @else if (errorCalculo(); as mensaje) {
-      <p class="rounded-tarjeta border border-peligro p-4 text-peligro" role="alert">{{ mensaje }}</p>
+      <p
+        animate.enter="motion-safe:animate-aparecer"
+        class="rounded-tarjeta border border-peligro p-4 text-peligro"
+        role="alert"
+      >
+        {{ mensaje }}
+      </p>
     }
   </div>
 
@@ -47,17 +58,24 @@
 
     <button
       type="button"
-      class="cursor-pointer rounded-control bg-primario px-4 py-2 font-medium text-sobre-primario disabled:cursor-default disabled:opacity-50"
+      class="cursor-pointer rounded-control bg-primario px-4 py-2 font-medium text-sobre-primario motion-safe:transition-colors enabled:hover:bg-primario/90 disabled:cursor-default disabled:opacity-50"
       [disabled]="guardando() || sinPrecio() || formulario.invalid"
       (click)="guardar()"
     >
       Guardar simulación
     </button>
     @if (guardando()) {
-      <app-cargando texto="Guardando…" />
+      <app-cargando animate.leave="pointer-events-none motion-safe:animate-desaparecer" texto="Guardando…" />
     }
     @if (errorGuardar(); as mensaje) {
-      <p class="rounded-tarjeta border border-peligro p-4 text-peligro" role="alert">{{ mensaje }}</p>
+      <p
+        animate.enter="motion-safe:animate-aparecer"
+        animate.leave="pointer-events-none motion-safe:animate-desaparecer"
+        class="rounded-tarjeta border border-peligro p-4 text-peligro"
+        role="alert"
+      >
+        {{ mensaje }}
+      </p>
     }
   </div>
 </form>

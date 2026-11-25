@@ -353,3 +353,11 @@
 - Al crear, avisa y lleva al detalle del cliente nuevo.
 - Probé yo mismo la app completa en el navegador: <lo que encontraste>.
 
+## 25/11 · Bloque F8: animaciones y repaso visual
+
+- Fundidos de 100 a 150 ms al aparecer y desaparecer, y transición de color
+  al pasar el ratón. No se anima donde un bloque sustituye a otro, para que
+  la página no dé saltos.
+  -> `prompts/20-f8.md`
+- Pedí respetar `prefers-reduced-motion`: si el usuario tiene desactivadas
+  las animaciones en su sistema, no hay ninguna.

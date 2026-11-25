@@ -7,6 +7,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   imports: [MatProgressSpinnerModule],
   templateUrl: './cargando.html',
   styleUrl: './cargando.css',
+  // en bloque: animate.leave le baja la opacidad al anfitrion, y en linea no se aplica bien a su div
+  host: { class: 'block' },
 })
 export class Cargando {
   readonly texto = input('Cargando…');

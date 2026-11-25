@@ -1,10 +1,22 @@
 <!-- sin cliente no hay historial que ensenar: se ve un solo mensaje -->
 @if (errorCliente(); as mensaje) {
-  <p class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro" role="alert">{{ mensaje }}</p>
+  <p
+    animate.enter="motion-safe:animate-aparecer"
+    class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro"
+    role="alert"
+  >
+    {{ mensaje }}
+  </p>
 } @else {
   @if (cliente(); as datos) {
-    <app-cliente-datos [cliente]="datos" />
-    <app-simulador class="mt-8" [cliente]="datos" [divisa]="divisas.activa()" (guardada)="anadir($event)" />
+    <app-cliente-datos animate.enter="motion-safe:animate-aparecer" [cliente]="datos" />
+    <app-simulador
+      animate.enter="motion-safe:animate-aparecer"
+      class="mt-8"
+      [cliente]="datos"
+      [divisa]="divisas.activa()"
+      (guardada)="anadir($event)"
+    />
   } @else {
     <app-cargando />
   }
@@ -12,7 +24,13 @@
   <section class="mt-8">
     <h2 class="mb-4 text-xl font-bold">Historial de simulaciones</h2>
     @if (errorHistorial(); as mensaje) {
-      <p class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro" role="alert">{{ mensaje }}</p>
+      <p
+        animate.enter="motion-safe:animate-aparecer"
+        class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro"
+        role="alert"
+      >
+        {{ mensaje }}
+      </p>
     } @else if (simulaciones(); as lista) {
       <app-historial-simulaciones [simulaciones]="lista" [divisa]="divisas.activa()" />
     } @else {

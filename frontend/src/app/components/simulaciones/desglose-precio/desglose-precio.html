@@ -1,11 +1,15 @@
 <!-- el hueco se reserva siempre: al aparecer el texto, el precio no salta -->
 <p class="h-6 text-sm font-bold text-primario" role="status">
   @if (calculando()) {
-    calculando
+    <span
+      animate.enter="motion-safe:animate-aparecer"
+      animate.leave="pointer-events-none motion-safe:animate-desaparecer"
+      >calculando</span
+    >
   }
 </p>
 
-<div class="tabular-nums" [class.opacity-50]="calculando()">
+<div class="tabular-nums motion-safe:transition-opacity" [class.opacity-50]="calculando()">
   <ul>
     @for (tramo of calculo().tramos; track tramo.desde) {
       <li class="py-1.5">

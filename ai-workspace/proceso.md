@@ -440,3 +440,13 @@
 - Lo adapté a mi servidor: el puerto solo se abre en local, porque el acceso
   público va por un túnel de Cloudflare, y en otro puerto, porque el 3000 y el
   8080 ya los usan otras apps.
+
+## 25/11 · Guía de lectura y demo
+
+- Añadí al README la dirección de la demo y una guía de por dónde empezar, en
+  lugar de una sección que repetía la anterior. La documentación es larga y
+  quería que lo importante se encontrara en cinco minutos.
+  -> `prompts/28-guia-y-demo.md`
+- Dejé por escrito en la spec por qué solo hay tres divisas: era la única
+  duda sin justificar.
+- Completé el prompt de Docker, que tenía dos huecos sin rellenar.

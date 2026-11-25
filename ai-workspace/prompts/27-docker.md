@@ -3,7 +3,28 @@
 ## Encargo
 
 ```text
-<el prompt de Docker que enviaste>
+Responde en castellano.
+
+Extra fuera del plan: preparar la app para ejecutarse con Docker, en local y
+en mi servidor (Linux ARM64).
+
+- backend/Dockerfile: Node 22, compila TypeScript, sin dependencias de
+  desarrollo en la imagen final. La base de datos SQLite en un volumen, para
+  que no se pierda al recrear el contenedor. Que cargue los datos de ejemplo
+  la primera vez si la base está vacía.
+- frontend/Dockerfile: compila Angular y lo sirve con nginx. nginx pasa
+  /customers, /simulations y /salud al backend, y el resto a la app (con
+  vuelta a index.html para las rutas de Angular). Así todo va desde el mismo
+  origen: la apiUrl de producción queda vacía y no hace falta tocar CORS.
+- docker-compose.yml en la raíz: los dos servicios, el volumen y solo el
+  puerto del frontend expuesto.
+- Que funcione en amd64 y arm64.
+- Añade al README una sección "Con Docker": docker compose up --build y la URL.
+- Anótalo en docs/decisiones.md.
+
+Pruébalo: levanta el compose en local, recorre la app en el navegador y
+comprueba que los datos sobreviven a un docker compose down y up. No toques
+el arranque sin Docker: tiene que seguir funcionando igual. Sin commit.
 ```
 
 Fuera del plan, como extra: que se pueda arrancar con un solo
@@ -17,7 +38,18 @@ solo debe abrirse en local. Además, la captura de la IA se quedó en
 "Cargando divisas…".
 
 ```text
-<el prompt de los tres ajustes>
+Antes del commit, tres ajustes para mi servidor:
+
+1. Publica el frontend solo en local: "127.0.0.1:${PUERTO:-8080}:80". En mi
+   servidor el acceso público va por un túnel de Cloudflare, y no quiero el
+   puerto abierto en todas las interfaces.
+2. Fija el nombre del proyecto en el compose (name: saas-o-matic), para que
+   el volumen se llame igual en cualquier equipo y no dependa de la carpeta.
+3. En tu captura se quedó en "Cargando divisas…". Comprueba que nginx no
+   añade una cabecera Content-Security-Policy que bloquee open.er-api.com, y
+   que pasados 5 s sin respuesta pasa a euros con el aviso, como dice la spec.
+
+Sin commit.
 ```
 
 Resultado: la IA encontró dos problemas que no estaban previstos. El

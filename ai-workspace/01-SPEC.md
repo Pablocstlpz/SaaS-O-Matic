@@ -194,6 +194,7 @@ Tabla (lista cerrada):
 ## 6. Decisiones ante dudas
 
 - ¿Qué países e impuestos? -> No aparece. España, Francia, Reino Unido, Italia y Alemania con su IVA general
+- ¿Qué divisas? -> EUR, USD y GBP, las que nombran los requisitos. Las tres tienen dos decimales, así que el redondeo por línea a céntimos vale para todas; una divisa sin decimales, como el yen, necesitaría otra regla. Añadir otra con dos decimales es sumarla a CODIGOS_DIVISA y a la lectura de tipos de divisas.service.ts
 - ¿Almacenamiento y llamadas a la API cuestan? -> No tienen tarifa. Se guardan y no se cobran; no me invento precios
 - ¿El plan cambia el precio? -> No. La única regla de precio depende de los usuarios
 - ¿Se valida el NIE? -> Sí, es el mismo algoritmo que el DNI

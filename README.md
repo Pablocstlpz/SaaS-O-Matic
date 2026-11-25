@@ -3,6 +3,13 @@
 Herramienta interna para dar de alta clientes y simular cuánto pagarían por una suscripción SaaS,
 con impuesto según su país y precios mostrados en varias divisas.
 
+## Demo
+
+https://saas-o-matic.pablosrv.com
+
+Es una demo pública con los datos de ejemplo. Lo que se guarde lo ve cualquiera que entre, así que no
+metas datos reales.
+
 ## Requisitos
 
 - Node **22.12** o posterior (también vale la 24).
@@ -58,6 +65,7 @@ cd frontend && npx ng test --watch=false
 - Busca clientes por nombre o identificador fiscal mientras escribes.
 - Da de alta clientes y valida su identificador fiscal (en España, DNI, NIE o CIF).
 - Simula el precio con un slider: coste por tramos de usuarios, el IVA del país y el total.
+  Por ejemplo, 15 usuarios = 10 × 10 € + 5 × 8 € = 140 € de base, más el IVA del país.
 - Guarda las simulaciones y muestra el historial de cada cliente.
 - Muestra los importes en otra divisa. Los tipos de cambio vienen de ExchangeRate-API, así que hace falta internet.
 
@@ -101,11 +109,13 @@ arquitectura, calidad y seguridad tomadas por mí en cada paso:
    de errores de la IA que se pararon por el camino
    ([`04-calidad/`](ai-workspace/04-calidad/)).
 
-Para seguir el proceso de principio a fin:
-[`ai-workspace/proceso.md`](ai-workspace/proceso.md). Por qué trabajé así:
-[`metodologia.md`](ai-workspace/metodologia.md).
+## Por dónde empezar
 
-## Proceso con IA
-
-Todo el proceso (borrador, spec, plan, prompts usados y auditoría) está en
-[`ai-workspace/`](ai-workspace/). Para empezar, lee [`ai-workspace/proceso.md`](ai-workspace/proceso.md).
+1. [`ai-workspace/01-SPEC.md`](ai-workspace/01-SPEC.md), apartado «6. Decisiones ante dudas»:
+   lo que los requisitos no fijaban y cómo lo decidí antes de programar.
+2. [`CLAUDE.md`](CLAUDE.md), apartado «Dónde va cada regla de la spec»: cómo le marqué a la IA
+   dónde va cada regla.
+3. [`ai-workspace/04-calidad/fallos-detectados.md`](ai-workspace/04-calidad/fallos-detectados.md):
+   los fallos de la IA que se pararon al revisar y cómo se corrigieron.
+4. [`ai-workspace/proceso.md`](ai-workspace/proceso.md): el diario completo, bloque a bloque.
+5. [`ai-workspace/metodologia.md`](ai-workspace/metodologia.md): por qué trabajé así.

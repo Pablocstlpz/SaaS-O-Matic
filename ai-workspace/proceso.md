@@ -7,7 +7,7 @@
   divisas y que el slider podía enseñar precios viejos. Lo añadí.
 
 ## 25/11 · Spec
-- Escribí la spec v1 a mano. -> 00-borrador/spec-v1.md
+- Escribí la spec v1 a mano.
 - La IA la completó. Acepté: id propio para el cliente, códigos de país.
   -> 01-SPEC.md
 

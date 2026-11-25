@@ -204,3 +204,27 @@
 - La IA añadió una regla que nadie había pedido (`cliente_id` mayor que 0) y
   la quitó ella misma: no inventar requisitos funciona.
   -> `backend/src/models/simulacion.model.ts`, `controllers/simulaciones.controller.ts`
+
+## 25/11 · Bloque B7: buscador, detalle e historial
+
+- Pedí el bloque B7 con una excepción: resolver el caso de `?q=a&q=b`, el
+  mismo agujero de las listas que cerré en el cuerpo en B4.
+  -> `prompts/11-b7.md`
+- La primera entrega decía estar terminada, pero la lista de fallos vistos
+  llegó incompleta y el caso normal del detalle (200) no tenía prueba. Pedí
+  la lista entera y que arreglara lo que diera 500 o chocara con la spec.
+- Resultado: cuatro entradas daban 500 y ahora dan 400 (un carácter nulo en
+  la búsqueda, ids con cientos de cifras, una ruta mal codificada y un cuerpo
+  comprimido corrupto). Dos de ellas no estaban ni apuntadas.
+- La búsqueda no encontraba "IBÉRICA" escribiendo "ibérica": SQLite solo
+  ignora mayúsculas en letras sin tilde. Se arregló con una columna interna
+  en minúsculas, que la API no devuelve. Las tildes siguen contando ("erica"
+  no encuentra "Ibérica"); lo anoté en la spec.
+- Decidí qué hacer con los casos abiertos: arreglé solo el orden alfabético
+  sin distinguir mayúsculas, que era una línea. Ordenar bien las tildes y la
+  ñ pedía otra columna y queda en pendientes. El resto no daba error ni
+  contradecía la spec.
+- La IA usó un fragmento fijo de SQL para que `%` y `_` se busquen como
+  texto, apartándose de una regla de `CLAUDE.md`. Lo avisó y lo anotó: el
+  texto del usuario entra como parámetro, así que no hay riesgo de inyección.
+- 115 pruebas en verde.

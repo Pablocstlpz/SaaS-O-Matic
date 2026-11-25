@@ -53,7 +53,7 @@ describe("POST /customers: alta", () => {
 
     expect(status).toBe(201);
     expect(cuerpo).toEqual(esperado);
-    expect(await filas()).toEqual([esperado]);
+    expect(await filas()).toEqual([{ ...esperado, nombre_busqueda: "acme ibérica" }]);
   });
 
   it("los campos de más (id, fecha_creacion) se ignoran", async () => {
@@ -77,6 +77,7 @@ describe("POST /customers: campos mal", () => {
     ["un plan desconocido", "plan", "gold", PLAN_MAL],
     ["un nombre de 1 carácter", "nombre_empresa", "A", NOMBRE_MAL],
     ["un nombre de 121 caracteres", "nombre_empresa", "a".repeat(121), NOMBRE_MAL],
+    ["un nombre con el carácter nulo", "nombre_empresa", "Ac\0me", NOMBRE_MAL],
     ["un email de 255 caracteres", "email_contacto", EMAIL_255, EMAIL_MAL],
     ["un email con espacios dentro", "email_contacto", "com pras@acme.example", EMAIL_MAL],
     ["un email con espacios entre comillas", "email_contacto", '"com pras"@acme.example', EMAIL_MAL],

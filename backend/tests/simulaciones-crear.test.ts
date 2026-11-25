@@ -98,3 +98,16 @@ describe("POST /simulations", () => {
     expect(await filas()).toEqual([]);
   });
 });
+
+describe("POST /simulations: cliente_id que no cabe en un número", () => {
+  it.each([
+    ["positivo", "9".repeat(400)],
+    ["negativo", `-${"9".repeat(400)}`],
+  ])("un cliente_id %s de cientos de cifras → 400 en cliente_id", async (_caso, valor) => {
+    const { status, cuerpo } = await crear({ cliente_id: valor });
+
+    expect(status).toBe(400);
+    expect(cuerpo).toEqual(errorDeCampo("cliente_id", "El cliente debe ser un número entero"));
+    expect(await filas()).toEqual([]);
+  });
+});

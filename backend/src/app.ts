@@ -62,6 +62,12 @@ const traducirError = (err: unknown): ErrorHttp | null => {
   if (type === "entity.too.large") {
     return new ErrorHttp(413, "La petición es demasiado grande", "DEMASIADO_GRANDE");
   }
+  // El resto de lo que Express marca como fallo del cliente: un cuerpo comprimido corrupto
+  // o una ruta mal codificada (URIError).
+  if ("status" in err && err.status === 400) {
+    const parte = err instanceof URIError ? "la dirección" : "el cuerpo";
+    return new ErrorHttp(400, `No se puede leer ${parte} de la petición`, "VALIDACION");
+  }
   return null;
 };
 

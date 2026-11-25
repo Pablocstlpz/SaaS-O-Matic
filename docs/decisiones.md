@@ -8,6 +8,36 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · Peticiones corruptas: 400, no 500
+
+**Qué:** un cuerpo comprimido y corrupto da 400 `VALIDACION` con «No se puede leer el cuerpo de la petición», y una ruta mal codificada (`/customers/%`), «No se puede leer la dirección de la petición». `app.ts` traduce así cualquier otro error que Express marque con `status` 400.
+**Por qué:** son fallos del cliente. Sustituye al pendiente de B1, que dejaba el cuerpo corrupto en 500.
+**Descartado:** una lista cerrada de errores de `express.json()`, porque los de descompresión no traen `type`.
+
+## 2026-11-25 · Topes de `q`, de los id y carácter nulo
+
+**Qué:** `q` admite como mucho `NOMBRE_EMPRESA_MAX` (120) caracteres. Ni `q` ni `nombre_empresa` admiten el carácter nulo. `id` y `cliente_id` van de `-Number.MAX_SAFE_INTEGER` a `Number.MAX_SAFE_INTEGER` (`RANGO_ID`).
+**Por qué:** la spec pide límite en todos los campos y algo más largo que un nombre no puede coincidir. SQLite corta el texto en el nulo, y un id de cientos de cifras llegaba como `Infinity` y daba 500.
+**Descartado:** recortar `q` sin avisar o devolver una lista vacía. También quitar el nulo del texto.
+
+## 2026-11-25 · Columna `nombre_busqueda`
+
+**Qué:** el cliente guarda además el nombre en minúsculas (`paraBuscar`), que rellena el `set` de `nombre_empresa`. El buscador compara y ordena con ella, y no sale por la API.
+**Por qué:** el `LIKE` de SQLite solo iguala mayúsculas inglesas, y `sqlite3` no permite registrar funciones propias. Su orden también es binario. Las tildes siguen contando: `erica` no encuentra «Ibérica», y en la lista «Ábaco» sale detrás de «Zeta».
+**Descartado:** filtrar en Node (obliga a cargar todos los clientes) y compilar la extensión ICU. Una BD creada antes de este cambio hay que borrarla: `sync()` no añade columnas.
+
+## 2026-11-25 · Buscador: `Op.like` con `ESCAPE` en un literal fijo
+
+**Qué:** `GET /customers` compara con `literal(":patron ESCAPE :escape")` y pasa los dos valores por `replacements`. El patrón lleva una barra delante de `%`, `_` y la propia barra.
+**Por qué:** SQLite no tiene carácter de escape por defecto y `Op.like` de Sequelize 6 no añade `ESCAPE`: sin él, `q=%` lo devuelve todo. El literal no contiene texto del usuario, que Sequelize escapa al sustituirlo.
+**Descartado:** pegar el texto en el literal (SQL montado a mano) y `fn("like", …)`, que deja de encontrar textos como `$1`.
+
+## 2026-11-25 · Parámetros de la consulta: misma regla que el cuerpo
+
+**Qué:** todo parámetro de la consulta se declara con `campoDeLaConsulta` (`validators/_campo.ts`), no con `query()`: es opcional y no puede ser una lista (`?q=a&q=b` es 400 `VALIDACION`).
+**Por qué:** es el mismo agujero que en el cuerpo: express-validator valida las listas elemento a elemento.
+**Descartado:** quedarse con el primer valor o con el último sin avisar.
+
 ## 2026-11-25 · Patrón de los mensajes de cada campo
 
 **Qué:** en todos los campos (cuerpo, ruta y consulta), de este bloque y de los siguientes, el mensaje es «<Campo> es obligatorio» si falta y «<Campo> debe ser <regla>» si está mal, concordando en género y número: «Los usuarios son obligatorios», «El país debe ser uno de: ES, FR, GB, IT, DE».
@@ -20,12 +50,6 @@ Las más recientes arriba.
 **Qué:** todo campo del cuerpo se declara con `campoDelCuerpo` (`validators/_campo.ts`), no con `body()`: exige que venga y que no sea una lista ni un objeto, antes de cualquier sanitizer. Una lista o un objeto dan el «debe ser» de su campo.
 **Por qué:** express-validator valida las listas elemento a elemento, así que `usuarios: []` daba un precio de 0 € en vez de rechazarse. La regla común evita repetir el fallo en cada recurso.
 **Descartado:** el `body()` directo de la plantilla con la comprobación campo a campo, porque basta olvidarla en uno. También un texto propio para listas y objetos.
-
-## 2026-11-25 · Pendiente: cuerpo comprimido corrupto
-
-**Qué:** un cuerpo que declara una compresión admitida (por ejemplo, `Content-Encoding: gzip`) pero está corrupto responde hoy 500 `ERROR_INTERNO`. Queda pendiente.
-**Por qué:** es un caso distinto del de la compresión no admitida y se ha dejado fuera de B1 a propósito.
-**Descartado:** por ahora, darle el 400 `VALIDACION` de los cuerpos que no se pueden leer.
 
 ## 2026-11-25 · Cuerpos que la API no puede leer
 

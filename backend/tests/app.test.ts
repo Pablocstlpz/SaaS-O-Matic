@@ -64,6 +64,28 @@ describe("cuerpo que no se puede leer", () => {
   });
 });
 
+describe("peticiones corruptas", () => {
+  const ilegible = (parte: string) => ({
+    message: `No se puede leer ${parte} de la petición`,
+    tipo: "VALIDACION",
+    errors: [],
+  });
+
+  it("un cuerpo comprimido y corrupto es 400 VALIDACION", async () => {
+    const cabeceras = { "Content-Encoding": "gzip" };
+    const opciones = { crudo: "no soy gzip", cabeceras };
+    const { status, cuerpo } = await peticion("POST", "/no-existe", opciones);
+    expect(status).toBe(400);
+    expect(cuerpo).toEqual(ilegible("el cuerpo"));
+  });
+
+  it("una dirección mal codificada es 400 VALIDACION", async () => {
+    const { status, cuerpo } = await peticion("GET", "/customers/%E0%A4%A");
+    expect(status).toBe(400);
+    expect(cuerpo).toEqual(ilegible("la dirección"));
+  });
+});
+
 describe("errores del servidor", () => {
   it("un índice único que salta es 409 DUPLICADO", async () => {
     const error = new Error("UNIQUE constraint failed: clientes.identificador_fiscal");

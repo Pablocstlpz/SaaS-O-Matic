@@ -1,8 +1,11 @@
-// Formato de la entrada (spec §2 y §3). En cada campo, primero se limpia y luego se valida.
-// Aquí no se consultan datos: el identificador repetido lo comprueba el controlador.
+// Formato de la entrada (spec §2, §3 y §4). En cada campo, primero se limpia y luego se valida.
+// Aquí no se consultan datos: el identificador repetido y el cliente que no existe los comprueba
+// el controlador.
+import { param } from "express-validator";
+
 import { esIdentificadorValido, normalizarIdentificador } from "../utils/identificadorFiscal.js";
 import { LIMITES, PLANES } from "../utils/regex.js";
-import { campoDelCuerpo } from "./_campo.js";
+import { RANGO_ID, campoDeLaConsulta, campoDelCuerpo } from "./_campo.js";
 import { comprobarValidacion } from "./_handle.js";
 import { campoPais, esPaisDeLaLista } from "./_pais.js";
 
@@ -19,7 +22,10 @@ const nombreEmpresa = campoDelCuerpo("nombre_empresa", {
   .isString()
   .bail()
   .customSanitizer(limpiarNombre)
-  .isLength({ min: NOMBRE_EMPRESA_MIN, max: NOMBRE_EMPRESA_MAX });
+  .isLength({ min: NOMBRE_EMPRESA_MIN, max: NOMBRE_EMPRESA_MAX })
+  // El buscador de SQLite no ve lo que va detrás de un carácter nulo.
+  .not()
+  .contains("\0");
 
 // La regla depende del país que llega en el mismo cuerpo. Sin un país de la lista no hay regla
 // que aplicar, y el error sale solo en `pais`.
@@ -53,6 +59,22 @@ const plan = campoDelCuerpo("plan", {
   obligatorio: "El plan es obligatorio",
   debeSer: `El plan debe ser uno de: ${PLANES.join(", ")}`,
 }).isIn(PLANES);
+
+// Se busca en el nombre y en el identificador: algo más largo que un nombre no puede coincidir.
+// El carácter nulo corta la consulta en SQLite.
+const busqueda = campoDeLaConsulta(
+  "q",
+  `La búsqueda debe ser un texto de ${NOMBRE_EMPRESA_MAX} caracteres como máximo`,
+)
+  .isLength({ max: NOMBRE_EMPRESA_MAX })
+  .not()
+  .contains("\0");
+
+const idCliente = param("id", "El cliente debe ser un número entero").isInt(RANGO_ID).toInt();
+
+export const validarListarClientes = [busqueda, comprobarValidacion];
+
+export const validarIdCliente = [idCliente, comprobarValidacion];
 
 export const validarCrearCliente = [
   nombreEmpresa,

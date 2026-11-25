@@ -1,7 +1,7 @@
 // Solo el formato de la entrada (spec §2 y §4). Aquí no se consultan datos ni se calculan precios:
 // que el cliente exista lo comprueba el controlador.
 import { LIMITES } from "../utils/regex.js";
-import { campoDelCuerpo } from "./_campo.js";
+import { RANGO_ID, campoDelCuerpo } from "./_campo.js";
 import { comprobarValidacion } from "./_handle.js";
 import { campoPais } from "./_pais.js";
 
@@ -27,7 +27,7 @@ const clienteId = campoDelCuerpo("cliente_id", {
   obligatorio: "El cliente es obligatorio",
   debeSer: "El cliente debe ser un número entero",
 })
-  .isInt()
+  .isInt(RANGO_ID)
   .toInt();
 
 const usuarios = campoEntero("usuarios", {

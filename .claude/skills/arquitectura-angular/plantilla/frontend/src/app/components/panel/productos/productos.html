@@ -1,0 +1,73 @@
+<section class="mb-4 flex flex-wrap items-center justify-between gap-3">
+  <h1 class="text-2xl font-medium">{{ 'productos.titulo' | translate }}</h1>
+  @if (sesion.esAdmin()) {
+    <a mat-flat-button routerLink="nuevo">
+      <mat-icon>add</mat-icon>
+      {{ 'productos.nuevo' | translate }}
+    </a>
+  }
+</section>
+
+<mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+  <mat-icon matPrefix>search</mat-icon>
+  <mat-label>{{ 'productos.buscar' | translate }}</mat-label>
+  <input #campo matInput type="search" [value]="busqueda()" (input)="busqueda.set(campo.value)" />
+</mat-form-field>
+
+@if (cargando()) {
+  <app-cargando />
+} @else if (error()) {
+  <p class="mt-4 text-peligro" role="alert">{{ error() }}</p>
+  <button mat-stroked-button type="button" (click)="cargar()">{{ 'comun.reintentar' | translate }}</button>
+} @else if (filtrados().length === 0) {
+  <p class="py-6 text-suave">
+    {{ (busqueda() ? 'productos.sinResultados' : 'productos.vacio') | translate }}
+  </p>
+} @else {
+  <!-- en movil se ocultan las columnas secundarias (hidden sm:table-cell) para que nombre, precio y
+       acciones quepan; si aun asi no cabe, la tabla se desplaza dentro de su caja, no arrastra la pagina -->
+  <div class="mt-4 overflow-x-auto">
+    <table mat-table [dataSource]="fuente" matSort class="w-full">
+      <!-- el nombre de cada columna es el del campo: asi mat-sort-header sabe por que ordenar -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'productos.nombre' | translate }}</th>
+        <td mat-cell *matCellDef="let producto">{{ producto.nombre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="hidden sm:table-cell">
+          {{ 'productos.estado' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let producto" class="hidden text-suave sm:table-cell">
+          {{ 'productos.estados.' + producto.estado | translate }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'productos.precio' | translate }}</th>
+        <td mat-cell *matCellDef="let producto">{{ producto.precio | currency: 'EUR' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha_actualizacion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="hidden sm:table-cell">
+          {{ 'productos.actualizado' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let producto" class="hidden text-suave sm:table-cell">
+          {{ producto.fecha_actualizacion | tiempoRelativo: idioma.actual() }}
+        </td>
+      </ng-container>
+
+      <!-- el padre escucha al hijo: (editar) y (eliminar) llegan con el producto -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let producto" class="text-right">
+          <app-producto-acciones [producto]="producto" (editar)="editar($event)" (eliminar)="eliminar($event)" />
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnas()"></tr>
+      <tr mat-row *matRowDef="let fila; columns: columnas()"></tr>
+    </table>
+  </div>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" />
+}

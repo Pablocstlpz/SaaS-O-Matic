@@ -1,0 +1,29 @@
+# Todas las variables vienen del .env de la raiz (copiado de .env.example).
+# La base de datos no esta aqui: añade su servicio o apunta DB_HOST a una existente.
+
+services:
+  backend:
+    build: ./backend
+    restart: always
+    ports:
+      - "${BACKEND_PUERTO:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      FRONTEND_URL: ${FRONTEND_URL}
+      JWT_SECRETO: ${JWT_SECRETO}
+      JWT_SECRETO_REFRESCO: ${JWT_SECRETO_REFRESCO}
+      DB_DIALECTO: ${DB_DIALECTO}
+      DB_HOST: ${DB_HOST}
+      DB_PUERTO: ${DB_PUERTO}
+      DB_USUARIO: ${DB_USUARIO}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NOMBRE: ${DB_NOMBRE}
+
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "${FRONTEND_PUERTO:-8080}:80"
+    depends_on:
+      - backend

@@ -1,0 +1,9 @@
+:host {
+  display: inline-flex;
+}
+
+/* el color del icono de un mat-icon-button lo pone Material con su propia variable:
+   una clase de Tailwind (text-peligro) no gana a esa regla */
+.peligro {
+  --mat-icon-button-icon-color: var(--mat-sys-error);
+}

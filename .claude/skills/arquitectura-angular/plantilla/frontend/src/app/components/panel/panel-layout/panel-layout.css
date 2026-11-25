@@ -1,0 +1,11 @@
+/* routerLinkActive pone la clase "activo" en tiempo de ejecucion: no se puede escribir como
+   clase de Tailwind en el .html, por eso estos dos estilos viven aqui */
+.enlace {
+  color: var(--mat-sys-on-surface-variant);
+  text-decoration: none;
+}
+
+.enlace.activo {
+  color: var(--mat-sys-primary);
+  font-weight: 500;
+}

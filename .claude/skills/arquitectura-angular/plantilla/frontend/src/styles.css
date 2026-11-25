@@ -1,0 +1,34 @@
+/* Estilos GLOBALES. Reparto:
+   - Angular Material: componentes de formulario, botones, iconos, avisos (y el tema de colores)
+   - Tailwind: maquetacion y espaciado con clases en el .html
+   - el .css de cada componente: solo lo que no se puede expresar con clases */
+@import 'tailwindcss';
+
+/* La paleta sale del tema de Material (material-theme.scss). Con estos nombres Tailwind genera
+   bg-superficie, text-suave, border-borde... y cambian solas entre claro y oscuro.
+   Usa SIEMPRE estos y no colores sueltos (bg-blue-600): asi la marca se cambia en un sitio. */
+@theme inline {
+  --color-fondo: var(--mat-sys-surface);
+  --color-superficie: var(--mat-sys-surface-container-low);
+  --color-texto: var(--mat-sys-on-surface);
+  --color-suave: var(--mat-sys-on-surface-variant);
+  --color-borde: var(--mat-sys-outline-variant);
+  --color-primario: var(--mat-sys-primary);
+  --color-peligro: var(--mat-sys-error);
+}
+
+@layer base {
+  body {
+    min-width: 320px;
+  }
+
+  a {
+    color: var(--mat-sys-primary);
+  }
+}
+
+/* el preflight de Tailwind pone borde a todo y dibuja una raya dentro del hueco
+   de la etiqueta en los mat-form-field con appearance="outline" */
+.mdc-notched-outline__notch {
+  border-right-style: hidden;
+}

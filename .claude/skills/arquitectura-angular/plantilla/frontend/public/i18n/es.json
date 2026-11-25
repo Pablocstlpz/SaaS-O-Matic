@@ -1,0 +1,64 @@
+{
+  "comun": {
+    "cancelar": "Cancelar",
+    "guardar": "Guardar",
+    "guardando": "Guardando…",
+    "cargando": "Cargando…",
+    "reintentar": "Reintentar",
+    "editar": "Editar",
+    "eliminar": "Eliminar",
+    "cerrar": "Cerrar",
+    "salir": "Salir",
+    "cambiarIdioma": "Cambiar idioma",
+    "volverInicio": "Volver al inicio"
+  },
+  "login": {
+    "titulo": "Iniciar sesión",
+    "email": "Email",
+    "password": "Contraseña",
+    "entrar": "Entrar",
+    "entrando": "Entrando…",
+    "emailInvalido": "Escribe un email válido",
+    "passwordObligatoria": "La contraseña es obligatoria"
+  },
+  "panel": {
+    "nombreApp": "Proyecto",
+    "menu": {
+      "productos": "Productos"
+    }
+  },
+  "productos": {
+    "titulo": "Productos",
+    "nuevo": "Nuevo producto",
+    "editarTitulo": "Editar producto",
+    "buscar": "Buscar por nombre",
+    "vacio": "Todavía no hay productos.",
+    "sinResultados": "Ningún producto coincide con la búsqueda.",
+    "nombre": "Nombre",
+    "precio": "Precio",
+    "estado": "Estado",
+    "nombreObligatorio": "El nombre es obligatorio",
+    "precioRango": "El precio debe estar entre 0 y {{max}}",
+    "confirmarEliminar": "¿Eliminar «{{nombre}}»?",
+    "confirmarEliminarTexto": "Esta acción no se puede deshacer.",
+    "eliminado": "Producto eliminado",
+    "guardado": "Producto guardado",
+    "estados": {
+      "activo": "Activo",
+      "retirado": "Retirado"
+    },
+    "actualizado": "Actualizado"
+  },
+  "paginador": {
+    "porPagina": "Por página",
+    "siguiente": "Página siguiente",
+    "anterior": "Página anterior",
+    "primera": "Primera página",
+    "ultima": "Última página",
+    "de": "de"
+  },
+  "noEncontrado": {
+    "titulo": "Esta página no existe",
+    "texto": "Puede que el enlace esté mal escrito o que la página se haya movido."
+  }
+}

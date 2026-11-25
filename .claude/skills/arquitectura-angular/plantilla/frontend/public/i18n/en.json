@@ -1,0 +1,64 @@
+{
+  "comun": {
+    "cancelar": "Cancel",
+    "guardar": "Save",
+    "guardando": "Saving…",
+    "cargando": "Loading…",
+    "reintentar": "Retry",
+    "editar": "Edit",
+    "eliminar": "Delete",
+    "cerrar": "Close",
+    "salir": "Log out",
+    "cambiarIdioma": "Change language",
+    "volverInicio": "Back to home"
+  },
+  "login": {
+    "titulo": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "entrar": "Sign in",
+    "entrando": "Signing in…",
+    "emailInvalido": "Enter a valid email",
+    "passwordObligatoria": "Password is required"
+  },
+  "panel": {
+    "nombreApp": "Project",
+    "menu": {
+      "productos": "Products"
+    }
+  },
+  "productos": {
+    "titulo": "Products",
+    "nuevo": "New product",
+    "editarTitulo": "Edit product",
+    "buscar": "Search by name",
+    "vacio": "There are no products yet.",
+    "sinResultados": "No product matches the search.",
+    "nombre": "Name",
+    "precio": "Price",
+    "estado": "Status",
+    "nombreObligatorio": "Name is required",
+    "precioRango": "Price must be between 0 and {{max}}",
+    "confirmarEliminar": "Delete “{{nombre}}”?",
+    "confirmarEliminarTexto": "This cannot be undone.",
+    "eliminado": "Product deleted",
+    "guardado": "Product saved",
+    "estados": {
+      "activo": "Active",
+      "retirado": "Discontinued"
+    },
+    "actualizado": "Updated"
+  },
+  "paginador": {
+    "porPagina": "Per page",
+    "siguiente": "Next page",
+    "anterior": "Previous page",
+    "primera": "First page",
+    "ultima": "Last page",
+    "de": "of"
+  },
+  "noEncontrado": {
+    "titulo": "This page does not exist",
+    "texto": "The link may be mistyped or the page may have moved."
+  }
+}

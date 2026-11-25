@@ -1,0 +1,17 @@
+<button
+  mat-icon-button
+  type="button"
+  (click)="editar.emit(producto())"
+  [attr.aria-label]="('comun.editar' | translate) + ' ' + producto().nombre"
+>
+  <mat-icon>edit</mat-icon>
+</button>
+<button
+  mat-icon-button
+  type="button"
+  class="peligro"
+  (click)="eliminar.emit(producto())"
+  [attr.aria-label]="('comun.eliminar' | translate) + ' ' + producto().nombre"
+>
+  <mat-icon>delete</mat-icon>
+</button>

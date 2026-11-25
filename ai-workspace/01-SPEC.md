@@ -166,7 +166,9 @@ Fuera de alcance (no está en los requisitos):
 
 - Simulación interactiva
 
-* Slider de usuarios + campos de almacenamiento y llamadas a la API (con la etiqueta "No modifica el precio")
+* Al mover el slider: espera 250 ms y cancela la petición anterior. Mientras
+  calcula, el precio anterior se ve atenuado con "calculando". Nunca se
+  presenta un precio viejo como si fuera el vigente
 * Se ve: desglose por tramos, coste base, impuesto y total
 * Al mover el slider: espera 250 ms, cancela la petición anterior y muestra "calculando". Nunca se ve un precio viejo
 * Botón guardar: guarda y la simulación aparece en el historial

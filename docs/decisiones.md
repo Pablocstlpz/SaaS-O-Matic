@@ -8,6 +8,24 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · `BaseHttpService`: solo GET y POST, y errores sin la forma de la API
+
+**Qué:** no hay `put`, `patch` ni `delete`. Si no llega un error con la forma de nuestra API (sin respuesta, o un cuerpo que no es suyo), `ErrorApi` lleva `tipo: ''` y `errors: []`.
+**Por qué:** la API solo admite GET y POST, y así `ErrorApi` sigue sin campos opcionales.
+**Descartado:** los cinco verbos y el `tipo?` de la plantilla. También inventar un `tipo` que el servidor no ha enviado.
+
+## 2026-11-25 · `Id` es solo un número
+
+**Qué:** `interfaces/id.ts` es `type Id = number`.
+**Por qué:** la spec dice que los `id` son números y aquí solo hay SQLite.
+**Descartado:** el `number | string` de la plantilla, que existe para MongoDB.
+
+## 2026-11-25 · El pipe de importes convierte y suma
+
+**Qué:** `pipes/importe.pipe.ts` recibe céntimos de euro (una línea o una lista) y la divisa. Convierte cada línea con `shared/divisas.ts`, suma y pinta. El nombre del fichero es el del plan.
+**Por qué:** un total se pide con sus líneas, así que nunca se convierte el total en euros ni dos veces el mismo importe.
+**Descartado:** un pipe que reciba importes ya convertidos, porque cada pantalla tendría que convertir antes. También el `-pipe.ts` de la skill.
+
 ## 2026-11-25 · Solo modo claro
 
 **Qué:** `material-theme.scss` fija `color-scheme: light` y `theme-type: light`. La app no sigue el modo del sistema.

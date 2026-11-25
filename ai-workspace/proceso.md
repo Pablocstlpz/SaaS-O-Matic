@@ -264,3 +264,12 @@
 - Medí el contraste de la paleta: todos los textos cumplen WCAG AA. El color
   de los bordes no llega a 3:1, así que no sirve para el contorno de los
   campos de formulario; lo tendré en cuenta en F5.
+
+## 25/11 · Bloque F2: contrato del frontend y conversión de divisas
+
+- Interfaces, servicios y constantes gemelas del backend, comparadas con un
+  script. La conversión de divisa convierte cada línea y suma las líneas
+  ya convertidas, para que la factura cuadre en cualquier divisa.
+- Ningún servicio del frontend calcula precios: piden el cálculo a la API.
+- 10 pruebas en verde, cada una rota a propósito.
+  -> `prompts/14-f2.md`

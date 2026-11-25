@@ -218,3 +218,40 @@ el 76 (a 320, 375 y 1366 px).
 ### Para bloques siguientes
 
 80. **Inicio vacío:** `/` muestra solo la cabecera. F4 tiene que sustituir esa ruta por el buscador.
+
+## F2 · Contrato y conversión de divisas
+
+Código: `frontend/src/app/` (`shared/`, `interfaces/`, `services/` y `pipes/`).
+Se han comprobado a mano, con una prueba temporal que no se ha guardado: del 81 al 84 (del 82, solo que
+los dos textos salen; no las duraciones). El 86, comparando los dos ficheros con un script.
+
+### Sin prueba
+
+81. **Pipe `importe`:** ni el formato en cada divisa ni que el total de varias líneas sea la suma de las
+    convertidas (la prueba mira `shared/divisas.ts`, no el pipe).
+82. **`NotificacionesService`:** ni los avisos, ni su duración, ni el botón «Cerrar».
+83. **Errores sin la forma de la API:** sin respuesta (`status` 0), un cuerpo que no es JSON o está vacío,
+    y elementos mal formados en `errors`, que se descartan.
+84. **Buscar con texto:** la prueba de `listar` no lleva `q`, así que no se prueba que se envíe codificado
+    (`&`, `%`, `+`, `#`, tildes).
+85. **Cuerpo de los POST:** se prueban la ruta y el verbo, no lo que se envía.
+86. **Constantes gemelas:** ninguna prueba compara `shared/regex.ts` con el del backend.
+87. **Contrato:** las interfaces no se comprueban contra la API real.
+
+### Comportamiento por decidir
+
+88. **Textos que no fija la spec:** «No se puede conectar con el servidor», «Error inesperado» y «Cerrar»
+    son los de la plantilla de la skill.
+89. **Qué es una «línea» al convertir:** el cálculo trae los tramos y el historial no. Si en el simulador
+    la base es la suma de los tramos convertidos y en el historial es la base convertida, la misma
+    simulación puede diferir en algún céntimo. F6 y F7 tienen que usar las mismas líneas.
+90. **Precio por usuario convertido:** multiplicado por los usuarios puede no dar el subtotal convertido
+    del tramo.
+91. **Medio céntimo:** el redondeo usa coma flotante, y un medio exacto puede bajar (100 céntimos a un
+    cambio de 1,005 dan 100, no 101).
+92. **Símbolo de la divisa:** sale el de Angular en `es-ES`: «€», «US$» y «GBP» (no «$» ni «£»).
+
+### Para bloques siguientes
+
+93. **`Id` es un número:** el `:id` de la ruta llega como texto. F6 tiene que convertirlo y decidir qué se
+    ve con `/customers/abc`.

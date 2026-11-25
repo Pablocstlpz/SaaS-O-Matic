@@ -321,9 +321,56 @@ Se han comprobado a mano en Edge sin ventana, con `ng serve` y los datos de ejem
 
 ### Para bloques siguientes
 
-121. **Rutas sin pantalla:** F6 ha creado `/clientes/:id`. Falta `/clientes/nuevo` (F5), que tiene que
-     ir **antes** que `:id`. Hasta entonces el botón de alta cae en el detalle y muestra «El cliente
-     debe ser un número entero» (antes, «Esta página no existe»).
+121. **Resuelto en F5, sin prueba (ver 119 y 179):** `/clientes/nuevo` va antes que `:id` en
+     `app.routes.ts`, y el botón de alta lleva al formulario. Visto en el navegador a 320 y 1366 px.
+
+## F5 · Alta de cliente
+
+Código: `frontend/src/app/components/clientes/cliente-alta/`, `cliente-formulario/` y
+`frontend/src/app/app.routes.ts`.
+Se han comprobado a mano en Chromium sin ventana (el de Playwright), con `ng serve`, el backend y los
+datos de ejemplo. A 320 px, con toques: el botón de alta del buscador lleva a `/clientes/nuevo`, aviso en
+vivo del nombre, país y plan obligatorios al enviar vacío, `12345678A` pasa el formulario y el 400 sale
+junto al identificador. A 1366 px, con ratón: alta de `00000000-t` (aviso y detalle del cliente nuevo) y
+409 junto al identificador al repetirlo. Sin desplazamiento horizontal y sin errores en consola, aparte
+de los 400 y 409 provocados. En la BD local queda el cliente «Prueba Alta F5».
+Después se ha añadido `items-start` a la rejilla (a 1366 px, la caja del país se estiraba a la altura
+del identificador con su aviso), y eso no se ha vuelto a ver en el navegador.
+
+### Comportamiento por decidir
+
+163. **Valores de entrada:** todo vacío; país y plan empiezan sin elegir.
+164. **Cuándo avisa:** al escribir en el campo o al enviar. Lo que no se ha tocado no avisa hasta enviar.
+165. **Campo vacío:** el formulario dice «es obligatorio»; la API, a un texto vacío, le responde con
+     el «debe ser» (nunca llega, porque el formulario no lo envía).
+166. **Email:** el formulario pide `algo@algo.algo`, sin espacios y de 254 como mucho. El `isEmail` del
+     servidor es más estricto (por ejemplo, más de 64 caracteres antes de la @) y eso vuelve como 400
+     junto al campo.
+167. **Identificador en España:** el formulario acepta cualquier letra inicial (`[A-Z]` + 7 números +
+     control). Las que no son de CIF, NIE ni DNI las rechaza el servidor.
+168. **Carácter nulo en el nombre:** el formulario no lo frena; vuelve como 400 junto al campo.
+169. **Error del servidor junto a un campo:** bloquea el envío hasta que se cambie ese campo. Cambiar el
+     país también borra el del identificador, porque lo vuelve a validar (como 147).
+170. **Un error con campo que el formulario no tiene** no se pintaría en ningún sitio. Hoy la API de
+     alta solo devuelve errores de sus cinco campos.
+171. **Se envía lo escrito:** el formulario valida el texto limpio, pero envía el original y la API lo
+     limpia.
+172. **Sin cancelar:** no hay enlace de vuelta; se vuelve con el logo o con «Atrás» (como 125).
+173. **Textos que no fija la spec:** «Dar de alta un cliente» (título), las etiquetas, «Dar de alta»,
+     «Guardando…» y «Cliente dado de alta». El plan sale tal cual («pro»).
+
+### Sin prueba
+
+174. **País y plan:** el «es obligatorio» al enviar sin elegirlos.
+175. **No se envía con un campo inválido** (lo pide el «Terminado» del plan, pero no sus pruebas), ni
+     dos veces seguidas mientras se envía.
+176. **Cambio de país:** que vuelve a validar el identificador. Del formato español solo se prueba
+     `12345678A`; ni NIE ni CIF.
+177. **Limpieza antes de validar:** espacios dobles en el nombre, ni `a-58.818.501` en el identificador.
+178. **Errores sin campo** (500, sin conexión, 409 `DUPLICADO`): que salen bajo el formulario.
+179. **Ruta:** que `clientes/nuevo` va antes que `clientes/:id`, ni el botón de alta (ver 119).
+180. **«Guardando…»** y el botón desactivado mientras se envía.
+181. **Formato del email:** las pruebas solo miran su longitud.
 
 ## F6 · Detalle del cliente e historial
 

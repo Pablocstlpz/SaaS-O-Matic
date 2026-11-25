@@ -8,6 +8,12 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · Alta de cliente: errores repartidos por `errors` y avisos al escribir
+
+**Qué:** `cliente-alta` (padre) envía y, si el error trae `errors`, se los pasa a `cliente-formulario` (hijo), que los pone junto a su campo; si no trae ninguno, pinta `message` bajo el formulario. El hijo usa `FormControl` con país y plan anulables y validadores que dan `{ mensaje }` con los textos de la API, como el simulador. Los avisos salen al escribir (`ShowOnDirtyErrorStateMatcher`).
+**Por qué:** la API pone el campo en `errors` en todo 400 de validación y en el 409 `IDENTIFICADOR_REPETIDO`, así que no hace falta una lista de tipos. País y plan empiezan sin elegir. La spec pide validación en vivo, y Material por defecto solo avisa al salir del campo.
+**Descartado:** repartir por `tipo` y el `FormBuilder` no anulable de la skill (§5), y crear y editar en la misma pantalla, porque aquí no se edita.
+
 ## 2026-11-25 · La pista del slider, con un estilo sobre una clase de Material
 
 **Qué:** `material-theme.scss` fija el color de la parte sin recorrer del slider y, con `.mdc-slider__track--inactive`, le quita la atenuación.

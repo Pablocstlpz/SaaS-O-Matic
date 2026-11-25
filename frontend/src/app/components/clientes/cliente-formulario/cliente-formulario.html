@@ -1,0 +1,55 @@
+<!-- el país va antes del identificador: su formato depende de él -->
+<form
+  [formGroup]="formulario"
+  (ngSubmit)="enviarSiVale()"
+  novalidate
+  class="grid items-start gap-4 rounded-tarjeta border border-borde bg-superficie p-4 sm:grid-cols-2 sm:p-6"
+>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="min-w-0 sm:col-span-2">
+    <mat-label>Nombre de empresa</mat-label>
+    <input matInput formControlName="nombre_empresa" autocomplete="organization" />
+    <mat-error>{{ formulario.controls.nombre_empresa.errors?.['mensaje'] }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="min-w-0 sm:col-span-2">
+    <mat-label>Email de contacto</mat-label>
+    <input matInput type="email" formControlName="email_contacto" autocomplete="email" />
+    <mat-error>{{ formulario.controls.email_contacto.errors?.['mensaje'] }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="min-w-0">
+    <mat-label>País</mat-label>
+    <mat-select formControlName="pais">
+      @for (pais of paises; track pais.codigo) {
+        <mat-option [value]="pais.codigo">{{ pais.nombre }}</mat-option>
+      }
+    </mat-select>
+    <mat-error>{{ formulario.controls.pais.errors?.['mensaje'] }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="min-w-0">
+    <mat-label>Identificador fiscal</mat-label>
+    <input matInput formControlName="identificador_fiscal" autocomplete="off" />
+    <mat-error>{{ formulario.controls.identificador_fiscal.errors?.['mensaje'] }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="min-w-0">
+    <mat-label>Plan</mat-label>
+    <mat-select formControlName="plan">
+      @for (plan of planes; track plan) {
+        <mat-option [value]="plan">{{ plan }}</mat-option>
+      }
+    </mat-select>
+    <mat-error>{{ formulario.controls.plan.errors?.['mensaje'] }}</mat-error>
+  </mat-form-field>
+
+  <div class="flex items-start sm:col-span-2 sm:justify-end">
+    <button
+      type="submit"
+      class="cursor-pointer rounded-control bg-primario px-4 py-2 font-medium text-sobre-primario disabled:cursor-default disabled:opacity-50"
+      [disabled]="guardando()"
+    >
+      {{ guardando() ? 'Guardando…' : 'Dar de alta' }}
+    </button>
+  </div>
+</form>

@@ -13,6 +13,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./components/clientes/clientes-buscador/clientes-buscador').then((m) => m.ClientesBuscador),
       },
+      // antes que clientes/:id, o «nuevo» se tomaría por un id
+      {
+        path: 'clientes/nuevo',
+        loadComponent: () => import('./components/clientes/cliente-alta/cliente-alta').then((m) => m.ClienteAlta),
+      },
       {
         path: 'clientes/:id',
         loadComponent: () =>

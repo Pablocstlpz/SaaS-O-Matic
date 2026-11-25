@@ -1,0 +1,7 @@
+<section class="max-w-2xl">
+  <h1 class="mb-4 text-2xl font-bold">Dar de alta un cliente</h1>
+  <app-cliente-formulario [guardando]="guardando()" [errores]="erroresCampo()" (enviar)="crear($event)" />
+  @if (error(); as mensaje) {
+    <p class="mt-4 rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro" role="alert">{{ mensaje }}</p>
+  }
+</section>

@@ -341,3 +341,15 @@
 - En otra divisa, el simulador y el historial pueden diferir en un céntimo.
   Lo acepté y lo anoté en la spec: la conversión es informativa y en euros
   coinciden siempre.
+
+## 25/11 · Bloque F5: alta de cliente
+
+- Formulario con los mismos límites y textos de error que la API. País y
+  plan son desplegables y no se puede enviar con un campo mal.
+  -> `prompts/19-f5.md`
+- El identificador solo se comprueba en formato: la letra de control la
+  valida el servidor, para no duplicar el algoritmo. Si es falso, el error
+  sale junto al campo, igual que el de cliente repetido.
+- Al crear, avisa y lleva al detalle del cliente nuevo.
+- Probé yo mismo la app completa en el navegador: <lo que encontraste>.
+

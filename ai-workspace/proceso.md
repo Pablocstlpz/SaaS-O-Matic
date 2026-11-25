@@ -288,3 +288,18 @@
   de la página: sin ella, la app incumplía las condiciones de uso.
 - Añadí un estado "Cargando divisas…" al selector, que la spec pide en todas
   las pantallas.
+
+## 25/11 · Bloque F4: buscador y dashboard
+
+- Primera pantalla con datos reales: pedí probarla en el navegador contra el
+  backend con los datos de ejemplo, en móvil y en escritorio.
+  -> `prompts/16-f4.md`
+- La búsqueda espera 300 ms tras la última tecla y cancela la petición
+  anterior. Comprobado contra la API real: busca por nombre e identificador,
+  encuentra "IBÉRICA" y trata `%` como texto.
+- Estados vistos en pantalla: cargando, "No hay resultados", error de la API
+  y "No se puede conectar con el servidor" con el backend parado.
+- Decidí no añadir un botón de reintentar: la spec no lo pide y basta con
+  volver a escribir.
+- Una de las pruebas en el navegador dio un resultado raro que no se pudo
+  repetir. Queda apuntado como "no reproducido".

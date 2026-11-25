@@ -8,6 +8,12 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · El error del buscador, sin botón de reintentar
+
+**Qué:** `clientes-buscador` pinta el mensaje del error. Para repetir la búsqueda se escribe otra vez o se recarga la página.
+**Por qué:** ni la spec ni el plan piden el botón.
+**Descartado:** el botón «Reintentar» de la pantalla de listado de la skill.
+
 ## 2026-11-25 · `DivisasService` usa `shared/divisas.ts`
 
 **Qué:** el servicio toma de `shared/divisas.ts` el tipo `Divisa`, los códigos y `EUR`. La skill solo deja a un servicio usar `BaseHttpService`, `interfaces` y `environments`.

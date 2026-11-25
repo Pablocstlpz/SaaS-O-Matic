@@ -7,16 +7,16 @@ import { appConfig } from './app.config';
 
 describe('Arranque', () => {
   it('arranca con la configuración real y muestra el layout en el inicio', async () => {
-    // sin red de verdad: el layout pide los tipos de cambio a una API externa
+    // sin red de verdad: el layout pide los tipos de cambio y el inicio, los clientes
     TestBed.configureTestingModule({ providers: [...appConfig.providers, provideHttpClientTesting()] });
     const app = TestBed.createComponent(App);
 
     await TestBed.inject(Router).navigateByUrl('/');
     app.detectChanges();
-    // con esa petición pendiente, la app no llega a estar estable
-    TestBed.inject(HttpTestingController)
-      .expectOne('https://open.er-api.com/v6/latest/EUR')
-      .flush({ rates: { USD: 1.1, GBP: 0.85 } });
+    // con alguna petición pendiente, la app no llega a estar estable
+    const http = TestBed.inject(HttpTestingController);
+    http.expectOne('https://open.er-api.com/v6/latest/EUR').flush({ rates: { USD: 1.1, GBP: 0.85 } });
+    http.expectOne('http://localhost:3000/customers').flush([]);
     await app.whenStable();
 
     const pantalla: HTMLElement = app.nativeElement;

@@ -204,7 +204,7 @@ el 76 (a 320, 375 y 1366 px).
 
 72. **Formato español:** quitar `LOCALE_ID` o `registerLocaleData` no pone roja ninguna prueba.
 73. **Página no encontrada:** ni la ruta desconocida ni su enlace de vuelta tienen prueba.
-74. **`app-cargando`:** todavía no lo usa ninguna pantalla; ni prueba ni visto en el navegador.
+74. **`app-cargando`:** desde F4 lo usa el buscador, con prueba de que sale el spinner y visto en el navegador.
 75. **Aspecto:** los colores del tema, la letra y que no se pida nada fuera de la app.
 76. **Móvil y escritorio:** la cabecera y el contenido sin desplazamiento horizontal.
 
@@ -217,7 +217,7 @@ el 76 (a 320, 375 y 1366 px).
 
 ### Para bloques siguientes
 
-80. **Inicio vacío:** `/` muestra solo la cabecera. F4 tiene que sustituir esa ruta por el buscador.
+80. **Resuelto en F4.** Inicio vacío: `/` es el buscador.
 
 ## F2 · Contrato y conversión de divisas
 
@@ -291,3 +291,35 @@ antes de los cambios de la revisión.
 105. **Divisa elegida:** al recargar se vuelve a EUR.
 108. **Aviso sobre el pie:** el snackbar sale abajo y, en pantallas cortas o estrechas, puede tapar la
      atribución mientras se ve.
+
+## F4 · Buscador y dashboard
+
+Código: `frontend/src/app/components/clientes/` y `frontend/src/app/app.routes.ts`.
+Se han comprobado a mano en Edge sin ventana, con `ng serve` y los datos de ejemplo, a 320, 375 y
+1366 px: el 110, el 111, el 117, el 118, el 119 (también con el teclado) y el 120.
+
+### Comportamiento por decidir
+
+109. **Sin reintento:** tras un error hay que escribir otra vez o recargar (ver `docs/decisiones.md`).
+110. **Más de 120 caracteres:** el campo no tiene tope; la API responde 400 y se pinta su mensaje.
+111. **Volver al buscador:** desde otra pantalla el campo sale vacío; el texto no va en la URL.
+112. **Mientras se teclea:** durante los 300 ms se ven los resultados anteriores, y en cada búsqueda el
+     spinner sustituye a las tarjetas.
+113. **Peticiones de más:** si el texto se cambia y se deshace en menos de 300 ms, se vuelve a pedir lo
+     mismo. Un texto de solo espacios se envía como búsqueda (ver 53).
+114. **Tope de 50:** la pantalla no avisa de que puede haber más clientes.
+115. **Textos que no fija la spec:** «Clientes», «Buscar por nombre o identificador», «Dar de alta un
+     cliente», «Cargando…» y «Plan pro» (el plan sale tal cual llega).
+116. **Datos de la tarjeta:** nombre, identificador, país y plan; ni email ni fecha.
+
+### Sin prueba
+
+117. **Contenido de la tarjeta:** las pruebas solo miran el nombre.
+118. **Buscar después de un error:** sacar el `catchError` del `switchMap` no pone roja ninguna prueba.
+119. **Enlaces:** ni el de cada tarjeta ni el botón de alta.
+120. **Vaciar el campo:** que vuelve a pedir sin `q`.
+
+### Para bloques siguientes
+
+121. **Rutas sin pantalla:** las tarjetas van a `/clientes/:id` y el botón a `/clientes/nuevo`, que hoy
+     muestran «Esta página no existe». F5 y F6 tienen que crearlas, con `nuevo` antes que `:id`.

@@ -1,0 +1,32 @@
+<div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+  <h1 class="text-2xl font-bold">Clientes</h1>
+  <a routerLink="/clientes/nuevo" class="rounded-control bg-primario px-4 py-2 font-medium text-sobre-primario">
+    Dar de alta un cliente
+  </a>
+</div>
+
+<mat-form-field appearance="outline" subscriptSizing="dynamic" class="mb-6 w-full sm:max-w-md">
+  <mat-label>Buscar por nombre o identificador</mat-label>
+  <input #campo matInput type="search" autocomplete="off" [value]="q()" (input)="q.set(campo.value)" />
+</mat-form-field>
+
+@if (cargando()) {
+  <app-cargando />
+} @else if (error(); as mensaje) {
+  <p class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro" role="alert">{{ mensaje }}</p>
+} @else if (clientes().length === 0) {
+  <p class="py-8 text-suave" role="status">No hay resultados</p>
+} @else {
+  <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    @for (cliente of clientes(); track cliente.id) {
+      <li class="min-w-0">
+        <a
+          [routerLink]="['/clientes', cliente.id]"
+          class="block h-full rounded-tarjeta border border-borde bg-superficie p-4 text-texto hover:border-primario"
+        >
+          <app-cliente-tarjeta [cliente]="cliente" />
+        </a>
+      </li>
+    }
+  </ul>
+}

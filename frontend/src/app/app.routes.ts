@@ -7,8 +7,12 @@ export const routes: Routes = [
     path: '',
     loadComponent: () => import('./components/layout/layout').then((m) => m.Layout),
     children: [
-      // inicio sin contenido hasta que exista el buscador (F4); sin esta ruta caeria en '**'
-      { path: '', pathMatch: 'full', children: [] },
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./components/clientes/clientes-buscador/clientes-buscador').then((m) => m.ClientesBuscador),
+      },
       {
         path: '**',
         loadComponent: () => import('./components/no-encontrado/no-encontrado').then((m) => m.NoEncontrado),

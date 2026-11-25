@@ -5,6 +5,7 @@ import express, { type ErrorRequestHandler } from "express";
 import helmet from "helmet";
 
 import { FRONTEND_URL } from "./config.js";
+import { clientesRoutes } from "./routes/clientes.route.js";
 import { simulacionesRoutes } from "./routes/simulaciones.route.js";
 import { ErrorHttp, noEncontrado } from "./utils/errores.js";
 import { logger } from "./utils/logger.js";
@@ -33,6 +34,7 @@ app.get("/salud", (_req, res) => {
   res.status(200).json({ estado: "ok" });
 });
 
+app.use("/customers", clientesRoutes);
 app.use("/simulations", simulacionesRoutes);
 
 app.use(() => {

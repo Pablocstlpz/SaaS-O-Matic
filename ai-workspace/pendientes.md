@@ -69,3 +69,36 @@ Los comportamientos 16 y 17 se han comprobado a mano contra la app.
 
 23. **Parámetros de la URL como lista** (B7): `?q=a&q=b` llega como lista y `campoDelCuerpo` solo
     cubre el cuerpo.
+
+## B5 · Clientes: modelo y `POST /customers`
+
+Código: `backend/src/validators/clientes.validator.ts`, `backend/src/controllers/clientes.controller.ts`
+y `backend/src/models/cliente.model.ts`.
+Se han comprobado a mano contra la app: de 25 a 28, el 30 (con `es`), el 31 (con un número en el
+nombre y con el cuerpo `{}`) y el 37 (sin identificador).
+
+### Comportamiento por decidir
+
+25. **Partes largas del email:** el único tope son los 254 en total. Se aceptan más de 64 caracteres
+    antes de la `@` (y trozos del dominio de más de 63). El validador de email de Angular rechaza lo
+    primero, así que F5 no coincidiría.
+26. **Mismo identificador en países distintos:** 409. La unicidad no mira el país.
+27. **Tabuladores y saltos de línea en el nombre:** se convierten en un espacio.
+28. **Plan en mayúsculas** (`PRO`): se rechaza.
+29. **Longitud sin normalizar (ver 10):** B5 no pone otro límite en nombre, identificador ni email;
+    solo se mide lo que queda tras limpiar.
+37. **País fuera de la lista sin identificador** (o que no es texto): salen los dos errores, porque
+    que falte no depende del país.
+
+### Sin prueba
+
+30. **País en minúscula (ver 9):** la lista lo rechaza, pero la prueba usa `PT`.
+31. **Campo ausente, `null` o que no es texto:** los textos «es obligatorio» de clientes y el 400 de un
+    número en nombre, identificador o email.
+32. **Normalización:** la prueba del 201 comprueba todo a la vez; solo se han roto dos pasos del email
+    (minúscula y espacios de los extremos).
+33. **Formato del email:** no se prueba un email mal formado de longitud correcta.
+34. **Límites que sí valen:** nombre de 2 y de 120 caracteres y email de 254.
+35. **Identificador fiscal por la API:** no se prueba un cliente de fuera de España ni un duplicado
+    escrito de otra forma (`a-58.818.501` frente a `A58818501`).
+36. **Listas y objetos** en los campos de cliente: los frena `campoDelCuerpo`, probado solo en B4.

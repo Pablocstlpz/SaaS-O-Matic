@@ -12,6 +12,7 @@ Las más recientes arriba.
 
 **Qué:** en todos los campos (cuerpo, ruta y consulta), de este bloque y de los siguientes, el mensaje es «<Campo> es obligatorio» si falta y «<Campo> debe ser <regla>» si está mal, concordando en género y número: «Los usuarios son obligatorios», «El país debe ser uno de: ES, FR, GB, IT, DE».
 **Por qué:** la spec no fija textos. Con un solo patrón, todos los formularios avisan igual y no hay que decidir cada frase.
+**Excepción:** el 409 `IDENTIFICADOR_REPETIDO` dice «Ya existe un cliente con ese identificador fiscal», en `message` y en `errors`.
 **Descartado:** un texto libre para cada campo y regla.
 
 ## 2026-11-25 · Campos del cuerpo: regla común

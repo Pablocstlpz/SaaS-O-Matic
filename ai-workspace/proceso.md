@@ -159,3 +159,29 @@
   prohibiciones de `CLAUDE.md`.
 - 67 pruebas en verde.
   -> `backend/src/validators/`, `docs/decisiones.md`
+
+## 25/11 · Bloque B5: clientes y POST /customers
+
+- Pedí el bloque B5 con esfuerzo alto: modelo, limpieza de datos,
+  duplicados y la carrera entre dos altas.
+  -> `prompts/09-b5.md`
+- Resultado: limpia y valida, rechaza identificadores repetidos con dos 409
+  (el que detecta el controlador y el que frena el índice de la base de datos)
+  y guarda solo los cinco campos esperados. 11 pruebas nuevas, cada una rota
+  a propósito.
+- La IA sacó la regla del país a un fichero común para no repetirla entre
+  clientes y simulaciones.
+- Corregí tres cosas al revisar:
+  * La IA quitaba los espacios de dentro del email. Eso podía guardar otra
+    dirección sin avisar; ahora se rechaza. Al cambiarlo, la IA vio que el
+    validador aceptaba espacios entre comillas (`"com pras"@acme.example`)
+    y añadió una regla que los rechaza también.
+  * El 409 decía "debe ser único", el patrón de los errores de formato. Lo
+    cambié por "Ya existe un cliente con ese identificador fiscal", porque el
+    dato está bien escrito: lo que pasa es que ya existe.
+  * Pedí comprobar qué pasaba con un país incorrecto, y **fallaba**: el error
+    salía también en el identificador, que no se puede validar sin saber el
+    país. Ahora sale solo en `pais`. Ninguna prueba del plan lo cubría.
+- Actualicé la spec para el email: la spec tiene que decir lo que hace el
+  código.
+  -> `backend/src/models/`, `validators/`, `controllers/clientes.controller.ts`

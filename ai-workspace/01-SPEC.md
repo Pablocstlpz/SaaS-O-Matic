@@ -17,7 +17,9 @@ Fuera de alcance (no está en los requisitos):
 - id (número) - Lo genera el sistema. Es la clave, NO el identificador fiscal
 - Nombre de empresa (texto, obligatorio, de 2 a 120 caracteres) - Se limpian espacios al principio, al final y los dobles
 - Identificador fiscal (texto, obligatorio, ÚNICO) - Se guarda normalizado: mayúsculas, sin espacios, puntos ni guiones
-- Email de contacto (texto, obligatorio, máximo 254) - Formato de email válido, sin espacios y todo en minúscula
+- Email de contacto (texto, obligatorio, máximo 254) - Formato de email válido,
+  en minúscula. Se quitan los espacios del principio y del final; con espacios
+  dentro, se rechaza
 - País (código de 2 letras, obligatorio) - Solo los de la lista del apartado 3. En pantalla es un select
 - Plan elegido (obligatorio) - Uno de: free, pro, max. Es una etiqueta, no cambia el precio
 - Fecha de creación - La pone el sistema

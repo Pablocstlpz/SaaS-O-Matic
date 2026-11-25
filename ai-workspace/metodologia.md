@@ -22,8 +22,8 @@ Cada modelo tuvo un papel:
 
 ## Por qué aquí
 
-- **Lo que importa es el criterio, no la velocidad.** Los requisitos piden dirigir
-  a la IA y controlar lo que produce. Un bloque cada vez me deja decidir en cada
+- **Lo que importa es el criterio, no la velocidad.** El objetivo es dirigir a la
+  IA y controlar lo que produce. Un bloque cada vez me deja decidir en cada
   paso, con cambios lo bastante pequeños para poder revisarlos.
 - **Las restricciones reales:** menos de dos días de plazo y un límite de uso
   semanal casi agotado al empezar. Varios agentes en paralelo, cada uno releyendo

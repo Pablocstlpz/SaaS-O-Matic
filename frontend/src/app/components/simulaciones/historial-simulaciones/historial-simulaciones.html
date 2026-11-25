@@ -1,0 +1,44 @@
+@if (simulaciones().length === 0) {
+  <p class="py-8 text-suave" role="status">Todavía no hay simulaciones guardadas</p>
+} @else {
+  <ol class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    @for (simulacion of simulaciones(); track simulacion.id) {
+      <li class="flex min-w-0 flex-col rounded-tarjeta border border-borde bg-superficie p-4 tabular-nums">
+        <h3 class="mb-2 font-bold">
+          <time [attr.datetime]="simulacion.fecha_creacion">{{ simulacion.fecha_creacion | date: 'short' }}</time>
+        </h3>
+
+        <dl class="mb-3 text-sm text-suave">
+          <div class="flex justify-between gap-3">
+            <dt>Usuarios</dt>
+            <dd>{{ simulacion.usuarios | number }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt>Almacenamiento</dt>
+            <dd>{{ simulacion.almacenamiento_gb | number }} GB</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt>Llamadas a la API</dt>
+            <dd>{{ simulacion.llamadas_api | number }}</dd>
+          </div>
+        </dl>
+
+        <!-- como un presupuesto: las dos lineas y debajo su suma -->
+        <dl class="mt-auto border-t border-borde pt-3">
+          <div class="flex justify-between gap-3">
+            <dt>Coste base</dt>
+            <dd>{{ simulacion.coste_base_centimos | importe: divisa() }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt>Impuesto ({{ simulacion.porcentaje_impuesto }}&nbsp;%)</dt>
+            <dd>{{ simulacion.impuesto_centimos | importe: divisa() }}</dd>
+          </div>
+          <div class="mt-2 flex justify-between gap-3 text-lg font-bold">
+            <dt>Total</dt>
+            <dd>{{ [simulacion.coste_base_centimos, simulacion.impuesto_centimos] | importe: divisa() }}</dd>
+          </div>
+        </dl>
+      </li>
+    }
+  </ol>
+}

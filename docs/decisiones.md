@@ -8,6 +8,12 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · El detalle, sin botón de reintentar
+
+**Qué:** `cliente-detalle` pinta el mensaje del error, del cliente o del historial. Para repetir la petición se recarga la página.
+**Por qué:** ni la spec ni el plan piden el botón, como en el buscador.
+**Descartado:** el botón «Reintentar» de la pantalla de detalle de la skill.
+
 ## 2026-11-25 · El error del buscador, sin botón de reintentar
 
 **Qué:** `clientes-buscador` pinta el mensaje del error. Para repetir la búsqueda se escribe otra vez o se recarga la página.

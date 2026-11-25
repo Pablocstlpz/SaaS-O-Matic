@@ -14,6 +14,11 @@ export const routes: Routes = [
           import('./components/clientes/clientes-buscador/clientes-buscador').then((m) => m.ClientesBuscador),
       },
       {
+        path: 'clientes/:id',
+        loadComponent: () =>
+          import('./components/clientes/cliente-detalle/cliente-detalle').then((m) => m.ClienteDetalle),
+      },
+      {
         path: '**',
         loadComponent: () => import('./components/no-encontrado/no-encontrado').then((m) => m.NoEncontrado),
       },

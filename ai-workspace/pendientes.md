@@ -253,8 +253,8 @@ los dos textos salen; no las duraciones). El 86, comparando los dos ficheros con
 
 ### Para bloques siguientes
 
-93. **`Id` es un número:** el `:id` de la ruta llega como texto. F6 tiene que convertirlo y decidir qué se
-    ve con `/customers/abc`.
+93. **Resuelto en F6.** `:id` de la ruta: se convierte con `numberAttribute`. Lo que no es un número
+    llega a la API como `NaN` y se pinta su 400 («El cliente debe ser un número entero»).
 
 ## F3 · Servicio y selector de divisa
 
@@ -321,5 +321,46 @@ Se han comprobado a mano en Edge sin ventana, con `ng serve` y los datos de ejem
 
 ### Para bloques siguientes
 
-121. **Rutas sin pantalla:** las tarjetas van a `/clientes/:id` y el botón a `/clientes/nuevo`, que hoy
-     muestran «Esta página no existe». F5 y F6 tienen que crearlas, con `nuevo` antes que `:id`.
+121. **Rutas sin pantalla:** F6 ha creado `/clientes/:id`. Falta `/clientes/nuevo` (F5), que tiene que
+     ir **antes** que `:id`. Hasta entonces el botón de alta cae en el detalle y muestra «El cliente
+     debe ser un número entero» (antes, «Esta página no existe»).
+
+## F6 · Detalle del cliente e historial
+
+Código: `frontend/src/app/components/clientes/cliente-detalle/` y `cliente-datos/`,
+`frontend/src/app/components/simulaciones/historial-simulaciones/` y `frontend/src/app/app.routes.ts`.
+Se han comprobado a mano en Edge sin ventana, con `ng serve` y los datos de ejemplo, a 375 y 1366 px,
+con un cliente (el alemán) y con `/clientes/999`: se entra desde la tarjeta del buscador, se ven los
+datos y el historial, el cambio a USD no pide nada al backend y no hay desplazamiento horizontal. Con
+eso queda visto el 131.
+
+### Comportamiento por decidir
+
+122. **Sin reintento:** tras un error solo queda recargar la página (ver `docs/decisiones.md`).
+123. **Falla solo el cliente:** se ve su error y se oculta el historial, aunque haya llegado bien.
+124. **Falla solo el historial:** el cliente se ve y el error sale bajo «Historial de simulaciones».
+125. **Volver al buscador:** la pantalla no tiene enlace propio; se vuelve con el logo o con «Atrás».
+126. **Ids raros:** `/clientes/0x10` se convierte en 16 antes de llegar a la API.
+127. **Textos que no fija la spec:** «Historial de simulaciones», «Todavía no hay simulaciones
+     guardadas», las etiquetas de los datos y de cada simulación, y el plan tal cual llega («pro»).
+128. **Fechas:** la del cliente sin hora; la de cada simulación, corta y con hora, en la zona del
+     navegador. Dos guardadas en el mismo minuto se ven con la misma fecha.
+129. **Historial largo:** salen todas las simulaciones, sin paginar.
+130. **Título de la pestaña (ver 77):** no cambia con el nombre del cliente.
+
+### Sin prueba
+
+131. **Ruta:** ninguna prueba cubre `clientes/:id` en `app.routes.ts` ni que el id llegue desde ella.
+132. **Cargando:** ni el spinner del cliente ni el del historial.
+133. **Errores:** un fallo que no sea el 404, o de una sola de las dos peticiones.
+134. **Cambio de id** sin salir de la pantalla, y cancelación de las peticiones anteriores.
+135. **Contenido de cada simulación:** de lo que no es dinero solo se miran los usuarios; ni la fecha,
+     ni el almacenamiento, ni las llamadas, ni el % del impuesto.
+136. **Total en divisa:** que sea la suma de las líneas convertidas (ver 81); en la prueba, convertir
+     el total de golpe daría lo mismo.
+137. **GBP** y la vuelta a EUR en esta pantalla.
+
+### Para bloques siguientes
+
+138. **Líneas al convertir (ver 89):** el historial convierte coste base e impuesto, y el total es su
+     suma. F7 tiene que decidir cómo casar con esto la suma de los tramos convertidos.

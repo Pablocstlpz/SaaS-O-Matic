@@ -1,0 +1,24 @@
+<h1 class="mb-4 text-2xl font-bold wrap-anywhere">{{ cliente().nombre_empresa }}</h1>
+
+<dl class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="min-w-0 rounded-tarjeta border border-borde bg-superficie p-4">
+    <dt class="text-sm text-suave">Identificador fiscal</dt>
+    <dd class="font-medium tabular-nums wrap-anywhere">{{ cliente().identificador_fiscal }}</dd>
+  </div>
+  <div class="min-w-0 rounded-tarjeta border border-borde bg-superficie p-4">
+    <dt class="text-sm text-suave">Email de contacto</dt>
+    <dd class="font-medium wrap-anywhere">{{ cliente().email_contacto }}</dd>
+  </div>
+  <div class="min-w-0 rounded-tarjeta border border-borde bg-superficie p-4">
+    <dt class="text-sm text-suave">País</dt>
+    <dd class="font-medium">{{ pais() }}</dd>
+  </div>
+  <div class="min-w-0 rounded-tarjeta border border-borde bg-superficie p-4">
+    <dt class="text-sm text-suave">Plan</dt>
+    <dd class="font-medium">{{ cliente().plan }}</dd>
+  </div>
+  <div class="min-w-0 rounded-tarjeta border border-borde bg-superficie p-4">
+    <dt class="text-sm text-suave">Fecha de creación</dt>
+    <dd class="font-medium">{{ cliente().fecha_creacion | date: 'longDate' }}</dd>
+  </div>
+</dl>

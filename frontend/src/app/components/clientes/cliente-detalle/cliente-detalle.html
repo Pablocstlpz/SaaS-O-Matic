@@ -1,0 +1,21 @@
+<!-- sin cliente no hay historial que ensenar: se ve un solo mensaje -->
+@if (errorCliente(); as mensaje) {
+  <p class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro" role="alert">{{ mensaje }}</p>
+} @else {
+  @if (cliente(); as datos) {
+    <app-cliente-datos [cliente]="datos" />
+  } @else {
+    <app-cargando />
+  }
+
+  <section class="mt-8">
+    <h2 class="mb-4 text-xl font-bold">Historial de simulaciones</h2>
+    @if (errorHistorial(); as mensaje) {
+      <p class="rounded-tarjeta border border-peligro bg-superficie p-4 text-peligro" role="alert">{{ mensaje }}</p>
+    } @else if (simulaciones(); as lista) {
+      <app-historial-simulaciones [simulaciones]="lista" [divisa]="divisas.activa()" />
+    } @else {
+      <app-cargando />
+    }
+  </section>
+}

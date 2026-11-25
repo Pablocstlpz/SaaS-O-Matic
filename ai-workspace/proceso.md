@@ -303,3 +303,15 @@
   volver a escribir.
 - Una de las pruebas en el navegador dio un resultado raro que no se pudo
   repetir. Queda apuntado como "no reproducido".
+
+## 25/11 · Bloque F6: detalle del cliente e historial
+
+- Hice F6 antes que F5: el detalle es una vista obligatoria de los requisitos y
+  el alta no. Si faltara tiempo, prefiero recortar el alta.
+  -> `prompts/17-f6.md`
+- Tarjetas con los datos del cliente e historial de simulaciones. Al cambiar
+  la divisa, los importes cambian sin volver a pedir datos al backend:
+  comprobado en el navegador.
+- La IA adelantó un problema para F7: al convertir de divisa los tramos uno
+  a uno, su suma podía no coincidir con la base convertida. Lo decidí antes
+  de programar el simulador (ver F7).

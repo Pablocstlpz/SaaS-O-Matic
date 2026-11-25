@@ -8,6 +8,18 @@ Las más recientes arriba.
 
 ---
 
+## 2026-11-25 · La pista del slider, con un estilo sobre una clase de Material
+
+**Qué:** `material-theme.scss` fija el color de la parte sin recorrer del slider y, con `.mdc-slider__track--inactive`, le quita la atenuación.
+**Por qué:** Material la pinta al 24 % con un valor fijo: sobre blanco, ningún color del tema llega a verse bien. Al actualizar Material hay que mirar que la clase siga existiendo.
+**Descartado:** cambiar solo el color en el tema.
+
+## 2026-11-25 · Formulario del simulador: campos anulables
+
+**Qué:** `formulario-simulacion.ts` usa `FormControl<number | null>` sin `FormBuilder`, con un validador propio que da `{ mensaje }` y los textos de la API. Los errores del servidor se guardan con la misma forma.
+**Por qué:** un campo numérico vacío vale `null`. Los avisos salen de un solo sitio en la plantilla, vengan del formulario o del servidor.
+**Descartado:** el `FormBuilder` no anulable de la skill. También `Validators.min` y `max`, que no rechazan decimales.
+
 ## 2026-11-25 · El detalle, sin botón de reintentar
 
 **Qué:** `cliente-detalle` pinta el mensaje del error, del cliente o del historial. Para repetir la petición se recarga la página.

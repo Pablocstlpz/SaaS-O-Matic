@@ -1,0 +1,49 @@
+<!-- el hueco se reserva siempre: al aparecer el texto, el precio no salta -->
+<p class="h-6 text-sm font-bold text-primario" role="status">
+  @if (calculando()) {
+    calculando
+  }
+</p>
+
+<div class="tabular-nums" [class.opacity-50]="calculando()">
+  <ul>
+    @for (tramo of calculo().tramos; track tramo.desde) {
+      <li class="py-1.5">
+        <p>
+          Usuarios del {{ tramo.desde | number }}
+          @if (tramo.hasta === null) {
+            en adelante
+          } @else {
+            al {{ tramo.hasta | number }}
+          }
+        </p>
+        <!-- una flecha y no un igual: a la izquierda va la tarifa en euros y a la derecha, el importe -->
+        <div class="flex flex-wrap items-baseline justify-between gap-x-3">
+          <p class="text-sm text-suave" data-tarifa>
+            {{ tramo.usuarios | number }} {{ tramo.usuarios === 1 ? 'usuario' : 'usuarios' }} ×
+            {{ tramo.precio_unitario_centimos | importe: euros }}
+          </p>
+          <p class="ml-auto whitespace-nowrap">
+            → <span data-linea="tramo">{{ tramo.subtotal_centimos | importe: divisa() }}</span>
+          </p>
+        </div>
+      </li>
+    }
+  </ul>
+
+  <!-- como en el historial: las dos lineas y debajo su suma -->
+  <dl class="mt-2 border-t border-borde pt-3">
+    <div class="flex justify-between gap-3">
+      <dt>Coste base</dt>
+      <dd data-linea="base">{{ lineasBase() | importe: divisa() }}</dd>
+    </div>
+    <div class="flex justify-between gap-3">
+      <dt>Impuesto ({{ calculo().porcentaje_impuesto }}&nbsp;%)</dt>
+      <dd data-linea="impuesto">{{ calculo().impuesto_centimos | importe: divisa() }}</dd>
+    </div>
+    <div class="mt-2 flex flex-wrap justify-between gap-x-3 text-2xl font-bold">
+      <dt>Total</dt>
+      <dd data-linea="total">{{ lineasTotal() | importe: divisa() }}</dd>
+    </div>
+  </dl>
+</div>

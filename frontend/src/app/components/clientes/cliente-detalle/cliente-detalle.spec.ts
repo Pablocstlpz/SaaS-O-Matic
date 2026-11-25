@@ -49,6 +49,8 @@ describe('ClienteDetalle', () => {
     http = TestBed.inject(HttpTestingController);
   });
 
+  afterEach(() => vi.useRealTimers());
+
   // con una petición pendiente la app no llega a estar estable: se repinta a mano
   const montar = (): HTMLElement => {
     const detalle = TestBed.createComponent(ClienteDetalle);
@@ -117,6 +119,23 @@ describe('ClienteDetalle', () => {
     TestBed.tick();
 
     expect(textos(pantalla, '[role="alert"]')).toEqual([message]);
+  });
+
+  it('la simulación guardada aparece la primera del historial sin recargar', () => {
+    vi.useFakeTimers();
+    const pantalla = montar();
+    responder([simulacion(1, 10, 10000, 2100)]);
+    // sin precio no se puede guardar
+    vi.advanceTimersByTime(250);
+    http.expectOne('http://localhost:3000/simulations/calcular').flush({ ...simulacion(0, 1, 1000, 210), tramos: [] });
+    TestBed.tick();
+
+    pantalla.querySelector<HTMLButtonElement>('app-simulador button')?.click();
+    http.expectOne('http://localhost:3000/simulations').flush(simulacion(2, 15, 14000, 2940));
+    TestBed.tick();
+
+    expect(textos(pantalla, 'app-historial-simulaciones dl:first-of-type div:first-child dd')).toEqual(['15', '10']);
+    http.expectNone(URL_HISTORIAL);
   });
 
   it('sin simulaciones muestra el estado vacío', () => {

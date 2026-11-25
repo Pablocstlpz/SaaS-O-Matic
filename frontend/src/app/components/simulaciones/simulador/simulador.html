@@ -1,0 +1,63 @@
+<h2 class="mb-4 text-xl font-bold">Simulador</h2>
+
+<!-- en movil el precio queda justo debajo del slider; en escritorio, a la derecha -->
+<form
+  [formGroup]="formulario"
+  class="grid gap-x-10 gap-y-4 rounded-tarjeta border border-borde bg-superficie p-4 sm:p-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr]"
+>
+  <div class="flex min-w-0 items-start gap-1 sm:gap-3">
+    <mat-slider class="min-w-0 flex-1" [min]="sliderMin" [max]="sliderMax" [step]="1">
+      <input
+        matSliderThumb
+        #pulgar="matSliderThumb"
+        aria-label="Usuarios activos, con el control deslizante"
+        [value]="usuarios() ?? sliderMin"
+        (input)="mover(pulgar.value)"
+        (valueChange)="mover($event)"
+      />
+    </mat-slider>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-36 min-w-0 sm:w-48">
+      <mat-label>Usuarios activos</mat-label>
+      <input matInput type="number" inputmode="numeric" formControlName="usuarios" />
+      <mat-error>{{ formulario.controls.usuarios.errors?.['mensaje'] }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+    @if (calculo(); as precio) {
+      <app-desglose-precio [calculo]="precio" [divisa]="divisa()" [calculando]="calculando()" />
+    } @else if (calculando()) {
+      <app-cargando texto="Calculando…" />
+    } @else if (errorCalculo(); as mensaje) {
+      <p class="rounded-tarjeta border border-peligro p-4 text-peligro" role="alert">{{ mensaje }}</p>
+    }
+  </div>
+
+  <div class="flex min-w-0 flex-col items-start gap-4 lg:col-start-1">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
+      <mat-label>Almacenamiento (GB)</mat-label>
+      <input matInput type="number" inputmode="numeric" formControlName="almacenamiento_gb" />
+      <mat-error>{{ formulario.controls.almacenamiento_gb.errors?.['mensaje'] }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
+      <mat-label>Llamadas a la API</mat-label>
+      <input matInput type="number" inputmode="numeric" formControlName="llamadas_api" />
+      <mat-error>{{ formulario.controls.llamadas_api.errors?.['mensaje'] }}</mat-error>
+    </mat-form-field>
+
+    <button
+      type="button"
+      class="cursor-pointer rounded-control bg-primario px-4 py-2 font-medium text-sobre-primario disabled:cursor-default disabled:opacity-50"
+      [disabled]="guardando() || sinPrecio() || formulario.invalid"
+      (click)="guardar()"
+    >
+      Guardar simulación
+    </button>
+    @if (guardando()) {
+      <app-cargando texto="Guardando…" />
+    }
+    @if (errorGuardar(); as mensaje) {
+      <p class="rounded-tarjeta border border-peligro p-4 text-peligro" role="alert">{{ mensaje }}</p>
+    }
+  </div>
+</form>

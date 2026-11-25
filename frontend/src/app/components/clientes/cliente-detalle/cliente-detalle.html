@@ -4,6 +4,7 @@
 } @else {
   @if (cliente(); as datos) {
     <app-cliente-datos [cliente]="datos" />
+    <app-simulador class="mt-8" [cliente]="datos" [divisa]="divisas.activa()" (guardada)="anadir($event)" />
   } @else {
     <app-cargando />
   }

@@ -245,8 +245,8 @@ los dos textos salen; no las duraciones). El 86, comparando los dos ficheros con
 89. **Qué es una «línea» al convertir:** el cálculo trae los tramos y el historial no. Si en el simulador
     la base es la suma de los tramos convertidos y en el historial es la base convertida, la misma
     simulación puede diferir en algún céntimo. F6 y F7 tienen que usar las mismas líneas.
-90. **Precio por usuario convertido:** multiplicado por los usuarios puede no dar el subtotal convertido
-    del tramo.
+90. **Resuelto en F7, con prueba** (spec §5). El precio por usuario se queda en euros y solo se convierten
+    los importes: «40 usuarios × 8,00 € → 350,70 US$».
 91. **Medio céntimo:** el redondeo usa coma flotante, y un medio exacto puede bajar (100 céntimos a un
     cambio de 1,005 dan 100, no 101).
 92. **Símbolo de la divisa:** sale el de Angular en `es-ES`: «€», «US$» y «GBP» (no «$» ni «£»).
@@ -362,5 +362,62 @@ eso queda visto el 131.
 
 ### Para bloques siguientes
 
-138. **Líneas al convertir (ver 89):** el historial convierte coste base e impuesto, y el total es su
-     suma. F7 tiene que decidir cómo casar con esto la suma de los tramos convertidos.
+138. **Resuelto en F7, con prueba** (spec §5). En el simulador la base convertida es la suma de los
+     tramos convertidos y el total, esa base más el impuesto convertido. Ver 139.
+
+## F7 · Simulador: slider, cálculo en vivo y guardar
+
+Código: `frontend/src/app/components/simulaciones/simulador/` y `desglose-precio/`, y
+`frontend/src/app/components/clientes/cliente-detalle/`.
+Se han comprobado a mano en Edge sin ventana, con `ng serve` y los datos de ejemplo, una pasada a
+375 px (con toques) y otra a 1366 px (con ratón), con el cliente alemán: arrastrar el slider (una
+petición), «calculando», 500 usuarios, 100.001 y campo vacío (sin peticiones, y el precio desaparece),
+el cambio a USD (sin peticiones y las sumas cuadran), guardar (la primera del historial), sin errores en
+consola ni desplazamiento horizontal. Con eso quedan vistos el 143, el 157 y el 160.
+Tras la revisión, a 320 y 1366 px: la pista del slider, la tarifa en euros y el botón desactivado al
+calcular y con el cálculo bloqueado; a 320 y 375 px, que el campo de usuarios cabe en la tarjeta.
+
+### Comportamiento por decidir
+
+139. **Resuelto en la spec (§5):** en otra divisa, el simulador y el historial pueden diferir en algún
+     céntimo, porque la conversión es informativa. En euros coinciden siempre.
+140. **Valores de entrada:** 1 usuario, 0 GB y 0 llamadas, y se calcula al entrar. Se puede guardar sin
+     tocar nada.
+141. **Resuelto en F7, con prueba** (spec §5). El botón está desactivado mientras calcula y si el cálculo
+     ha fallado.
+142. **«Dos veces seguidas»:** se bloquea mientras la petición está en vuelo. Después, otro clic guarda
+     otra simulación igual.
+143. **Usuarios no válidos:** el precio desaparece y su hueco queda vacío.
+144. **Texto que no es un número** (por ejemplo, `e`): el navegador entrega el campo vacío y sale «es
+     obligatorio».
+145. **Sin aviso al guardar:** la simulación solo aparece en el historial.
+146. **Error al guardar que no es de un campo** (500, sin conexión, `cliente_id`): sale bajo el botón y
+     se queda hasta el siguiente intento.
+147. **Error del servidor junto a un campo:** bloquea el botón hasta que se cambie ese campo.
+148. **Fallo del cálculo:** no hay reintento y no se puede guardar; hay que cambiar los usuarios o
+     recargar.
+149. **Guardar con el historial sin cargar:** si aún no ha llegado o ha fallado, la guardada no se
+     añade. La respuesta pendiente puede no traerla.
+150. **Salir mientras guarda:** el navegador cancela la petición, pero el servidor puede haberla
+     guardado.
+151. **Textos que no fija la spec:** «Simulador», «Usuarios activos», «Usuarios del 1 al 10», «en
+     adelante», «Almacenamiento (GB)», «Llamadas a la API», «Guardar simulación», «Calculando…» y
+     «Guardando…».
+152. **Slider en pantalla estrecha:** mide unos 145 px a 375 y 112 a 320 para 200 valores, y el aviso del
+     campo de usuarios ocupa cuatro o cinco líneas.
+153. **Resuelto en F7:** la parte sin recorrer del slider se ve (`material-theme.scss`).
+161. **Porcentaje del impuesto en otra divisa:** el impuesto se convierte (spec §5), así que el % de la
+     base convertida puede diferir en un céntimo del impuesto que se ve. Con 1 € = 1,096 US$, España y
+     17 usuarios: base 170,98, impuesto 35,90, y el 21 % de 170,98 es 35,91. También en el historial.
+
+### Sin prueba
+
+154. **Almacenamiento y llamadas:** que no piden cálculo ni cambian el precio; tampoco sus límites ni sus
+     avisos.
+155. **400 del cálculo:** ninguna prueba lo pinta junto a su campo (la del 400 es la de guardar).
+156. **Errores al guardar** que no son de un campo, y volver a guardar después de uno.
+157. **Precio con un valor no válido:** ninguna prueba mira que desaparezca.
+158. **Slider:** que al soltar no repite la petición, y el clic sobre la pista (`valueChange`).
+159. **Spinners** «Calculando…» y «Guardando…».
+160. **Divisa en el simulador:** que cambiarla vuelve a pintar el desglose sin pedir nada.
+162. **Aspecto:** ni el color de la pista del slider ni que el campo de usuarios quepa a 320 px.

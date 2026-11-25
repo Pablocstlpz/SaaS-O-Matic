@@ -151,6 +151,13 @@ Tabla (lista cerrada):
 - Los tipos se piden a https://open.er-api.com/v6/latest/EUR una vez y se guardan
 - Se convierte solo al pintar. La base de datos siempre está en euros
 - Redondeo: se convierte cada línea por separado a 2 decimales y el total es la suma de las líneas ya convertidas, para que cuadre
+- En el desglose del simulador, para que todo cuadre en pantalla:
+  1. Se convierte cada tramo
+  2. La base convertida es la suma de los tramos ya convertidos
+  3. Se convierte el impuesto
+  4. El total es la base convertida más el impuesto convertido
+- El precio por usuario del desglose se queda en euros, porque es la tarifa. Solo se convierten los importes: «40 usuarios × 8,00 € → 350,70 US$»
+- En otra divisa, el simulador y el historial pueden diferir en algún céntimo, porque la conversión es informativa. En euros coinciden siempre
 - Si la API falla o tarda: la app sigue en euros y avisa: «No se pueden cargar los tipos de cambio. Los importes se muestran en euros»
 - Mientras se cargan los tipos, el selector dice «Cargando divisas…»
 - La API sin clave exige atribución: en el pie de la página, «Tipos de cambio por ExchangeRate-API», con enlace a https://www.exchangerate-api.com que se abre en una pestaña nueva
@@ -176,7 +183,7 @@ Tabla (lista cerrada):
 
 - Al mover el slider: espera 250 ms y cancela la petición anterior. Mientras calcula, el precio anterior se ve atenuado con "calculando". Nunca se presenta un precio viejo como si fuera el vigente
 - Se ve: desglose por tramos, coste base, impuesto y total
-- Botón guardar: guarda y la simulación aparece en el historial
+- Botón guardar: guarda y la simulación aparece en el historial. Está desactivado mientras se calcula y si el cálculo ha fallado
 
 ### Animaciones
 

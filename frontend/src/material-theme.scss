@@ -55,6 +55,19 @@ html {
       inverse-primary: #9cc5c7
     )
   );
+
+  // la parte sin recorrer del slider: 3:1 sobre blanco y mas clara que la recorrida
+  @include mat.slider-overrides(
+    (
+      inactive-track-color: #849699,
+    )
+  );
+}
+
+// Material atenua esa pista al 24 % con un valor fijo, que no es una variable del tema. Las dos
+// clases ganan a su estilo, que se carga despues que este.
+.mat-mdc-slider .mdc-slider__track--inactive {
+  opacity: 1;
 }
 
 body {

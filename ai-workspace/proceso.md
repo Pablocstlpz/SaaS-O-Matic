@@ -315,3 +315,29 @@
 - La IA adelantó un problema para F7: al convertir de divisa los tramos uno
   a uno, su suma podía no coincidir con la base convertida. Lo decidí antes
   de programar el simulador (ver F7).
+
+## 25/11 · Bloque F7: simulador
+
+- La IA comprobó 800 combinaciones de usuarios y países en dólares y encontró
+  10 en las que el 21 % de la base convertida no daba exactamente el impuesto
+  convertido. Acepté su propuesta: cuando la divisa no es el euro, se indica
+  "calculado en euros". Es coherente con dejar el precio por usuario en euros:
+  la tarifa y el impuesto son los de euros, y lo convertido es una referencia.
+- La IA encontró y corrigió un fallo suyo: a 320 px el campo de usuarios se
+  salía de la tarjeta.
+- Antes de programar decidí la regla de conversión para que todo cuadre en
+  pantalla: se convierte cada tramo, la base es la suma de los tramos ya
+  convertidos y el total es la base más el impuesto convertido.
+  -> `prompts/18-f7.md`
+- Una sola petición por arrastre del slider, el precio anterior atenuado con
+  "calculando" y la simulación guardada aparece la primera del historial.
+  En dólares, las sumas cuadran: comprobado a mano en el navegador.
+- Corregí tres cosas al revisar:
+  - Se veía "40 × 8,77 US$ = 350,70 US$", y la cuenta da 350,80. Dejé el
+    precio por usuario en euros (es la tarifa) y solo se convierten los
+    importes: ninguna cuenta visible miente.
+  - El botón de guardar se desactiva mientras calcula o si el cálculo falla.
+  - La parte sin recorrer del slider apenas se veía; se ajustó el color.
+- En otra divisa, el simulador y el historial pueden diferir en un céntimo.
+  Lo acepté y lo anoté en la spec: la conversión es informativa y en euros
+  coinciden siempre.
